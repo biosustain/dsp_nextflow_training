@@ -1,3 +1,3 @@
-# Course instructions
+# Instructions
 
 To be completed
