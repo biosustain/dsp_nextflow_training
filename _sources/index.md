@@ -17,3 +17,23 @@ about
 folder_topic/article_topic
 ```
 
+```{toctree}
+:maxdepth: 2
+:hidden:
+
+Instructions
+```
+
+```{toctree}
+:maxdepth: 2
+:hidden:
+
+Location
+```
+
+```{toctree}
+:maxdepth: 2
+:hidden:
+
+Timing
+````
