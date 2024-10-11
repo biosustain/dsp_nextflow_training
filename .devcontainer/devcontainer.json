@@ -4,7 +4,7 @@
   "runArgs": [
     "--volume=/var/run/docker.sock:/var/run/docker.sock"  // Mount the Docker socket from host machine
   ],
-  "postCreateCommand": "curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/",
   "customizations": {
     "vscode": {
       "extensions": [
