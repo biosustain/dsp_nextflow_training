@@ -1,0 +1,21 @@
+{
+  "name": "Nextflow Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",  // Base Ubuntu container image
+  "runArgs": [
+    "--cap-add=SYS_ADMIN",  // Ensure Docker CLI access
+    "--security-opt", 
+    "seccomp=unconfined"    // Unconfine security for Docker in Codespace
+  ],
+  "features": {
+    "docker-in-docker": "true"  // Enable Docker within Codespace
+  },
+  "postCreateCommand": "curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker" // Docker extension for VS Code
+      ]
+    }
+  }
+}
+
