@@ -168,6 +168,7 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">About</a></li>
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">A topic</span></p>
 <ul class="nav bd-sidenav">
@@ -312,7 +313,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -328,6 +331,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">About</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#in-this-course-you-will-learn">In this course you will learn:</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -339,10 +352,25 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="about">
 <h1>About<a class="headerlink" href="#about" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>More information about your (your team) and your work.</p>
-</div></blockquote>
-<p>Some text about you here.</p>
+<p><strong>Nextflow fundamentals training</strong></p>
+<p>Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?</p>
+<p><strong>Nextflow</strong> is an advanced workflow management system designed to streamline data-driven processes, especially in the bioinformatics and computational biology fields. It allows users to develop, to execute, and to scale complex workflows across various environments (i.e local machine, Cloud - Azure, AWS, etc… - or HPC). This system is simple and flexible and supports different programming languages (i.e. Python, R, Bash) and containers (e.g Docker, Singularity, etc…).</p>
+<p>Let us introduce you to Nextflow and unlock you a door to a vibrant community building and maintaining standardized reproducible bioinformatics analyses, trainings, hackathons and resources to make your data-driven analysis scalable an reproducible.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="in-this-course-you-will-learn">
+<h1>In this course you will learn:<a class="headerlink" href="#in-this-course-you-will-learn" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>What is Nextflow?</p></li>
+<li><p>Why is needed?</p></li>
+<li><p>Nextflow concepts (e.g. channels, processes and operators, parallellism, reentrancy, reusability)</p></li>
+<li><p>Core features (e.g Portability, Scalability, Reproducibility, Modularity)</p></li>
+<li><p>Installing Nextflow (requirements, you will use a prepared dev environment)</p></li>
+<li><p>Write and run your first Nextflow script (nextflow script, config file, results, working directory)</p></li>
+<li><p>Run a nextflow pipeline in a Docker image (run for example a short version of an rnaseq pipeline)</p></li>
+<li><p>Seqera platform (monitoring your pipeline execution)</p></li>
+<li><p>nf-core community (113 bioinformatics standardized workflows)</p></li>
+<li><p>Resources to keep training</p></li>
+</ul>
 </section>
 
 
@@ -380,6 +408,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">About</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#in-this-course-you-will-learn">In this course you will learn:</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
