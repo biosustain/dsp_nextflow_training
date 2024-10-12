@@ -21,19 +21,19 @@ folder_topic/article_topic
 :maxdepth: 2
 :hidden:
 
-Instructions
+course_information/Instructions
 ```
 
 ```{toctree}
 :maxdepth: 2
 :hidden:
 
-Location
+course_information/Location
 ```
 
 ```{toctree}
 :maxdepth: 2
 :hidden:
 
-Timing
+course_information/Timing
 ````
