@@ -1,7 +1,7 @@
 # Instructions
 
 ## Opening the Nextflow environment
-Go to https://github.com/biosustain/dsp_nextflow_training
+Go to [course website](https://github.com/biosustain/dsp_nextflow_training)
 
 Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).
 
