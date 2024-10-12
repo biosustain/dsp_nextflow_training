@@ -9,26 +9,26 @@ To learn more about Github codespaces go [here](https://github.com/features/code
 
 Now, Nextflow should be ready to run in your GitHub Codespace environment! Let's check that you have a fully functional environment.
 
-````{code-block}
+```bash
 :caption: Verify java installation:
 
 java -version
-````
+```
 
-````{code-block}
+```bash
 :caption: Verify Nextflow installation:
 
 nextflow -v
-````
+```
 
-````{code-block}
+```bash
 :caption: Nextflow information:
 
 nextflow info
-````
+```
 
-````{code-block}
+```bash
 :caption: Verify Docker installation:
 
 docker --version
-````
+```
