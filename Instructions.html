@@ -322,7 +322,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -338,6 +340,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-the-nextflow-environment">Opening the Nextflow environment</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -349,7 +359,38 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="instructions">
 <h1>Instructions<a class="headerlink" href="#instructions" title="Link to this heading">#</a></h1>
-<p>To be completed</p>
+<section id="opening-the-nextflow-environment">
+<h2>Opening the Nextflow environment<a class="headerlink" href="#opening-the-nextflow-environment" title="Link to this heading">#</a></h2>
+<p>Go to https://github.com/biosustain/dsp_nextflow_training</p>
+<p>Click on button <strong>Code</strong> and click on the Codespaces tab. There click on <strong>Create codespace</strong>. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).</p>
+<p>To learn more about Github codespaces go <a class="reference external" href="https://github.com/features/codespaces" rel="noopener noreferrer" target="_blank">here</a></p>
+<p>Now, Nextflow should be ready to run in your GitHub Codespace environment! Let’s check that you have a fully functional environment.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Verify java installation:</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>java -version
+```
+
+````{code-block}
+:caption: Verify Nextflow installation:
+
+nextflow -v
+```
+
+````{code-block}
+:caption: Nextflow information:
+
+nextflow info
+```
+
+````{code-block}
+:caption: Verify Docker installation:
+
+docker --version
+```
+</pre></div>
+</div>
+</div>
+</section>
 </section>
 
 
@@ -387,6 +428,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-the-nextflow-environment">Opening the Nextflow environment</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
