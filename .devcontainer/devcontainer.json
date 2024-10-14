@@ -1,12 +1,13 @@
 {
   "name": "Nextflow Development Environment",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",  // Base Ubuntu container image
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",  // Added Base Ubuntu container image as OS
   "runArgs": [
     "--volume=/var/run/docker.sock:/var/run/docker.sock"  // Mount the Docker socket from host machine
   ],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/", 
+  // Updated packages, installed java 11, nextflow, changed permissions for nextflow to make it executable and moved it to /usr/local/bin
   "customizations": {
-    "vscode": {
+    "vscode": { // Added VSCode as my Editor
       "extensions": [
         "ms-azuretools.vscode-docker" // Docker extension for VS Code
       ]

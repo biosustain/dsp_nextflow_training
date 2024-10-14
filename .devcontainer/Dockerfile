@@ -1,4 +1,4 @@
-# Use an official Ubuntu as a parent image
+# Use Ubuntu as a parent image
 FROM ubuntu:20.04
 
 # Install Java 11 (required for Nextflow)
@@ -17,5 +17,5 @@ RUN apt-get update && apt-get install -y \
 # Set JAVA_HOME environment variable
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
-# Expose Docker socket
+# Expose the Docker socket
 RUN groupadd docker && usermod -aG docker $USER
