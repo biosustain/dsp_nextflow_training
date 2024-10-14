@@ -20,6 +20,7 @@ folder_topic/article_topic
 ```{toctree}
 :maxdepth: 2
 :hidden:
+:caption: Course information
 
 course_information/Instructions
 ```
@@ -27,6 +28,7 @@ course_information/Instructions
 ```{toctree}
 :maxdepth: 2
 :hidden:
+:caption: Course information
 
 course_information/Location
 ```
@@ -34,6 +36,7 @@ course_information/Location
 ```{toctree}
 :maxdepth: 2
 :hidden:
+:caption: Course information
 
 course_information/Timing
 ````
@@ -41,6 +44,7 @@ course_information/Timing
 ```{toctree}
 :maxdepth: 2
 :hidden:
+:caption: Course contents
 
 course_contents/Contents
 ```
