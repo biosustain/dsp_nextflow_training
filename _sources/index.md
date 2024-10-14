@@ -23,23 +23,9 @@ folder_topic/article_topic
 :caption: Course information
 
 course_information/Instructions
-```
-
-```{toctree}
-:maxdepth: 2
-:hidden:
-:caption: Course information
-
 course_information/Location
-```
-
-```{toctree}
-:maxdepth: 2
-:hidden:
-:caption: Course information
-
 course_information/Timing
-````
+```
 
 ```{toctree}
 :maxdepth: 2
