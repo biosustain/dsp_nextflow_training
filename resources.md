@@ -4,19 +4,19 @@ Here we are sharing some resources to keep learning Nextflow language or nf-core
 
 ## Training material
 
-Nextflow training portal (different levels): https://training.nextflow.io/
+Nextflow training portal (different levels): <https://training.nextflow.io/>
 
-Nextflow documentation: https://www.nextflow.io/docs/latest/index.html
+Nextflow documentation: <https://www.nextflow.io/docs/latest/index.html>
 
-Nf-core pipelines: https://nf-co.re/
+Nf-core pipelines: <https://nf-co.re/>
 
 ## Nextflow events
 
-Upcoming events: https://summit.nextflow.io/
+Upcoming events: <https://summit.nextflow.io/>
 
 ## Seqera platform
 
-Seqera platform: https://seqera.io/platform/
+Seqera platform: <https://seqera.io/platform/>
 
 ## Citations
 
