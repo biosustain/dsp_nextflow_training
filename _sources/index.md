@@ -34,3 +34,10 @@ course_information/Timing
 
 course_contents/Contents
 ```
+
+```{toctree}
+:maxdepth: 2
+:hidden:
+
+resources
+```
