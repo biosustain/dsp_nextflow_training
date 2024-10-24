@@ -7,8 +7,8 @@
 # -- Project information -----------------------------------------------------
 
 project = "Nextflow training notes template"
-copyright = "2024, DTU Biosustain, Informatics Platform, DSP"
-author = "Albert Palleja"
+copyright = "2024, DTU Biosustain, Informatics Platform, Data Science Platform (DSP)"
+author = "Albert Palleja from DSP"
 
 
 # -- General configuration ---------------------------------------------------
