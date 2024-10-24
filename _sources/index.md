@@ -33,6 +33,7 @@ course_information/Timing
 :caption: Course contents
 
 course_contents/Contents
+course_contents/Tutorial
 ```
 
 ```{toctree}

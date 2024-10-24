@@ -172,6 +172,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course contents</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../course_contents/Contents.html">Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_contents/Tutorial.html">Nextflow fundamentals tutorial</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../resources.html">Resources</a></li>
@@ -350,25 +351,29 @@
 <p>Click on button <strong>Code</strong> and click on the Codespaces tab. There click on <strong>Create codespace</strong>. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).</p>
 <p>To learn more about Github codespaces go <a class="reference external" href="https://github.com/features/codespaces" rel="noopener noreferrer" target="_blank">here</a></p>
 <p>Now, Nextflow should be ready to run in your GitHub Codespace environment! Let’s check that you have a fully functional environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>Verify<span class="w"> </span>java<span class="w"> </span>installation:
-
-java<span class="w"> </span>-version
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Verify java installation:</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>java<span class="w"> </span>-version
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>Verify<span class="w"> </span>Nextflow<span class="w"> </span>installation:
-
-nextflow<span class="w"> </span>-v
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Verify Nextflow installation:</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>-v
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>Nextflow<span class="w"> </span>information:
-
-nextflow<span class="w"> </span>info
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Nextflow information:</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>info
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>Verify<span class="w"> </span>Docker<span class="w"> </span>installation:
-
-docker<span class="w"> </span>--version
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Verify Docker installation:</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>--version
 </pre></div>
+</div>
 </div>
 </section>
 </section>
