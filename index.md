@@ -7,18 +7,10 @@ Please visit [About](https://biosustain.github.io/dsp_nextflow_training/about.ht
 And rememeber to ask questions during the course or after the course, you can contact us at [Data Science platform email](mailto:datascience@biosustain.dtu.dk).
 
 ```{toctree}
-:maxdepth: 3
+:maxdepth: 2
 :hidden:
 
 about
-```
-
-```{toctree}
-:maxdepth: 2
-:hidden:
-:caption: A topic
-
-folder_topic/article_topic
 ```
 
 ```{toctree}
@@ -41,7 +33,7 @@ course_contents/Tutorial
 ```
 
 ```{toctree}
-:maxdepth: 3
+:maxdepth: 2
 :hidden:
 
 resources
