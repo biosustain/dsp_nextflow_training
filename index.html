@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Nextflow training notes &#8212; Nextflow training notes  documentation</title>
+    <title>Nextflow fundamentals training &#8212; Nextflow training notes  documentation</title>
   
   
   
@@ -304,7 +304,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -315,11 +317,21 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Nextflow training notes</h1>
+    <h1>Nextflow fundamentals training</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-training-notes">Nextflow training notes</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -329,11 +341,16 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="nextflow-training-notes">
-<h1>Nextflow training notes<a class="headerlink" href="#nextflow-training-notes" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="nextflow-fundamentals-training">
+<h1><strong>Nextflow fundamentals training</strong><a class="headerlink" href="#nextflow-fundamentals-training" title="Link to this heading">#</a></h1>
+<p>Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?</p>
+<p><strong>Nextflow</strong> is an advanced workflow management system designed to streamline data-driven processes, especially in the bioinformatics and computational biology fields. It allows users to develop, to execute, and to scale complex workflows across various environments (i.e local machine, Cloud - Azure, AWS, etc… - or HPC). This system is simple and flexible and supports different programming languages (i.e. Python, R, Bash) and containers (e.g Docker, Singularity, etc…).</p>
+<p>Let us introduce you to Nextflow and unlock you a door to a vibrant community building and maintaining standardized reproducible bioinformatics analyses, trainings, hackathons and resources to make your data-driven analysis scalable an reproducible.</p>
+<section id="nextflow-training-notes">
+<h2>Nextflow training notes<a class="headerlink" href="#nextflow-training-notes" title="Link to this heading">#</a></h2>
 <p>Welcome to the notes for the Nextflow training offered to the researchers of DTU - Biosustain and DTU - Bioengineering. This course is half dedicated to explain Nextflow fundamentals and half dedicated to practice Nextflow. The materials are based mostly on <a class="reference external" href="https://training.nextflow.io/" rel="noopener noreferrer" target="_blank">Nextflow trainings portal</a>.</p>
-<p>Please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/about.html" rel="noopener noreferrer" target="_blank">About</a> to know what the course covers, go to Course Information to figure out about the details (<a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Instructions.html" rel="noopener noreferrer" target="_blank">instructions</a>, <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Location.html" rel="noopener noreferrer" target="_blank">location</a> and <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Timing.html" rel="noopener noreferrer" target="_blank">timing</a>). Please visit Instructions first before starting the hands-on part. Once you have started your Codespace, please follow course along in the Course contents. To keep learning Nextflow and nf-core pipelines please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/resources.html" rel="noopener noreferrer" target="_blank">Resources</a>.</p>
-<p>And rememeber to ask questions during the course or after the course, you can contact us at <a class="reference external" href="mailto:datascience&#37;&#52;&#48;biosustain&#46;dtu&#46;dk" rel="noopener noreferrer" target="_blank">Data Science platform email</a>.</p>
+<p>Please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/about.html" rel="noopener noreferrer" target="_blank">About</a> to know about the course, the Data Science platform and what the course covers, go to Course Information to figure out about the details (<a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Instructions.html" rel="noopener noreferrer" target="_blank">instructions</a>, <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Location.html" rel="noopener noreferrer" target="_blank">location</a> and <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Timing.html" rel="noopener noreferrer" target="_blank">timing</a>). Please visit Instructions first before starting the hands-on part. Once you have started your Codespace, please follow course along in the Course contents. To keep learning Nextflow and nf-core pipelines please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/resources.html" rel="noopener noreferrer" target="_blank">Resources</a>.</p>
+<p>And remember to ask questions during the course or after the course, you can contact us at <a class="reference external" href="mailto:datascience&#37;&#52;&#48;biosustain&#46;dtu&#46;dk" rel="noopener noreferrer" target="_blank">Data Science platform email</a>.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -342,6 +359,7 @@
 </div>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 </section>
 
 
@@ -370,6 +388,24 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-training-notes">Nextflow training notes</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

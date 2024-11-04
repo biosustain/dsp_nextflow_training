@@ -1,8 +1,5 @@
 # About
 
-## The course
-At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at DTU - Biosustain. To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop the workflows based on Groovy, allowing for easy integration with existing software and tools. Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. For these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU-Biosustain.
-
 ## [Data Science platform](https://www.biosustain.dtu.dk/technologies/informatics/data-science-platform)
 
 Data Science has become an essential piece both in academia and industry to accelerate gaining insights into the generated data. As a strategy to integrate high-level analytics we created a centralized Data Science platform (DSP) that provides support to our researchers while promoting standardized data and data processes.
@@ -11,6 +8,36 @@ The DSP team aims to make data science more accessible and inclusive at DTU Bios
 
 The DSP is based on four pillars: 
 – Support 
+
 – Education 
+
 – Innovation 
+
 – Tooling
+
+## The course 
+At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at DTU - Biosustain. To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop the workflows based on Groovy, allowing for easy integration with existing software and tools. Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. Nextflow has a strong community in the bioinformatics field and is supported by the nf-core project, which provides a large repository of pre-built, community-maintained bioinformatics pipelines that are optimized for Nextflow. For these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU-Biosustain.
+
+## Objectives
+
+In this course you will learn:
+
+- What is Nextflow?
+
+- Why is needed?
+
+- Nextflow concepts (e.g. channels, processes and operators, parallellism, reentrancy, reusability)
+
+- Core features (e.g Portability, Scalability, Reproducibility, Modularity)
+
+- Installing Nextflow (requirements, you will use a prepared dev environment)
+
+- Write and run your first Nextflow script (nextflow script, config file, results, working directory)
+
+- Run a nextflow pipeline in a Docker image (run for example a short version of an rnaseq pipeline)
+
+- Seqera platform (monitoring your pipeline execution)
+
+- nf-core community (113 bioinformatics standardized workflows)
+
+- Resources to keep training
