@@ -1,81 +1,31 @@
-# Template for a static website using Sphinx and GitHub Pages
+#**Nextflow fundamentals training**
 
-## Instructions
+Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?
 
-### 1. Create new repository based on this template
+**Nextflow** is an advanced workflow management system designed to streamline data-driven processes, especially in the bioinformatics and computational biology fields. It allows users to develop, to execute, and to scale complex workflows across various environments (i.e local machine, Cloud - Azure, AWS, etc... - or HPC). This system is simple and flexible and supports different programming languages (i.e. Python, R, Bash) and containers (e.g Docker, Singularity, etc...).
 
-Create a template based on 
-[this repository](https://github.com/enryH/notes_template)
-by clicking on the "Use this template" button,
-see instructions
-[here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template#creating-a-repository-from-a-template)
+Let us introduce you to Nextflow and unlock you a door to a vibrant community building and maintaining standardized reproducible bioinformatics analyses, trainings, hackathons and resources to make your data-driven analysis scalable an reproducible.
 
-- now you are already publish the site which looks identical to the template site
- (see it here)
-- jump to step 5 to do that directly.
+## Objectives
 
-### 2. Open in GitHub Codespaces (or locally)
+In this course you will learn:
 
-- go to [github.com/codespaces](https://github.com/codespaces)
-- create a new codespace using the forked repository
+- What is Nextflow?
 
-> If you are done, remember to delete the codespace to not see your free credit or money
-> wasted. Also inactive (stopped) codespaces use storage for the last 30 days.
+- Why is needed?
 
-### 3. Edit files
+- Nextflow concepts (e.g. channels, processes and operators, parallellism, reentrancy, reusability)
 
-You will need to know the Markdown to format your text. See 
-[this overview on GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) 
-or [this cheatsheet](https://www.markdownguide.org/cheat-sheet/) to get started.
+- Core features (e.g Portability, Scalability, Reproducibility, Modularity)
 
-- update in `conf.py` at least the author, project and copyright information at the top
-  - also update two urls to your repository:
-   ```json
-    "github_url": "https://github.com/enryh/",
-    "repository_url": "https://github.com/enryh/notes_template",
-    ```
-- write something about you in `about.md`
-- write articles in `folder_topic/article_topic.md`
-- update the `index.md` file to include new files
-- use [pandoc](https://pandoc.org/try/) to convert your previous files into markdown or
-  reStructuredText
+- Installing Nextflow (requirements, you will use a prepared dev environment)
 
-Troubleshooting:
- - don't forget to add new files to the `index.md` file
- - each document should have a title (`# title`) using a main heading and otherwise 
-   nested headlines (subheadings followed by sub-subheadings)
+- Write and run your first Nextflow script (nextflow script, config file, results, working directory)
 
-### 4. Build the site locally
+- Run a nextflow pipeline in a Docker image (run for example a short version of an rnaseq pipeline)
 
-Sphinx uses the configuration file `conf.py` to set up the site. The `requirements.txt` file
-contain extensions and themes that are used additionally to sphinx to build the site.
-The layout of the website is defined in the `index.md` file.
+- Seqera platform (monitoring your pipeline execution)
 
-> Have look at `.github/workflows/build_website.yaml` to see how the site is built
-> if you are interested.
+- nf-core community (113 bioinformatics standardized workflows)
 
-- Open a terminal (GitHub Codespaces)
-- install required packages from [`requirements.txt`](requirements.txt):
-  ```bash
-  pip install -r requirements.txt
-  ```
-- build the site (you could set an alias if you want):
-  ```bash
-  sphinx-build -n -W --keep-going -b html ./ ./_build/
-  ```
-  in case the command is not found, try:
-  ```bash
-   python -m sphinx -n -W --keep-going -b html ./ ./_build/
-  ```
-- open the site in a browser:
-  - install ["Live Preview" extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server) in Visual Studio Code
-  - open the `_build/index.html` file in the browser (right-click, "Show Preview")
-
-### 5. Publish the site
-
-Follow 
-[these instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) 
-to publish the website using GitHub Pages.
-
-- Select the `gh-pages` branch as the source for the GitHub Pages site (currently step 7)
-- add the deployed url to your "About" on the right sight of the repository
+- Resources to keep training

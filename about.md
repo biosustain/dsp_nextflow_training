@@ -1,31 +1,16 @@
 # About
-**Nextflow fundamentals training**
 
-Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?
+## The course
+At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at DTU - Biosustain. To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop the workflows based on Groovy, allowing for easy integration with existing software and tools. Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. For these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU-Biosustain.
 
-**Nextflow** is an advanced workflow management system designed to streamline data-driven processes, especially in the bioinformatics and computational biology fields. It allows users to develop, to execute, and to scale complex workflows across various environments (i.e local machine, Cloud - Azure, AWS, etc... - or HPC). This system is simple and flexible and supports different programming languages (i.e. Python, R, Bash) and containers (e.g Docker, Singularity, etc...).
+## [Data Science platform](https://www.biosustain.dtu.dk/technologies/informatics/data-science-platform)
 
-Let us introduce you to Nextflow and unlock you a door to a vibrant community building and maintaining standardized reproducible bioinformatics analyses, trainings, hackathons and resources to make your data-driven analysis scalable an reproducible.
+Data Science has become an essential piece both in academia and industry to accelerate gaining insights into the generated data. As a strategy to integrate high-level analytics we created a centralized Data Science platform (DSP) that provides support to our researchers while promoting standardized data and data processes.
 
-# In this course you will learn:
+The DSP team aims to make data science more accessible and inclusive at DTU Biosustain and across the DTU Community. The platform follows a data-centric approach that focuses on data infrastructure, processes, and outputs as ongoing, evolving products rather than one-time projects. Each data product is designed as a multidisciplinary collaboration involving the entire data lifecycle and pursuing standardization and automation, and with data usage in mind. 
 
-
-- What is Nextflow?
-
-- Why is needed?
-
-- Nextflow concepts (e.g. channels, processes and operators, parallellism, reentrancy, reusability)
-
-- Core features (e.g Portability, Scalability, Reproducibility, Modularity)
-
-- Installing Nextflow (requirements, you will use a prepared dev environment)
-
-- Write and run your first Nextflow script (nextflow script, config file, results, working directory)
-
-- Run a nextflow pipeline in a Docker image (run for example a short version of an rnaseq pipeline)
-
-- Seqera platform (monitoring your pipeline execution)
-
-- nf-core community (113 bioinformatics standardized workflows)
-
-- Resources to keep training
+The DSP is based on four pillars: 
+– Support 
+– Education 
+– Innovation 
+– Tooling
