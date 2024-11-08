@@ -10,6 +10,10 @@ Nextflow documentation: <https://www.nextflow.io/docs/latest/index.html>
 
 Nf-core pipelines: <https://nf-co.re/>
 
+## Asking for help, following specific developements
+Nextflow community forum: <https://community.seqera.io/>
+Nextflow slack channel: <https://nextflow.slack.com/join/shared_invite/>
+
 ## Nextflow events
 
 Upcoming events: <https://summit.nextflow.io/>

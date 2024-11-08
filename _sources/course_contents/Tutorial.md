@@ -337,6 +337,73 @@ nextflow run hello-world.nf
 >
 >More generally, you've learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.
 
+## Full script
+
+Here you have you first nextflow script in full!
+
+```{code-block} groovy
+#!/usr/bin/env nextflow
+
+/*
+ * Pipeline parameters
+ */
+params.input_file = "data/greetings.csv"
+
+/*
+ * Process 1: Use echo to print 'Hello World!' to an output file
+ */
+process sayHello {
+    //directives
+    publishDir 'results', mode: 'copy'
+
+    input:
+        path input_file
+
+    output:
+        path "${greeting}-output.txt"
+
+    script:
+    """
+    echo '$greeting' > '$greeting-output.txt'
+    """
+}
+
+/*
+ * Process 2: Use a text replace utility as we will do it in bash to convert the greeting to uppercase
+ */
+process convertToUpper {
+
+    publishDir 'results', mode: 'copy'
+
+    input:
+        path input_file
+
+    // we modify the output file name
+    output:
+        path "UPPER-${input_file}"
+
+    // now we add the bash code to convert the greeting to uppercase
+    script:
+    """
+    cat '$input_file' | tr '[a-z]' '[A-Z]' > UPPER-${input_file}
+    """
+}
+
+workflow {
+
+    // create a channel for inputs from a CSV file
+    greeting_ch = Channel.fromPath(params.input_file)
+                     .splitCsv()
+                     .flatten()
+
+    // emit a greeting
+    sayHello(greeting_ch)
+
+    // convert the greeting to uppercase
+    convertToUpper(sayHello.out)
+}
+```
+
 ## Run Nextflow CLI with Seqera Platform visualizing and capturing logs
 
 Run a Nextflow workflow with the addition of the -with-tower command:
