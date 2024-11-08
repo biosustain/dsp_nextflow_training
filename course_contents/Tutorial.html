@@ -592,13 +592,17 @@ e.g. the -resume feature we used earlier.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
+<p>Let’s greet på Dansk igen!</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
+</pre></div>
+</div>
 </section>
 <section id="let-s-run-the-script-on-a-batch-of-input-values">
 <h2>Let’s run the script on a batch of input values<a class="headerlink" href="#let-s-run-the-script-on-a-batch-of-input-values" title="Link to this heading">#</a></h2>
 <p>Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
-<span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello_World!&#39;</span><span class="o">,</span><span class="s1">&#39;Bonjour_le_monde!&#39;</span><span class="o">,</span><span class="s1">&#39;Hola_mundo!&#39;</span><span class="o">)</span>
+<span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="s1">&#39;Hej&#39;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>We want to ensure the output file names will be unique as they will be all written in the same folder. Let’s generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process:</p>
@@ -625,7 +629,7 @@ e.g. the -resume feature we used earlier.</p>
 </div>
 <p>Check the results folder and the output files:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>results
-less<span class="w"> </span>results/Hello_World!-output.txt
+less<span class="w"> </span>results/Hello-output.txt
 </pre></div>
 </div>
 </section>
@@ -639,10 +643,11 @@ vim<span class="w"> </span>greetings.csv
 <span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>greetings.csv
-
-Hello,<span class="w"> </span>Bonjour,<span class="w"> </span>Hola
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">greetings.csv</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Hello,Bonjour,Hola,Hej
 </pre></div>
+</div>
 </div>
 <p>Now we need to set up a CLI parameter with a default value pointing to an input file. Let’s put that piece of code by the bginning of our script:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
@@ -669,7 +674,9 @@ Hello,<span class="w"> </span>Bonjour,<span class="w"> </span>Hola
 </section>
 <section id="full-script">
 <h2>Full script<a class="headerlink" href="#full-script" title="Link to this heading">#</a></h2>
-<p>Here you have you first nextflow script in full!</p>
+<p>Here you have you first nextflow script in full! Congratulations!</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">hello-world.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -732,12 +739,13 @@ Hello,<span class="w"> </span>Bonjour,<span class="w"> </span>Hola
 <span class="o">}</span>
 </pre></div>
 </div>
+</div>
 </section>
 <section id="run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">
 <h2>Run Nextflow CLI with Seqera Platform visualizing and capturing logs<a class="headerlink" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs" title="Link to this heading">#</a></h2>
 <p>Run a Nextflow workflow with the addition of the -with-tower command:</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">tower</span>
 </pre></div>
 </div>

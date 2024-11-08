@@ -248,6 +248,12 @@ workflow {
 }
 ```
 
+Let's greet på Dansk igen!
+
+```groovy
+nextflow run hello-world.nf --greeting 'Hej verden!'
+```
+
 ## Let's run the script on a batch of input values
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
@@ -256,7 +262,7 @@ Workflows typically run on batches of inputs that are meant to be processed in b
 
 ```groovy
 // create a channel for inputs
-greeting_ch = Channel.of('Hello_World!','Bonjour_le_monde!','Hola_mundo!')
+greeting_ch = Channel.of('Hello','Bonjour','Hola','Hej')
 ```
 
 We want to ensure the output file names will be unique as they will be all written in the same folder. Let's generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process:
@@ -289,7 +295,7 @@ Check the results folder and the output files:
 
 ```bash
 tree results
-less results/Hello_World!-output.txt
+less results/Hello-output.txt
 ```
 ## Take a file source of input values (a sample file)
 
@@ -303,10 +309,10 @@ vim greetings.csv
 cd .. 
 ```
 
-```bash
+```{code-block} bash
 :caption: greetings.csv
 
-Hello, Bonjour, Hola
+Hello,Bonjour,Hola,Hej
 ```
 
 Now we need to set up a CLI parameter with a default value pointing to an input file. Let's put that piece of code by the bginning of our script:
@@ -339,9 +345,10 @@ nextflow run hello-world.nf
 
 ## Full script
 
-Here you have you first nextflow script in full!
+Here you have you first nextflow script in full! Congratulations!
 
 ```{code-block} groovy
+:caption: hello-world.nf
 #!/usr/bin/env nextflow
 
 /*
