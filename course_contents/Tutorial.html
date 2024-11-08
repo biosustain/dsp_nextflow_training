@@ -303,7 +303,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -319,6 +321,26 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-enviroment-verifications">First enviroment verifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">Input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-the-process-command-to-use-the-input-variable">Edit the process command to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-input-channel">Create an input channel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-channel-as-input-to-the-process-call">Add the channel as input to the process call</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -330,17 +352,180 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="nextflow-fundamentals-tutorial">
 <h1>Nextflow fundamentals tutorial<a class="headerlink" href="#nextflow-fundamentals-tutorial" title="Link to this heading">#</a></h1>
-<p>For DTU-Biosustain and DTU-Bioenginnering</p>
-<p>Print the current version, system and runtime:</p>
+<section id="first-enviroment-verifications">
+<h2>First enviroment verifications<a class="headerlink" href="#first-enviroment-verifications" title="Link to this heading">#</a></h2>
+<p>Let’s get some information about Nextflow. Print the current version, system and runtime:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>Verify<span class="w"> </span>java<span class="w"> </span>installation:
 
 nextflow<span class="w"> </span>info
 </pre></div>
 </div>
-<p>Run hello.nf as it is, passing a parameter from the command line and after changing the code in the second process (rev $y) using –resume
-nextflow run hello.nf
-nextflow run hello.nf –greeting ‘Hello Albert’
-nextflow run hello.nf –greeting ‘Hello Albert’ -resume</p>
+</section>
+<section id="running-our-first-script">
+<h2>Running our first script<a class="headerlink" href="#running-our-first-script" title="Link to this heading">#</a></h2>
+<p>Let’s run our first script, ‘Hello World!’ script.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">hello</span><span class="o">.</span><span class="n">nf</span>
+
+<span class="c1">#!/usr/bin/env nextflow</span>
+
+<span class="o">/*</span>
+ <span class="o">*</span> <span class="n">Use</span> <span class="n">echo</span> <span class="n">to</span> <span class="nb">print</span> <span class="s1">&#39;Hello World!&#39;</span> <span class="n">to</span> <span class="n">standard</span> <span class="n">out</span>
+ <span class="o">*/</span>
+<span class="o">//</span> <span class="n">A</span> <span class="n">process</span>
+<span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+
+    <span class="o">//</span><span class="n">directives</span>
+    <span class="n">output</span><span class="p">:</span>
+        <span class="n">stdout</span>
+    
+    <span class="o">//</span> <span class="n">code</span> <span class="n">block</span> <span class="p">(</span><span class="n">here</span> <span class="n">using</span> <span class="n">bash</span><span class="p">)</span>
+    <span class="n">script</span><span class="p">:</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    echo &#39;Hello World!&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">the</span> <span class="n">workflow</span>
+<span class="n">workflow</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">emit</span> <span class="n">a</span> <span class="n">greeting</span>
+    <span class="n">sayHello</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
+<p>Let’s try to run this code in your codespace:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Running</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+<span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+</pre></div>
+</div>
+</section>
+<section id="find-the-output-and-logs-in-the-work-directory">
+<h2>Find the output and logs in the work directory<a class="headerlink" href="#find-the-output-and-logs-in-the-work-directory" title="Link to this heading">#</a></h2>
+<p>The first time you run a pipeline it will create a new directory called ‘work’. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.</p>
+<p>To see the work folder structure</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-a<span class="w"> </span>work
+</pre></div>
+</div>
+<p>If we look inside the subdirectory, we find the following log files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>.command.begin: Metadata related to the beginning of the execution of the process task</p></li>
+<li><p>.command.err: Error messages (stderr) emitted by the process task</p></li>
+<li><p>.command.log: Complete log output emitted by the process task</p></li>
+<li><p>.command.out: Regular output (stdout) by the process task</p></li>
+<li><p>.command.sh: The command that was run by the process task call</p></li>
+<li><p>.exitcode: The exit code resulting from the command</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="send-the-output-to-a-file-and-save-it-on-an-specific-folder">
+<h2>Send the output to a file and save it on an specific folder<a class="headerlink" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder" title="Link to this heading">#</a></h2>
+<p>Let’s write the output to a file, we need to change the bash code in the code block</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
+</pre></div>
+</div>
+<p>Now in the directives the output get defined as an output file instead of stdout.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
+    <span class="n">path</span> <span class="s1">&#39;output.txt&#39;</span>
+</pre></div>
+</div>
+<p>Run the pipeline again!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+</pre></div>
+</div>
+<p>Find the output file in the work directory.</p>
+<p>Now let’s save the outputfile on an specific folder called ‘results’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+
+    <span class="n">publishDir</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="s1">&#39;copy&#39;</span>
+
+    <span class="n">output</span><span class="p">:</span>
+        <span class="n">path</span> <span class="s1">&#39;output.txt&#39;</span>
+</pre></div>
+</div>
+<p>Run the pipeline again!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+</pre></div>
+</div>
+<p>Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?</p>
+</section>
+<section id="add-in-variable-inputs-using-a-channel">
+<h2>Add in variable inputs using a channel<a class="headerlink" href="#add-in-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
+<p>Let’s add some more flexibility by using an input variable, so that we can easily change the greeting.</p>
+<p>This requires us to make a series of inter-related changes:</p>
+<ul class="simple">
+<li><p>Tell the process about expected variable inputs using the input: block</p></li>
+<li><p>Edit the process to use the input</p></li>
+<li><p>Create a channel to pass input to the process (more on that in a minute)</p></li>
+<li><p>Add the channel as input to the process call</p></li>
+</ul>
+<section id="input-definition-to-the-process-block">
+<h3>Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
+<p>Adding an input definition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+
+    <span class="n">publishDir</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="s1">&#39;copy&#39;</span>
+
+    <span class="nb">input</span><span class="p">:</span>
+        <span class="n">val</span> <span class="n">greeting</span>
+
+    <span class="n">output</span><span class="p">:</span>
+        <span class="n">path</span> <span class="s2">&quot;output.txt&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="edit-the-process-command-to-use-the-input-variable">
+<h3>Edit the process command to use the input variable<a class="headerlink" href="#edit-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
+<p>Changing the code to write the variable in the output file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;$greeting&#39;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</section>
+<section id="create-an-input-channel">
+<h3>Create an input channel<a class="headerlink" href="#create-an-input-channel" title="Link to this heading">#</a></h3>
+<p>This needs to be done in the workflow, we need to set up that input in the workflow part.</p>
+<p>Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">create</span> <span class="n">a</span> <span class="n">channel</span> <span class="k">for</span> <span class="n">inputs</span>
+    <span class="n">greeting_ch</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+
+    <span class="o">//</span> <span class="n">emit</span> <span class="n">a</span> <span class="n">greeting</span>
+    <span class="n">sayHello</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="add-the-channel-as-input-to-the-process-call">
+<h3>Add the channel as input to the process call<a class="headerlink" href="#add-the-channel-as-input-to-the-process-call" title="Link to this heading">#</a></h3>
+<p>Now we need to actually plug our newly created channel into the sayHello() process call.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">emit</span> <span class="n">a</span> <span class="n">greeting</span>
+<span class="n">sayHello</span><span class="p">(</span><span class="n">greeting_ch</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And run the pipeline again!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="relaunch-a-pipeline-without-repeating-steps">
+<h2>Relaunch a pipeline without repeating steps<a class="headerlink" href="#relaunch-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
+<p>A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to</p>
+<p>Run the workflow again with -resume</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span> <span class="o">-</span><span class="n">resume</span>
+</pre></div>
+</div>
+</section>
+<section id="run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">
+<h2>Run Nextflow CLI with Seqera Platform visualizing and capturing logs<a class="headerlink" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs" title="Link to this heading">#</a></h2>
+<p>Run a Nextflow workflow with the addition of the -with-tower command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">hello</span><span class="o">.</span><span class="n">nf</span> <span class="n">capturing</span> <span class="n">logs</span> <span class="ow">in</span> <span class="n">Seqera</span> <span class="n">platform</span>
+<span class="n">nextflow</span> <span class="n">run</span> <span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span> <span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">tower</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -378,6 +563,34 @@ nextflow run hello.nf –greeting ‘Hello Albert’ -resume</p>
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-enviroment-verifications">First enviroment verifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">Input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-the-process-command-to-use-the-input-variable">Edit the process command to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-input-channel">Create an input channel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-channel-as-input-to-the-process-call">Add the channel as input to the process call</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
