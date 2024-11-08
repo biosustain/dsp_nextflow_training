@@ -12,7 +12,7 @@ nextflow info
 
 Let's run our first script, 'Hello World!' script.
 
-```
+```{code-block} groovy
 :caption: hello.nf
 
 #!/usr/bin/env nextflow
