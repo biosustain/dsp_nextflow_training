@@ -10,7 +10,7 @@ nextflow info
 
 Help with nextflow parameters and commands:
 
-```{code-block}groovy
+```{code-block} groovy
 :caption: nextflow help
 nextflow -h
 ```
