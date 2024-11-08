@@ -340,6 +340,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-second-process">Add a second process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
             </nav>
@@ -363,12 +365,19 @@
 </pre></div>
 </div>
 </div>
+<p>Help with nextflow parameters and commands:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">nextflow help</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+</div>
 </section>
 <section id="running-our-first-script">
 <h2>Running our first script<a class="headerlink" href="#running-our-first-script" title="Link to this heading">#</a></h2>
 <p>Let’s run our first script, ‘Hello World!’ script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello-world.nf.</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">hello-world.nf</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">hello-world.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -399,8 +408,8 @@
 </div>
 <p>As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
 <p>Let’s try to run this code in your codespace:</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">Running hello-world.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Running hello-world.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
@@ -583,11 +592,85 @@ e.g. the -resume feature we used earlier.</p>
 </pre></div>
 </div>
 </section>
+<section id="let-s-run-the-script-on-a-batch-of-input-values">
+<h2>Let’s run the script on a batch of input values<a class="headerlink" href="#let-s-run-the-script-on-a-batch-of-input-values" title="Link to this heading">#</a></h2>
+<p>Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
+<span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello_World!&#39;</span><span class="o">,</span><span class="s1">&#39;Bonjour_le_monde!&#39;</span><span class="o">,</span><span class="s1">&#39;Hola_mundo!&#39;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>We want to ensure the output file names will be unique as they will be all written in the same folder. Let’s generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
+
+<span class="w">    </span><span class="nl">input:</span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">greeting</span>
+
+<span class="w">    </span><span class="nl">output:</span>
+<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${greeting}-output.txt&quot;</span>
+
+<span class="w">    </span><span class="nl">script:</span>
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    echo &#39;$greeting&#39; &gt; &#39;$greeting-output.txt&#39;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Let’s run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add <code class="docutils literal notranslate"><span class="pre">-ansi-log</span> <span class="pre">false</span></code> to the command.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">ansi</span><span class="o">-</span><span class="n">log</span><span class="w"> </span><span class="kc">false</span>
+</pre></div>
+</div>
+<p>Check the results folder and the output files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>results
+less<span class="w"> </span>results/Hello_World!-output.txt
+</pre></div>
+</div>
+</section>
+<section id="take-a-file-source-of-input-values-a-sample-file">
+<h2>Take a file source of input values (a sample file)<a class="headerlink" href="#take-a-file-source-of-input-values-a-sample-file" title="Link to this heading">#</a></h2>
+<p>Finally last modification to our script. Usually workflows start from a sample file. In Nextflow this is usually called <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code>. We will create a file called <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> for our example pipeline and save it in a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>data
+<span class="nb">cd</span><span class="w"> </span>data
+vim<span class="w"> </span>greetings.csv
+<span class="c1"># Add the contents of the next code block (type a + add contents + ESC) and save (:wq!)</span>
+<span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:caption:<span class="w"> </span>greetings.csv
+
+Hello,<span class="w"> </span>Bonjour,<span class="w"> </span>Hola
+</pre></div>
+</div>
+<p>Now we need to set up a CLI parameter with a default value pointing to an input file. Let’s put that piece of code by the bginning of our script:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * Pipeline parameters</span>
+<span class="cm"> */</span>
+<span class="n">params</span><span class="o">.</span><span class="na">input_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;data/greetings.csv&quot;</span>
+</pre></div>
+</div>
+<p>We need to construct the channel. We use channel factory, <code class="docutils literal notranslate"><span class="pre">Channel.fromPath()</span></code>, which has some built-in functionality for handling file paths. Furthermore, we’re going to add the <code class="docutils literal notranslate"><span class="pre">.splitCsv()</span></code> operator to make Nextflow parse the file contents accordingly, as well as the <code class="docutils literal notranslate"><span class="pre">.flatten()</span></code> operator to turn the array element produced by <code class="docutils literal notranslate"><span class="pre">.splitCsv()</span></code> into a channel of individual elements.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs from a CSV file</span>
+<span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">input_file</span><span class="o">)</span>
+<span class="w">                     </span><span class="o">.</span><span class="na">splitCsv</span><span class="o">()</span>
+<span class="w">                     </span><span class="o">.</span><span class="na">flatten</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>Ok, lets try this script one last time!</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>You know how to provide the input values to the workflow via a file.</p>
+<p>More generally, you’ve learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.</p>
+</div></blockquote>
+</section>
 <section id="run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">
 <h2>Run Nextflow CLI with Seqera Platform visualizing and capturing logs<a class="headerlink" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs" title="Link to this heading">#</a></h2>
 <p>Run a Nextflow workflow with the addition of the -with-tower command:</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">tower</span>
 </pre></div>
 </div>
@@ -655,6 +738,8 @@ e.g. the -resume feature we used earlier.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-second-process">Add a second process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
   </nav></div>

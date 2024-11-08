@@ -2,12 +2,18 @@
 
 ## First enviroment verifications
 Let's get some information about Nextflow. Print the current version, system and runtime:
+
 ```{code-block} groovy
 :caption: Verify java installation:
-
 nextflow info
 ```
 
+Help with nextflow parameters and commands:
+
+```{code-block} groovy
+:caption: nextflow help
+nextflow -h
+```
 ## Running our first script
 
 Let's run our first script, 'Hello World!' script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello-world.nf.
@@ -241,6 +247,95 @@ workflow {
     convertToUpper(sayHello.out)
 }
 ```
+
+## Let's run the script on a batch of input values
+
+Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
+
+`Channel.of()` factory we've been using is quite happy to accept more than one value.
+
+```groovy
+// create a channel for inputs
+greeting_ch = Channel.of('Hello_World!','Bonjour_le_monde!','Hola_mundo!')
+```
+
+We want to ensure the output file names will be unique as they will be all written in the same folder. Let's generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process:
+
+```groovy
+process sayHello {
+
+    publishDir 'results', mode: 'copy'
+
+    input:
+        val greeting
+
+    output:
+        path "${greeting}-output.txt"
+
+    script:
+    """
+    echo '$greeting' > '$greeting-output.txt'
+    """
+}
+```
+
+Let's run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add `-ansi-log false` to the command.
+
+```groovy
+nextflow run hello-world.nf -ansi-log false
+```
+
+Check the results folder and the output files:
+
+```bash
+tree results
+less results/Hello_World!-output.txt
+```
+## Take a file source of input values (a sample file)
+
+Finally last modification to our script. Usually workflows start from a sample file. In Nextflow this is usually called `samplesheet.csv`. We will create a file called `greetings.csv` for our example pipeline and save it in a folder called `data`.
+
+```bash
+mkdir data
+cd data
+vim greetings.csv
+# Add the contents of the next code block (type a + add contents + ESC) and save (:wq!)
+cd .. 
+```
+
+```bash
+:caption: greetings.csv
+
+Hello, Bonjour, Hola
+```
+
+Now we need to set up a CLI parameter with a default value pointing to an input file. Let's put that piece of code by the bginning of our script:
+
+```groovy
+/*
+ * Pipeline parameters
+ */
+params.input_file = "data/greetings.csv"
+```
+
+We need to construct the channel. We use channel factory, `Channel.fromPath()`, which has some built-in functionality for handling file paths. Furthermore, we're going to add the `.splitCsv()` operator to make Nextflow parse the file contents accordingly, as well as the `.flatten()` operator to turn the array element produced by `.splitCsv()` into a channel of individual elements.
+
+```groovy
+// create a channel for inputs from a CSV file
+greeting_ch = Channel.fromPath(params.input_file)
+                     .splitCsv()
+                     .flatten()
+```
+
+Ok, lets try this script one last time!
+
+```groovy
+nextflow run hello-world.nf
+```
+
+>You know how to provide the input values to the workflow via a file.
+>
+>More generally, you've learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.
 
 ## Run Nextflow CLI with Seqera Platform visualizing and capturing logs
 
