@@ -1,4 +1,4 @@
-#**Nextflow fundamentals training**
+# **Nextflow fundamentals training**
 
 Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?
 
