@@ -1,2 +1,4 @@
 _build
 *.docx
+.nextflow-console.log
+.nextflow.pid
