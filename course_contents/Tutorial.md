@@ -12,7 +12,7 @@ nextflow info
 
 Let's run our first script, 'Hello World!' script.
 
-```nextflow
+```
 :caption: hello.nf
 
 #!/usr/bin/env nextflow
@@ -41,10 +41,11 @@ workflow {
     sayHello()
 }
 ```
+
 As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps.
 
 Let's try to run this code in your codespace:
-```nextflow
+```
 :caption: Running hello-world.nf
 nextflow run hello-world.nf
 ```
@@ -70,24 +71,24 @@ If we look inside the subdirectory, we find the following log files:
 ## Send the output to a file and save it on an specific folder
 
 Let's write the output to a file, we need to change the bash code in the code block
-```nextflow
+```bash
 echo 'Hello World!' > output.txt
 ```
 
 Now in the directives the output get defined as an output file instead of stdout.
-```nextflow
+```
 output:
     path 'output.txt'
 ```
 
 Run the pipeline again!
-```nextflow
+```
 nextflow run hello-world.nf
 ```
 Find the output file in the work directory.
 
 Now let's save the outputfile on an specific folder called 'results'.
-```nextflow
+```
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -97,7 +98,7 @@ process sayHello {
 ```
 
 Run the pipeline again!
-```nextflow
+```
 nextflow run hello-world.nf
 ```
 Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?
@@ -118,7 +119,7 @@ This requires us to make a series of inter-related changes:
 
 Adding an input definition:
 
-```nextflow
+```
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -133,7 +134,7 @@ process sayHello {
 ### Edit the process command to use the input variable
 
 Changing the code to write the variable in the output file:
-```nextflow
+```
 echo '$greeting' > output.txt
 ```
 ### Create an input channel
@@ -142,7 +143,7 @@ This needs to be done in the workflow, we need to set up that input in the workf
 
 Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together
 
-```nextflow
+```
 workflow {
 
     // create a channel for inputs
@@ -157,13 +158,13 @@ workflow {
 
 Now we need to actually plug our newly created channel into the sayHello() process call.
 
-```nextflow
+```
 // emit a greeting
 sayHello(greeting_ch)
 ```
 And run the pipeline again!
 
-```nextflow
+```
 nextflow run hello-world.nf
 ```
 
@@ -172,7 +173,7 @@ nextflow run hello-world.nf
 A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to 
 
 Run the workflow again with -resume
-```nextflow
+```
 nextflow run hello-world.nf -resume
 ```
 
@@ -180,7 +181,7 @@ nextflow run hello-world.nf -resume
 
 Run a Nextflow workflow with the addition of the -with-tower command:
 
-```nextflow
+```
 :caption: hello.nf capturing logs in Seqera platform
 nextflow run nextflow-io/hello -with-tower
 ```
