@@ -2,7 +2,7 @@
 
 ## First enviroment verifications
 Let's get some information about Nextflow. Print the current version, system and runtime:
-```bash
+```{code-block} groovy
 :caption: Verify java installation:
 
 nextflow info
@@ -10,10 +10,10 @@ nextflow info
 
 ## Running our first script
 
-Let's run our first script, 'Hello World!' script.
+Let's run our first script, 'Hello World!' script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello-world.nf.
 
 ```{code-block} groovy
-:caption: hello.nf
+:caption: hello-world.nf
 
 #!/usr/bin/env nextflow
 
@@ -76,7 +76,7 @@ echo 'Hello World!' > output.txt
 ```
 
 Now in the directives the output get defined as an output file instead of stdout.
-```{code-block} groovy
+```groovy
 output:
     path 'output.txt'
 ```
@@ -88,7 +88,7 @@ nextflow run hello-world.nf
 Find the output file in the work directory.
 
 Now let's save the outputfile on an specific folder called 'results'.
-```{code-block} groovy
+```groovy
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -119,7 +119,7 @@ This requires us to make a series of inter-related changes:
 
 Adding an input definition:
 
-```{code-block} groovy
+```groovy
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -143,7 +143,7 @@ This needs to be done in the workflow, we need to set up that input in the workf
 
 Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together
 
-```{code-block} groovy
+```groovy
 workflow {
 
     // create a channel for inputs
@@ -158,7 +158,7 @@ workflow {
 
 Now we need to actually plug our newly created channel into the sayHello() process call.
 
-```{code-block} groovy
+```groovy
 // emit a greeting
 sayHello(greeting_ch)
 ```
@@ -175,6 +175,71 @@ A very useful option of nextflow is the -resume to launch a pipeline again witho
 Run the workflow again with -resume
 ```groovy
 nextflow run hello-world.nf -resume
+```
+
+## Use command line interface (CLI) parameters for inputs
+
+We want to be able to specify the input from the command line, Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.
+
+```groovy
+// create a channel for inputs
+greeting_ch = Channel.of(params.greeting)
+```
+
+Run the pipeline! Let's greet på Dansk!
+
+```groovy
+nextflow run hello-world.nf --greeting 'Hej verden!'
+```
+
+> Notice one thing here, for parameters that apply to a pipeline, we use a double hyphen (--), 
+> whereas we use a single hyphen (-) >for parameters that modify a specific Nextflow setting, 
+> e.g. the -resume feature we used earlier.
+
+## Add a second process
+
+Now we introduce a second process that converts the text to uppercase (all-caps).
+
+Here it is the code:
+
+```groovy
+/*
+ * Use a text replace utility as we will do it in bash to convert the greeting to uppercase
+ */
+process convertToUpper {
+
+    publishDir 'results', mode: 'copy'
+
+    input:
+        path input_file
+
+    // we modify the output file name
+    output:
+        path "UPPER-${input_file}"
+
+    // now we add the bash code to convert the greeting to uppercase
+    script:
+    """
+    cat '$input_file' | tr '[a-z]' '[A-Z]' > UPPER-${input_file}
+    """
+}
+```
+Let's modify the code in the workflow block to accomodate the second process.
+
+The output of the sayHello process is automatically packaged as a channel called `sayHello.out`, so all we need to do is pass that as the input to the convertToUpper process.
+
+```groovy
+workflow {
+
+    // create a channel for inputs
+    greeting_ch = Channel.of(params.greeting)
+
+    // emit a greeting
+    sayHello(greeting_ch)
+
+    // convert the greeting to uppercase
+    convertToUpper(sayHello.out)
+}
 ```
 
 ## Run Nextflow CLI with Seqera Platform visualizing and capturing logs
