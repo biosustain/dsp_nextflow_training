@@ -396,9 +396,11 @@ nextflow<span class="w"> </span>info
 </div>
 <p>As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
 <p>Let’s try to run this code in your codespace:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Running</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
-<span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Running hello-world.nf</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
+</div>
 </div>
 </section>
 <section id="find-the-output-and-logs-in-the-work-directory">
@@ -427,26 +429,26 @@ nextflow<span class="w"> </span>info
 </pre></div>
 </div>
 <p>Now in the directives the output get defined as an output file instead of stdout.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span><span class="p">:</span>
-    <span class="n">path</span> <span class="s1">&#39;output.txt&#39;</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
+<span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;output.txt&#39;</span>
 </pre></div>
 </div>
 <p>Run the pipeline again!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 <p>Find the output file in the work directory.</p>
 <p>Now let’s save the outputfile on an specific folder called ‘results’.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
-    <span class="n">publishDir</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="s1">&#39;copy&#39;</span>
+<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
 
-    <span class="n">output</span><span class="p">:</span>
-        <span class="n">path</span> <span class="s1">&#39;output.txt&#39;</span>
+<span class="w">    </span><span class="nl">output:</span>
+<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;output.txt&#39;</span>
 </pre></div>
 </div>
 <p>Run the pipeline again!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 <p>Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?</p>
@@ -464,22 +466,22 @@ nextflow<span class="w"> </span>info
 <section id="input-definition-to-the-process-block">
 <h3>Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
 <p>Adding an input definition:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">process</span> <span class="n">sayHello</span> <span class="p">{</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
-    <span class="n">publishDir</span> <span class="s1">&#39;results&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="s1">&#39;copy&#39;</span>
+<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
 
-    <span class="nb">input</span><span class="p">:</span>
-        <span class="n">val</span> <span class="n">greeting</span>
+<span class="w">    </span><span class="nl">input:</span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">greeting</span>
 
-    <span class="n">output</span><span class="p">:</span>
-        <span class="n">path</span> <span class="s2">&quot;output.txt&quot;</span>
+<span class="w">    </span><span class="nl">output:</span>
+<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;output.txt&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="edit-the-process-command-to-use-the-input-variable">
 <h3>Edit the process command to use the input variable<a class="headerlink" href="#edit-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
 <p>Changing the code to write the variable in the output file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;$greeting&#39;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;$greeting&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
 </section>
@@ -487,26 +489,26 @@ nextflow<span class="w"> </span>info
 <h3>Create an input channel<a class="headerlink" href="#create-an-input-channel" title="Link to this heading">#</a></h3>
 <p>This needs to be done in the workflow, we need to set up that input in the workflow part.</p>
 <p>Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span> <span class="p">{</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 
-    <span class="o">//</span> <span class="n">create</span> <span class="n">a</span> <span class="n">channel</span> <span class="k">for</span> <span class="n">inputs</span>
-    <span class="n">greeting_ch</span> <span class="o">=</span> <span class="n">Channel</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// create a channel for inputs</span>
+<span class="w">    </span><span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello world!&#39;</span><span class="o">)</span>
 
-    <span class="o">//</span> <span class="n">emit</span> <span class="n">a</span> <span class="n">greeting</span>
-    <span class="n">sayHello</span><span class="p">()</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">// emit a greeting</span>
+<span class="w">    </span><span class="n">sayHello</span><span class="o">()</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 </section>
 <section id="add-the-channel-as-input-to-the-process-call">
 <h3>Add the channel as input to the process call<a class="headerlink" href="#add-the-channel-as-input-to-the-process-call" title="Link to this heading">#</a></h3>
 <p>Now we need to actually plug our newly created channel into the sayHello() process call.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">emit</span> <span class="n">a</span> <span class="n">greeting</span>
-<span class="n">sayHello</span><span class="p">(</span><span class="n">greeting_ch</span><span class="p">)</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// emit a greeting</span>
+<span class="n">sayHello</span><span class="o">(</span><span class="n">greeting_ch</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>And run the pipeline again!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 </section>
@@ -515,16 +517,18 @@ nextflow<span class="w"> </span>info
 <h2>Relaunch a pipeline without repeating steps<a class="headerlink" href="#relaunch-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
 <p>A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to</p>
 <p>Run the workflow again with -resume</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">nf</span> <span class="o">-</span><span class="n">resume</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">resume</span>
 </pre></div>
 </div>
 </section>
 <section id="run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">
 <h2>Run Nextflow CLI with Seqera Platform visualizing and capturing logs<a class="headerlink" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs" title="Link to this heading">#</a></h2>
 <p>Run a Nextflow workflow with the addition of the -with-tower command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">hello</span><span class="o">.</span><span class="n">nf</span> <span class="n">capturing</span> <span class="n">logs</span> <span class="ow">in</span> <span class="n">Seqera</span> <span class="n">platform</span>
-<span class="n">nextflow</span> <span class="n">run</span> <span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span> <span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">tower</span>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">tower</span>
 </pre></div>
+</div>
 </div>
 </section>
 </section>

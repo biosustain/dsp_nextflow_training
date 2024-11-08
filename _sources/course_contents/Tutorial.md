@@ -45,7 +45,7 @@ workflow {
 As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps.
 
 Let's try to run this code in your codespace:
-```
+```{code-block} groovy
 :caption: Running hello-world.nf
 nextflow run hello-world.nf
 ```
@@ -76,19 +76,19 @@ echo 'Hello World!' > output.txt
 ```
 
 Now in the directives the output get defined as an output file instead of stdout.
-```
+```{code-block} groovy
 output:
     path 'output.txt'
 ```
 
 Run the pipeline again!
-```
+```groovy
 nextflow run hello-world.nf
 ```
 Find the output file in the work directory.
 
 Now let's save the outputfile on an specific folder called 'results'.
-```
+```{code-block} groovy
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -98,7 +98,7 @@ process sayHello {
 ```
 
 Run the pipeline again!
-```
+```groovy
 nextflow run hello-world.nf
 ```
 Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?
@@ -119,7 +119,7 @@ This requires us to make a series of inter-related changes:
 
 Adding an input definition:
 
-```
+```{code-block} groovy
 process sayHello {
 
     publishDir 'results', mode: 'copy'
@@ -134,7 +134,7 @@ process sayHello {
 ### Edit the process command to use the input variable
 
 Changing the code to write the variable in the output file:
-```
+```bash
 echo '$greeting' > output.txt
 ```
 ### Create an input channel
@@ -143,7 +143,7 @@ This needs to be done in the workflow, we need to set up that input in the workf
 
 Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together
 
-```
+```{code-block} groovy
 workflow {
 
     // create a channel for inputs
@@ -158,13 +158,13 @@ workflow {
 
 Now we need to actually plug our newly created channel into the sayHello() process call.
 
-```
+```{code-block} groovy
 // emit a greeting
 sayHello(greeting_ch)
 ```
 And run the pipeline again!
 
-```
+```groovy
 nextflow run hello-world.nf
 ```
 
@@ -173,7 +173,7 @@ nextflow run hello-world.nf
 A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to 
 
 Run the workflow again with -resume
-```
+```groovy
 nextflow run hello-world.nf -resume
 ```
 
@@ -181,7 +181,7 @@ nextflow run hello-world.nf -resume
 
 Run a Nextflow workflow with the addition of the -with-tower command:
 
-```
+```{code-block} groovy
 :caption: hello.nf capturing logs in Seqera platform
 nextflow run nextflow-io/hello -with-tower
 ```
