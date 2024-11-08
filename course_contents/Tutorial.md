@@ -247,11 +247,12 @@ workflow {
     convertToUpper(sayHello.out)
 }
 ```
+
 ## Let's run the script on a batch of input values
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
 
-Channel.of() factory we've been using is quite happy to accept more than one value.
+`Channel.of()` factory we've been using is quite happy to accept more than one value.
 
 ```groovy
 // create a channel for inputs
@@ -278,7 +279,7 @@ process sayHello {
 }
 ```
 
-Let's run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add -ansi-log false to the command.
+Let's run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add `-ansi-log false` to the command.
 
 ```groovy
 nextflow run hello-world.nf -ansi-log false
