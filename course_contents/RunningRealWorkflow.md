@@ -16,3 +16,9 @@ In this part of the tutorial you can also see that Nextflow allows the execution
 ```groovy
 nextflow run nextflow-io/rnaseq-nf -with-docker
 ```
+
+In order to avoid to add the option `-with-docker` add the following line in the `nextflow.config` file: 
+```{code-block}groovy
+:caption: nextflow.config
+docker.enabled = true
+```
