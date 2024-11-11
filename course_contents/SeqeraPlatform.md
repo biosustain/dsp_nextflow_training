@@ -12,7 +12,9 @@ Seqera platform can help us by:
 4. ensuring compliance and security providing the framework for reliable and reproducible pipeline execution 
 5. allowing us to optimize and reduce computing and storage costs
 
-First you need to create an account and creat an access token. Later you need to export the token to your system:
+## Run hello.nf script and follow the run in Seqera platform
+
+First you need to create an account and create an access token. Later you need to export the token to your system:
 
 ```bash
 export TOWER_ACCESS_TOKEN=copyandpastetokenfromtheSqeraPlatformhere
