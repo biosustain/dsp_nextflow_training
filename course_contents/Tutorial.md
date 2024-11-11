@@ -16,10 +16,10 @@ nextflow -h
 ```
 ## Running our first script
 
-Let's run our first script, 'Hello World!' script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello-world.nf.
+Let's run our first script, 'Hello World!' script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello.nf.
 
 ```{code-block} groovy
-:caption: hello-world.nf
+:caption: hello.nf
 
 #!/usr/bin/env nextflow
 
@@ -52,8 +52,8 @@ As you can see, a Nextflow script involves two main types of core components: pr
 
 Let's try to run this code in your codespace:
 ```{code-block} groovy
-:caption: Running hello-world.nf
-nextflow run hello-world.nf
+:caption: Running hello.nf
+nextflow run hello.nf
 ```
 
 ## Find the output and logs in the work directory
@@ -89,7 +89,7 @@ output:
 
 Run the pipeline again!
 ```groovy
-nextflow run hello-world.nf
+nextflow run hello.nf
 ```
 Find the output file in the work directory.
 
@@ -105,7 +105,7 @@ process sayHello {
 
 Run the pipeline again!
 ```groovy
-nextflow run hello-world.nf
+nextflow run hello.nf
 ```
 Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?
 
@@ -171,7 +171,7 @@ sayHello(greeting_ch)
 And run the pipeline again!
 
 ```groovy
-nextflow run hello-world.nf
+nextflow run hello.nf
 ```
 
 ## Relaunch a pipeline without repeating steps
@@ -180,7 +180,7 @@ A very useful option of nextflow is the -resume to launch a pipeline again witho
 
 Run the workflow again with -resume
 ```groovy
-nextflow run hello-world.nf -resume
+nextflow run hello.nf -resume
 ```
 
 ## Use command line interface (CLI) parameters for inputs
@@ -195,7 +195,7 @@ greeting_ch = Channel.of(params.greeting)
 Run the pipeline! Let's greet på Dansk!
 
 ```groovy
-nextflow run hello-world.nf --greeting 'Hej verden!'
+nextflow run hello.nf --greeting 'Hej verden!'
 ```
 
 > Notice one thing here, for parameters that apply to a pipeline, we use a double hyphen (--), 
@@ -251,7 +251,7 @@ workflow {
 Let's greet på Dansk igen!
 
 ```groovy
-nextflow run hello-world.nf --greeting 'Hej verden!'
+nextflow run hello.nf --greeting 'Hej verden!'
 ```
 
 ## Let's run the script on a batch of input values
@@ -288,7 +288,7 @@ process sayHello {
 Let's run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add `-ansi-log false` to the command.
 
 ```groovy
-nextflow run hello-world.nf -ansi-log false
+nextflow run hello.nf -ansi-log false
 ```
 
 Check the results folder and the output files:
@@ -336,7 +336,7 @@ greeting_ch = Channel.fromPath(params.input_file)
 Ok, lets try this script one last time!
 
 ```groovy
-nextflow run hello-world.nf
+nextflow run hello.nf
 ```
 
 >You know how to provide the input values to the workflow via a file.
@@ -348,7 +348,7 @@ nextflow run hello-world.nf
 Here you have you first nextflow script in full! Congratulations!
 
 ```{code-block} groovy
-:caption: hello-world.nf
+:caption: hello.nf
 #!/usr/bin/env nextflow
 
 /*
@@ -409,13 +409,4 @@ workflow {
     // convert the greeting to uppercase
     convertToUpper(sayHello.out)
 }
-```
-
-## Run Nextflow CLI with Seqera Platform visualizing and capturing logs
-
-Run a Nextflow workflow with the addition of the -with-tower command:
-
-```{code-block} groovy
-:caption: hello.nf capturing logs in Seqera platform
-nextflow run nextflow-io/hello -with-tower
 ```
