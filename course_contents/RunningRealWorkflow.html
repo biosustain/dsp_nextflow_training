@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="./" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Nextflow fundamentals training &#8212; Nextflow training notes  documentation</title>
+    <title>RNA-Seq workflow &#8212; Nextflow training notes  documentation</title>
   
   
   
@@ -27,29 +27,30 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'course_contents/RunningRealWorkflow';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="author" title="About these documents" href="about.html" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="About" href="about.html" />
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run Nextflow CLI with Seqera Platform visualizing and capturing logs" href="SeqeraPlatform.html" />
+    <link rel="prev" title="Nextflow fundamentals tutorial" href="Tutorial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -71,7 +72,7 @@
   <dialog id="pst-search-dialog">
     
 <form class="bd-search d-flex align-items-center"
-      action="search.html"
+      action="../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -101,8 +102,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -122,7 +121,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="../index.html">
   
   
   
@@ -157,23 +156,23 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course information</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="course_information/Instructions.html">Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="course_information/Location.html">Location</a></li>
-<li class="toctree-l1"><a class="reference internal" href="course_information/Timing.html">Timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Location.html">Location</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Timing.html">Timing</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course contents</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="course_contents/Contents.html">Contents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="course_contents/Tutorial.html">Nextflow fundamentals tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="course_contents/RunningRealWorkflow.html">RNA-Seq workflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="course_contents/SeqeraPlatform.html">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Contents.html">Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Nextflow fundamentals tutorial</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">RNA-Seq workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SeqeraPlatform.html">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Resources</a></li>
 </ul>
 
     </div>
@@ -243,7 +242,7 @@
       
       
       
-      <li><a href="_sources/index.md" target="_blank"
+      <li><a href="../_sources/course_contents/RunningRealWorkflow.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,9 +305,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -319,21 +316,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Nextflow fundamentals training</h1>
+    <h1>RNA-Seq workflow</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-training-notes">Nextflow training notes</a><ul class="nav section-nav flex-column">
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -343,25 +330,21 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="nextflow-fundamentals-training">
-<h1><strong>Nextflow fundamentals training</strong><a class="headerlink" href="#nextflow-fundamentals-training" title="Link to this heading">#</a></h1>
-<p>Is your code reusable? Are your results reproducible? Tired of reinventing the wheel? The thing is that reproducibility and even repeatability is challenging even if you are very careful about keeping the same software parameters and versions. Do you want to learn how to write reusable, reproducible, and scalable pipelines?</p>
-<p><strong>Nextflow</strong> is an advanced workflow management system designed to streamline data-driven processes, especially in the bioinformatics and computational biology fields. It allows users to develop, to execute, and to scale complex workflows across various environments (i.e local machine, Cloud - Azure, AWS, etc… - or HPC). This system is simple and flexible and supports different programming languages (i.e. Python, R, Bash) and containers (e.g Docker, Singularity, etc…).</p>
-<p>Let us introduce you to Nextflow and unlock you a door to a vibrant community building and maintaining standardized reproducible bioinformatics analyses, trainings, hackathons and resources to make your data-driven analysis scalable an reproducible.</p>
-<section id="nextflow-training-notes">
-<h2>Nextflow training notes<a class="headerlink" href="#nextflow-training-notes" title="Link to this heading">#</a></h2>
-<p>Welcome to the notes for the Nextflow training offered to the researchers of DTU - Biosustain and DTU - Bioengineering. This course is half dedicated to explain Nextflow fundamentals and half dedicated to practice Nextflow. The materials are based mostly on <a class="reference external" href="https://training.nextflow.io/" rel="noopener noreferrer" target="_blank">Nextflow trainings portal</a>.</p>
-<p>Please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/about.html" rel="noopener noreferrer" target="_blank">About</a> to know about the course, the Data Science platform and what the course covers, go to Course Information to figure out about the details (<a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Instructions.html" rel="noopener noreferrer" target="_blank">instructions</a>, <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Location.html" rel="noopener noreferrer" target="_blank">location</a> and <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/course_information/Timing.html" rel="noopener noreferrer" target="_blank">timing</a>). Please visit Instructions first before starting the hands-on part. Once you have started your Codespace, please follow course along in the Course contents. To keep learning Nextflow and nf-core pipelines please visit <a class="reference external" href="https://biosustain.github.io/dsp_nextflow_training/resources.html" rel="noopener noreferrer" target="_blank">Resources</a>.</p>
-<p>And remember to ask questions during the course or after the course, you can contact us at <a class="reference external" href="mailto:datascience&#37;&#52;&#48;biosustain&#46;dtu&#46;dk" rel="noopener noreferrer" target="_blank">Data Science platform email</a>.</p>
-<div class="toctree-wrapper compound">
+  <section class="tex2jax_ignore mathjax_ignore" id="rna-seq-workflow">
+<h1>RNA-Seq workflow<a class="headerlink" href="#rna-seq-workflow" title="Link to this heading">#</a></h1>
+<p>Let’s run a commonly used Nextflow pipeline to analise RNA-seq data (<a class="reference external" href="https://nf-co.re/rnaseq/3.17.0" rel="noopener noreferrer" target="_blank">nf-core/rnaseq</a>).</p>
+<p>This pipeline that we will run will cover the following 4 steps using diffrent coomonly used bioinformatics tools:</p>
+<ol class="arabic simple">
+<li><p>Indexes a transcriptome file</p></li>
+<li><p>Quality control of the high throughput sequence data with <strong>FastQC</strong></p></li>
+<li><p>Quantification  of transcripts using <strong>Salmon</strong></p></li>
+<li><p>Creates a <strong>MultiQC</strong> report. MultiQC searches a given directory for analysis logs and compiles a easy-viwing HTML report.</p></li>
+</ol>
+<p>This is based on this part of <a class="reference external" href="https://training.nextflow.io/basic_training/rnaseq_pipeline/" rel="noopener noreferrer" target="_blank">Nextflow tutorial</a>. There you can find the pipeline broken into the different pieces in a collection of 7 different scripts if you want to get into the details.</p>
+<p>In this part of the tutorial you can also see that Nextflow allows the execution of a workflow project directly from a GitHub repository. This <a class="reference external" href="https://github.com/nextflow-io/rnaseq-nf" rel="noopener noreferrer" target="_blank">GitHub repository</a> hosts a version of this tutorial workflow (first 4 steps with some test data). You can run it specifying the project name and executing each process in a Docker container (<code class="docutils literal notranslate"><span class="pre">with-docker</span></code> as parameter). The containers will be automatically downloaded and saved in the folder <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow</span></code>.</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">rnaseq</span><span class="o">-</span><span class="n">nf</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">docker</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-</section>
 </section>
 
 
@@ -375,12 +358,21 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Nextflow fundamentals tutorial</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="about.html"
+       href="SeqeraPlatform.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">About</p>
+        <p class="prev-next-title">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -390,24 +382,6 @@
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-training-notes">Nextflow training notes</a><ul class="nav section-nav flex-column">
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
@@ -452,8 +426,8 @@ By Albert Palleja from DSP
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -49,7 +49,7 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Resources" href="../resources.html" />
+    <link rel="next" title="RNA-Seq workflow" href="RunningRealWorkflow.html" />
     <link rel="prev" title="Contents" href="Contents.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -168,6 +168,8 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Contents.html">Contents</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Nextflow fundamentals tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RunningRealWorkflow.html">RNA-Seq workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SeqeraPlatform.html">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../resources.html">Resources</a></li>
@@ -343,7 +345,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
             </nav>
         </div>
@@ -376,9 +377,9 @@
 </section>
 <section id="running-our-first-script">
 <h2>Running our first script<a class="headerlink" href="#running-our-first-script" title="Link to this heading">#</a></h2>
-<p>Let’s run our first script, ‘Hello World!’ script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello-world.nf.</p>
+<p>Let’s run our first script, ‘Hello World!’ script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello.nf.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">hello-world.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -410,8 +411,8 @@
 <p>As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
 <p>Let’s try to run this code in your codespace:</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Running hello-world.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+<div class="code-block-caption"><span class="caption-text">Running hello.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 </div>
@@ -447,7 +448,7 @@
 </pre></div>
 </div>
 <p>Run the pipeline again!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 <p>Find the output file in the work directory.</p>
@@ -461,7 +462,7 @@
 </pre></div>
 </div>
 <p>Run the pipeline again!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 <p>Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?</p>
@@ -521,7 +522,7 @@
 </pre></div>
 </div>
 <p>And run the pipeline again!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 </section>
@@ -530,7 +531,7 @@
 <h2>Relaunch a pipeline without repeating steps<a class="headerlink" href="#relaunch-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
 <p>A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to</p>
 <p>Run the workflow again with -resume</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">resume</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">resume</span>
 </pre></div>
 </div>
 </section>
@@ -542,7 +543,7 @@
 </pre></div>
 </div>
 <p>Run the pipeline! Let’s greet på Dansk!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
 </pre></div>
 </div>
 <blockquote>
@@ -593,7 +594,7 @@ e.g. the -resume feature we used earlier.</p>
 </pre></div>
 </div>
 <p>Let’s greet på Dansk igen!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
 </pre></div>
 </div>
 </section>
@@ -624,7 +625,7 @@ e.g. the -resume feature we used earlier.</p>
 </pre></div>
 </div>
 <p>Let’s run the script again. But hang on, to expand the logging to display one line per process call to have a closer look to what is going on, just add <code class="docutils literal notranslate"><span class="pre">-ansi-log</span> <span class="pre">false</span></code> to the command.</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">ansi</span><span class="o">-</span><span class="n">log</span><span class="w"> </span><span class="kc">false</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">ansi</span><span class="o">-</span><span class="n">log</span><span class="w"> </span><span class="kc">false</span>
 </pre></div>
 </div>
 <p>Check the results folder and the output files:</p>
@@ -664,7 +665,7 @@ vim<span class="w"> </span>greetings.csv
 </pre></div>
 </div>
 <p>Ok, lets try this script one last time!</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="na">nf</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 <blockquote>
@@ -676,7 +677,7 @@ vim<span class="w"> </span>greetings.csv
 <h2>Full script<a class="headerlink" href="#full-script" title="Link to this heading">#</a></h2>
 <p>Here you have you first nextflow script in full! Congratulations!</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">hello-world.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -741,16 +742,6 @@ vim<span class="w"> </span>greetings.csv
 </div>
 </div>
 </section>
-<section id="run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">
-<h2>Run Nextflow CLI with Seqera Platform visualizing and capturing logs<a class="headerlink" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs" title="Link to this heading">#</a></h2>
-<p>Run a Nextflow workflow with the addition of the -with-tower command:</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">hello</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">tower</span>
-</pre></div>
-</div>
-</div>
-</section>
 </section>
 
 
@@ -774,11 +765,11 @@ vim<span class="w"> </span>greetings.csv
       </div>
     </a>
     <a class="right-next"
-       href="../resources.html"
+       href="RunningRealWorkflow.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Resources</p>
+        <p class="prev-next-title">RNA-Seq workflow</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -816,7 +807,6 @@ vim<span class="w"> </span>greetings.csv
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-nextflow-cli-with-seqera-platform-visualizing-and-capturing-logs">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
 </ul>
   </nav></div>
 

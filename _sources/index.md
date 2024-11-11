@@ -38,6 +38,8 @@ course_information/Timing
 
 course_contents/Contents
 course_contents/Tutorial
+course_contents/RunningRealWorkflow
+course_contents/SeqeraPlatform
 ```
 
 ```{toctree}
