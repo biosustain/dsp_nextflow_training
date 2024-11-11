@@ -2,6 +2,10 @@
 
 Here we are sharing some resources to keep learning Nextflow language or nf-core pipelines, and keep updated of Nextflow events. We have gone through some of these resources on our own to lean or get inspiration to prepare these course contents. They are also good to once in a while refresh some of the knowledge or learn something new.
 
+## Local installation
+
+Please visit <https://training.nextflow.io/envsetup/02_local/>
+
 ## Training material
 
 Nextflow training portal (different levels): <https://training.nextflow.io/>
