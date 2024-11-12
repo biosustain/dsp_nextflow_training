@@ -345,6 +345,13 @@
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">rnaseq</span><span class="o">-</span><span class="n">nf</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">docker</span>
 </pre></div>
 </div>
+<p>In order to avoid to add the option <code class="docutils literal notranslate"><span class="pre">-with-docker</span></code> add the following line in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+</div>
+</div>
 </section>
 
 
