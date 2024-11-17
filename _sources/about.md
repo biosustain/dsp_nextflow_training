@@ -1,6 +1,5 @@
 # About
 
-
 ## The course 
 At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at DTU - Biosustain. To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop the workflows based on Groovy, allowing for easy integration with existing software and tools. Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. Nextflow has a strong community in the bioinformatics field and is supported by the nf-core project, which provides a large repository of pre-built, community-maintained bioinformatics pipelines that are optimized for Nextflow. For these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU-Biosustain.
 
