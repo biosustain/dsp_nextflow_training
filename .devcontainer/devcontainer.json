@@ -4,7 +4,7 @@
   "runArgs": [
     "--volume=/var/run/docker.sock:/var/run/docker.sock"  // Mounted the Docker socket from host machine
   ],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/ && sudo apt-get install -y docker.io && sudo usermod -aG docker $(whoami)", 
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/ && sudo apt-get install -y docker.io && sudo groupadd docker || true && sudo usermod -aG docker $(whoami) && sudo chown $USER:docker /var/run/docker.sock && exec su -l $(whoami)", 
   // Updated packages, installed java 11, nextflow, changed permissions for nextflow to make it executable and moved it to /usr/local/bin
   // Also installed Docker and added the Codespace user to the Docker group, enabling the user to run Docker commands
   "customizations": {
