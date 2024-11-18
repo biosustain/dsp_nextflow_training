@@ -35,3 +35,50 @@ nextflow info
 
 docker --version
 ```
+
+## Local installation
+
+Some requirements will be different depending on your local machine operation system.
+
+### Requirements
+
+Requirements are:
+- Bash (with wget or curl installed)
+- Java (up to 21 seems to be tested)
+- Git
+- Docker (not needed for the first script that you will write but needed in general for Nextflow)
+
+Good to have:
+If you are using it in Azure it is good to have you Azure Batch, Azure Storage, Virtual machine and network where all these features are seating configured together with your managed identities (credentials). Ask the RDM team for that.
+
+### Download and install Nextflow
+
+Execute the following in your terminal:
+```bash
+wget -qO- https://get.nextflow.io | bash
+```
+
+If you do not have wget but have curl, you could use the curl command:
+```bash
+curl -s https://get.nextflow.io | bash
+```
+
+Next, we make sure that the downloaded binary is executable:
+```bash
+chmod +x nextflow
+```
+
+Finally, ensure the nextflow executable is in your $PATH. The executable could be in `/usr/local/bin`, `/bin/`, etc...
+```bash
+sudo mv nextflow /usr/local/bin/
+```
+
+> Notice that these are the commands that we used in our devcontainer.json file to build our codespace.
+
+### Docker
+Please to install Docker follow this [link](https://docs.docker.com/get-started/get-docker/) and download the version that matches you OS.
+
+### Nextflow in Windows
+
+While Nextflow can run natively on Windows, its primary development and optimization are for Unix-based systems (Linux and macOS). Windows support is provided but may not be as smooth or feature-complete. We recommend to install Windows Subsystem for Linux (WSL). WSL allows you to run a Linux environment on Windows providing access to Unix-like tools and environments, 
+enabling compatibility with Docker for containerized workflows, and resolving many possible compatibility issues related to the file system and paths.
