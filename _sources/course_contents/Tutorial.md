@@ -1,22 +1,10 @@
 # Nextflow fundamentals tutorial
 
-## First enviroment verifications
-Let's get some information about Nextflow. Print the current version, system and runtime:
+Our first script is going to be the typical `"Hello World!"` script to start learning any programming language. Let's get hands on the code!
 
-```{code-block} groovy
-:caption: Verify java installation:
-nextflow info
-```
-
-Help with nextflow parameters and commands:
-
-```{code-block} groovy
-:caption: nextflow help
-nextflow -h
-```
 ## Running our first script
 
-Let's run our first script, 'Hello World!' script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello.nf.
+Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal `code hello.nf` (nf is the extension for Nextflow scripts). Then copy / paste the following code. Save the file as hello.nf.
 
 ```{code-block} groovy
 :caption: hello.nf
@@ -29,7 +17,6 @@ Let's run our first script, 'Hello World!' script. Open a new file in VSCode in 
 // A process
 process sayHello {
 
-    //directives
     output:
         stdout
     
@@ -48,24 +35,29 @@ workflow {
 }
 ```
 
-As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps.
+Now let's have a look to the code. A Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (in our case printing 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps. For now we only have `output` and `code block` in the process and only one process is called in the workflow block (`sayHello()`).
 
-Let's try to run this code in your codespace:
+Let's try to run your first Nextflow script in your codespace:
+
 ```{code-block} groovy
 :caption: Running hello.nf
 nextflow run hello.nf
 ```
 
+How do you feel? Success? :)
+
 ## Find the output and logs in the work directory
 
-The first time you run a pipeline it will create a new directory called 'work'. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.
+The first time you run a pipeline it will create a new directory called `work`. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.
 
-To see the work folder structure
+To find which is the folder that you have to loof for look at the run summary of your pipeline, then do an `ls work/<hexadecimal code here>`.
+
+To see the entire work folder structure use `tree`:
 ```bash
 tree -a work
 ```
 
-If we look inside the subdirectory, we find the following log files:
+If we look inside each subdirectory, we find the following log files:
 
 > - .command.begin: Metadata related to the beginning of the execution of the process task
 > - .command.err: Error messages (stderr) emitted by the process task
@@ -73,6 +65,8 @@ If we look inside the subdirectory, we find the following log files:
 > - .command.out: Regular output (stdout) by the process task
 > - .command.sh: The command that was run by the process task call
 > - .exitcode: The exit code resulting from the command
+
+You may have also noticed that you get some .nextflow.log files with all general log info compiled. These ones accumulate until 10 files. To see the one corresponding to the latest run do a `less .nextflow.log`.
 
 ## Send the output to a file and save it on an specific folder
 
@@ -340,7 +334,6 @@ nextflow run hello.nf
 ```
 
 >You know how to provide the input values to the workflow via a file.
->
 >More generally, you've learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.
 
 ## Full script

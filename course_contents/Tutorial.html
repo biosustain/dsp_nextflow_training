@@ -328,7 +328,6 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-enviroment-verifications">First enviroment verifications</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
@@ -358,28 +357,12 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="nextflow-fundamentals-tutorial">
 <h1>Nextflow fundamentals tutorial<a class="headerlink" href="#nextflow-fundamentals-tutorial" title="Link to this heading">#</a></h1>
-<section id="first-enviroment-verifications">
-<h2>First enviroment verifications<a class="headerlink" href="#first-enviroment-verifications" title="Link to this heading">#</a></h2>
-<p>Let’s get some information about Nextflow. Print the current version, system and runtime:</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">Verify java installation:</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">info</span>
-</pre></div>
-</div>
-</div>
-<p>Help with nextflow parameters and commands:</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">nextflow help</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="o">-</span><span class="n">h</span>
-</pre></div>
-</div>
-</div>
-</section>
+<p>Our first script is going to be the typical <code class="docutils literal notranslate"><span class="pre">&quot;Hello</span> <span class="pre">World!&quot;</span></code> script to start learning any programming language. Let’s get hands on the code!</p>
 <section id="running-our-first-script">
 <h2>Running our first script<a class="headerlink" href="#running-our-first-script" title="Link to this heading">#</a></h2>
-<p>Let’s run our first script, ‘Hello World!’ script. Open a new file in VSCode in the codespace and copy paste the following code. Save it as hello.nf.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<p>Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">hello.nf</span></code> (nf is the extension for Nextflow scripts). Then copy / paste the following code. Save the file as hello.nf.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -388,7 +371,6 @@
 <span class="c1">// A process</span>
 <span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="c1">//directives</span>
 <span class="w">    </span><span class="nl">output:</span>
 <span class="w">        </span><span class="n">stdout</span>
 <span class="w">    </span>
@@ -408,23 +390,25 @@
 </pre></div>
 </div>
 </div>
-<p>As you can see, a Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (print ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
-<p>Let’s try to run this code in your codespace:</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">Running hello.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<p>Now let’s have a look to the code. A Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (in our case printing ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps. For now we only have <code class="docutils literal notranslate"><span class="pre">output</span></code> and <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">block</span></code> in the process and only one process is called in the workflow block (<code class="docutils literal notranslate"><span class="pre">sayHello()</span></code>).</p>
+<p>Let’s try to run your first Nextflow script in your codespace:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Running hello.nf</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
 </div>
+<p>How do you feel? Success? :)</p>
 </section>
 <section id="find-the-output-and-logs-in-the-work-directory">
 <h2>Find the output and logs in the work directory<a class="headerlink" href="#find-the-output-and-logs-in-the-work-directory" title="Link to this heading">#</a></h2>
-<p>The first time you run a pipeline it will create a new directory called ‘work’. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.</p>
-<p>To see the work folder structure</p>
+<p>The first time you run a pipeline it will create a new directory called <code class="docutils literal notranslate"><span class="pre">work</span></code>. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.</p>
+<p>To find which is the folder that you have to loof for look at the run summary of your pipeline, then do an <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">work/&lt;hexadecimal</span> <span class="pre">code</span> <span class="pre">here&gt;</span></code>.</p>
+<p>To see the entire work folder structure use <code class="docutils literal notranslate"><span class="pre">tree</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-a<span class="w"> </span>work
 </pre></div>
 </div>
-<p>If we look inside the subdirectory, we find the following log files:</p>
+<p>If we look inside each subdirectory, we find the following log files:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>.command.begin: Metadata related to the beginning of the execution of the process task</p></li>
@@ -435,6 +419,7 @@
 <li><p>.exitcode: The exit code resulting from the command</p></li>
 </ul>
 </div></blockquote>
+<p>You may have also noticed that you get some .nextflow.log files with all general log info compiled. These ones accumulate until 10 files. To see the one corresponding to the latest run do a <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">.nextflow.log</span></code>.</p>
 </section>
 <section id="send-the-output-to-a-file-and-save-it-on-an-specific-folder">
 <h2>Send the output to a file and save it on an specific folder<a class="headerlink" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder" title="Link to this heading">#</a></h2>
@@ -644,8 +629,8 @@ vim<span class="w"> </span>greetings.csv
 <span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
 </pre></div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">greetings.csv</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">greetings.csv</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Hello,Bonjour,Hola,Hej
 </pre></div>
 </div>
@@ -669,15 +654,15 @@ vim<span class="w"> </span>greetings.csv
 </pre></div>
 </div>
 <blockquote>
-<div><p>You know how to provide the input values to the workflow via a file.</p>
-<p>More generally, you’ve learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.</p>
+<div><p>You know how to provide the input values to the workflow via a file.
+More generally, you’ve learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.</p>
 </div></blockquote>
 </section>
 <section id="full-script">
 <h2>Full script<a class="headerlink" href="#full-script" title="Link to this heading">#</a></h2>
 <p>Here you have you first nextflow script in full! Congratulations!</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -790,7 +775,6 @@ vim<span class="w"> </span>greetings.csv
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-enviroment-verifications">First enviroment verifications</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
