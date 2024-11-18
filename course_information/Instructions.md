@@ -10,7 +10,7 @@ If you want to open directly a GitHub codespace for this specific repository cli
 To learn more about Github codespaces go [here](https://github.com/features/codespaces)
 
 ## Initial checks
-Now, Nextflow should be ready to run in your GitHub Codespace environment! Let's check that you have a fully functional environment.
+Now, Nextflow should be ready to run in your GitHub Codespace environment! Let's check that you have a fully functional environment with Nextflow, java and Docker properly installed
 
 ```{code-block} bash
 :caption: Verify java installation:
@@ -25,7 +25,7 @@ nextflow -v
 ```
 
 ```{code-block} bash
-:caption: Nextflow information:
+:caption: Nextflow current version, system and runtime:
 
 nextflow info
 ```
@@ -35,6 +35,8 @@ nextflow info
 
 docker --version
 ```
+
+If everything went weel you have a fully functional Nextflow environment for today. Rememeber that we are going to use VS code as our editor to write code and handle our files.
 
 ## Local installation
 

@@ -4,7 +4,7 @@
   "runArgs": [
     "--volume=/var/run/docker.sock:/var/run/docker.sock"  // Mounted the Docker socket from host machine
   ],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/ && sudo apt-get install -y docker.io && sudo groupadd docker || true && sudo usermod -aG docker $(whoami) && sudo chown $(whoami):docker /var/run/docker.sock", 
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/ && sudo apt-get install -y docker.io && sudo groupadd docker || true && sudo usermod -aG docker $USER && sudo chown $USER:docker /var/run/docker.sock", 
   // Updated packages, 
   // installed java 11, 
   // installed nextflow, 
