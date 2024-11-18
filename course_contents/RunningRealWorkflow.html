@@ -341,17 +341,44 @@
 <li><p>Creates a <strong>MultiQC</strong> report. MultiQC searches a given directory for analysis logs and compiles a easy-viwing HTML report.</p></li>
 </ol>
 <p>This is based on this part of <a class="reference external" href="https://training.nextflow.io/basic_training/rnaseq_pipeline/" rel="noopener noreferrer" target="_blank">Nextflow tutorial</a>. There you can find the pipeline broken into the different pieces in a collection of 7 different scripts if you want to get into the details.</p>
-<p>In this part of the tutorial you can also see that Nextflow allows the execution of a workflow project directly from a GitHub repository. This <a class="reference external" href="https://github.com/nextflow-io/rnaseq-nf" rel="noopener noreferrer" target="_blank">GitHub repository</a> hosts a version of this tutorial workflow (first 4 steps with some test data). You can run it specifying the project name and executing each process in a Docker container (<code class="docutils literal notranslate"><span class="pre">with-docker</span></code> as parameter). The containers will be automatically downloaded and saved in the folder <code class="docutils literal notranslate"><span class="pre">$HOME/.nextflow</span></code>.</p>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">nextflow</span><span class="o">-</span><span class="n">io</span><span class="o">/</span><span class="n">rnaseq</span><span class="o">-</span><span class="n">nf</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">docker</span>
+<p>To be able to run this pipeline we will clone the training repository from Nextflow training materials in github. Here you can enjoy the hello training, their fundamentals training based on the rnaseq pipeline and the advanced training with all data, files and scripts needed.</p>
+<p>First cloning with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nextflow-io/training.git
 </pre></div>
 </div>
-<p>In order to avoid to add the option <code class="docutils literal notranslate"><span class="pre">-with-docker</span></code> add the following line in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file:</p>
+<p>And then move to <code class="docutils literal notranslate"><span class="pre">training/nf-training</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>training/nf-training
+</pre></div>
+</div>
+<p>Here there are a colloection of 7 scripts where the rnaseq pipeline (a small version of it) is broken into the different parts. It is great training material and I recommend you go through if you want to keep learning Nextflow. For today we will run the last script that contains all the parts we want to run (Indexing transcriptome file, fastQC, Salmon for quantification and MultiQC to see a final report of our run).</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-text">Running rnaseq pipeline (scrip7.nf)</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">script7</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">docker</span>
+</pre></div>
+</div>
+</div>
+<p>After few minutes you should have run succesfully your first rnaseq pipeline! Time to check your results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-a<span class="w"> </span>results
+tree<span class="w"> </span>-a<span class="w"> </span>work
+ls<span class="w"> </span>results
+</pre></div>
+</div>
+<p>Let’s have a look to an interesting report that we get summarizing the different steps of the pipeline. For that you may jave to go to Extensions icon in VSCode and install Live Preview. And then:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>results/multiqc_report.html
+</pre></div>
+</div>
+<p>Then on the top right corner look for the icon <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">Preview</span></code>.</p>
+<p>MultiQC report aggregates results from the pipeline steps (from all the softwares that is compatible with -  quite many). In this case it shows some general statistics, fastQC results, and the Quantification information.</p>
+<p>In order to avoid to add the option <code class="docutils literal notranslate"><span class="pre">-with-docker</span></code> add the following line in the <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> file:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">.</span><span class="na">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 </pre></div>
 </div>
 </div>
+<blockquote>
+<div><p>Remember that I mentioned in the theoretical part that usually nextflow script are run with the minimal environment settings specified in a config file (<code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code>) placed in the same folder where you are running your main script (<code class="docutils literal notranslate"><span class="pre">main.nf</span></code>).</p>
+</div></blockquote>
 </section>
 
 

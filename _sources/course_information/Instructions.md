@@ -36,7 +36,7 @@ nextflow info
 docker --version
 ```
 
-If everything went weel you have a fully functional Nextflow environment for today. Rememeber that we are going to use VS code as our editor to write code and handle our files.
+If everything went well you have a fully functional Nextflow environment for today. Rememeber that we are going to use VS code as our editor to write code and handle our files.
 
 ## Local installation
 
