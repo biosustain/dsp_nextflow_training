@@ -330,6 +330,13 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-the-nextflow-environment">Opening the Nextflow environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-checks">Initial checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-installation">Local installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-and-install-nextflow">Download and install Nextflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-in-windows">Nextflow in Windows</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -377,6 +384,53 @@
 </pre></div>
 </div>
 </div>
+</section>
+<section id="local-installation">
+<h2>Local installation<a class="headerlink" href="#local-installation" title="Link to this heading">#</a></h2>
+<p>Some requirements will be different depending on your local machine operation system.</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h3>
+<p>Requirements are:</p>
+<ul class="simple">
+<li><p>Bash (with wget or curl installed)</p></li>
+<li><p>Java (up to 21 seems to be tested)</p></li>
+<li><p>Git</p></li>
+<li><p>Docker (not needed for the first script that you will write but needed in general for Nextflow)</p></li>
+</ul>
+<p>Good to have:
+If you are using it in Azure it is good to have you Azure Batch, Azure Storage, Virtual machine and network where all these features are seating configured together with your managed identities (credentials). Ask the RDM team for that.</p>
+</section>
+<section id="download-and-install-nextflow">
+<h3>Download and install Nextflow<a class="headerlink" href="#download-and-install-nextflow" title="Link to this heading">#</a></h3>
+<p>Execute the following in your terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-qO-<span class="w"> </span>https://get.nextflow.io<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</pre></div>
+</div>
+<p>If you do not have wget but have curl, you could use the curl command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span>https://get.nextflow.io<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</pre></div>
+</div>
+<p>Next, we make sure that the downloaded binary is executable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>nextflow
+</pre></div>
+</div>
+<p>Finally, ensure the nextflow executable is in your $PATH. The executable could be in <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code>, <code class="docutils literal notranslate"><span class="pre">/bin/</span></code>, etc…</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mv<span class="w"> </span>nextflow<span class="w"> </span>/usr/local/bin/
+</pre></div>
+</div>
+<blockquote>
+<div><p>Notice that these are the commands that we used in our devcontainer.json file to build our codespace.</p>
+</div></blockquote>
+</section>
+<section id="docker">
+<h3>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h3>
+<p>Please to install Docker follow this <a class="reference external" href="https://docs.docker.com/get-started/get-docker/" rel="noopener noreferrer" target="_blank">link</a> and download the version that matches you OS.</p>
+</section>
+<section id="nextflow-in-windows">
+<h3>Nextflow in Windows<a class="headerlink" href="#nextflow-in-windows" title="Link to this heading">#</a></h3>
+<p>While Nextflow can run natively on Windows, its primary development and optimization are for Unix-based systems (Linux and macOS). Windows support is provided but may not be as smooth or feature-complete. We recommend to install Windows Subsystem for Linux (WSL). WSL allows you to run a Linux environment on Windows providing access to Unix-like tools and environments,
+enabling compatibility with Docker for containerized workflows, and resolving many possible compatibility issues related to the file system and paths.</p>
+</section>
 </section>
 </section>
 
@@ -428,6 +482,13 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opening-the-nextflow-environment">Opening the Nextflow environment</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-checks">Initial checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-installation">Local installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-and-install-nextflow">Download and install Nextflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nextflow-in-windows">Nextflow in Windows</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
