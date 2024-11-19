@@ -332,17 +332,18 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">Input definition to the process block:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-the-process-command-to-use-the-input-variable">Edit the process command to use the input variable</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-input-channel">Create an input channel</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-channel-as-input-to-the-process-call">Add the channel as input to the process call</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">1. Input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-command-to-use-the-input-variable">2. Editing the process command to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel">3. Creating an input channel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call">4. Adding the channel as input to the process call</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-second-process">Add a second process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-add-a-second-process-to-our-pipeline">Let’s add a second process to our pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
 </ul>
             </nav>
@@ -377,7 +378,7 @@
 <span class="w">    </span><span class="c1">// code block (here using bash)</span>
 <span class="w">    </span><span class="nl">script:</span><span class="w"> </span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &#39;Hello World!&#39;</span>
+<span class="s2">    echo &quot;$USER says Hello World!&quot;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 
@@ -403,11 +404,12 @@
 <section id="find-the-output-and-logs-in-the-work-directory">
 <h2>Find the output and logs in the work directory<a class="headerlink" href="#find-the-output-and-logs-in-the-work-directory" title="Link to this heading">#</a></h2>
 <p>The first time you run a pipeline it will create a new directory called <code class="docutils literal notranslate"><span class="pre">work</span></code>. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.</p>
-<p>To find which is the folder that you have to loof for look at the run summary of your pipeline, then do an <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">work/&lt;hexadecimal</span> <span class="pre">code</span> <span class="pre">here&gt;</span></code>.</p>
+<p>To find which is the folder that you have to look for check at the run summary of your pipeline, then do an <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">work/&lt;hexadecimal</span> <span class="pre">code</span> <span class="pre">here&gt;</span></code>.</p>
 <p>To see the entire work folder structure use <code class="docutils literal notranslate"><span class="pre">tree</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-a<span class="w"> </span>work
 </pre></div>
 </div>
+<p>Spend some time identifying all the files produced in your first script.</p>
 <p>If we look inside each subdirectory, we find the following log files:</p>
 <blockquote>
 <div><ul class="simple">
@@ -419,25 +421,31 @@
 <li><p>.exitcode: The exit code resulting from the command</p></li>
 </ul>
 </div></blockquote>
+<p>As you wrote your results in the standard output where do you think you will find your greeting message?</p>
 <p>You may have also noticed that you get some .nextflow.log files with all general log info compiled. These ones accumulate until 10 files. To see the one corresponding to the latest run do a <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">.nextflow.log</span></code>.</p>
 </section>
 <section id="send-the-output-to-a-file-and-save-it-on-an-specific-folder">
 <h2>Send the output to a file and save it on an specific folder<a class="headerlink" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder" title="Link to this heading">#</a></h2>
-<p>Let’s write the output to a file, we need to change the bash code in the code block</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
-</pre></div>
-</div>
-<p>Now in the directives the output get defined as an output file instead of stdout.</p>
+<p>Let’s write the output to a file, we need to define the output in a different way and change the bash code in the code block.</p>
+<p>Now in the output gets defined as a file instead of stdout.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
 <span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;output.txt&#39;</span>
+</pre></div>
+</div>
+<p>We adapt the code block:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
 <p>Run the pipeline again!</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
-<p>Find the output file in the work directory.</p>
-<p>Now let’s save the outputfile on an specific folder called ‘results’.</p>
+<p>Now go and find the output file in the <code class="docutils literal notranslate"><span class="pre">work</span></code> directory.</p>
+<p>Now let’s save the outputfile on an specific folder called <code class="docutils literal notranslate"><span class="pre">results</span></code>. We will do that by specifying in the directives the results folder using the directive <code class="docutils literal notranslate"><span class="pre">publishDir</span></code>.</p>
+<blockquote>
+<div><p>Directives are optional settings that affect the execution of the current process.
+The <code class="docutils literal notranslate"><span class="pre">path</span></code> qualifier allows you to provide input files to the process execution context.</p>
+</div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
@@ -450,21 +458,24 @@
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
-<p>Was the output file saved in there? Is it the same or different than the output file saved in the corresponding work directory?</p>
+<p>Were was the output file saved? Is it the same or different than the output file saved in the corresponding work directory? Notice the <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">'copy'</span></code>.</p>
 </section>
 <section id="add-in-variable-inputs-using-a-channel">
 <h2>Add in variable inputs using a channel<a class="headerlink" href="#add-in-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
-<p>Let’s add some more flexibility by using an input variable, so that we can easily change the greeting.</p>
-<p>This requires us to make a series of inter-related changes:</p>
-<ul class="simple">
-<li><p>Tell the process about expected variable inputs using the input: block</p></li>
+<p>Let’s add some more flexibility by using an input variable, so that we can easily change the greeting message.</p>
+<p>This requires us to make few changes:</p>
+<ol class="arabic simple">
+<li><p>Tell the process about expected variable inputs using the input block</p></li>
 <li><p>Edit the process to use the input</p></li>
 <li><p>Create a channel to pass input to the process (more on that in a minute)</p></li>
 <li><p>Add the channel as input to the process call</p></li>
-</ul>
+</ol>
 <section id="input-definition-to-the-process-block">
-<h3>Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
-<p>Adding an input definition:</p>
+<h3>1. Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
+<p>Adding an input definition.</p>
+<blockquote>
+<div><p>The <code class="docutils literal notranslate"><span class="pre">val</span></code> qualifier accepts any data type. It can be accessed in the process script by using the specified input name.</p>
+</div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
@@ -477,30 +488,30 @@
 </pre></div>
 </div>
 </section>
-<section id="edit-the-process-command-to-use-the-input-variable">
-<h3>Edit the process command to use the input variable<a class="headerlink" href="#edit-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
-<p>Changing the code to write the variable in the output file:</p>
+<section id="editing-the-process-command-to-use-the-input-variable">
+<h3>2. Editing the process command to use the input variable<a class="headerlink" href="#editing-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
+<p>Changing the code to write the variable (containing our grreting) in the output file:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;$greeting&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
 </section>
-<section id="create-an-input-channel">
-<h3>Create an input channel<a class="headerlink" href="#create-an-input-channel" title="Link to this heading">#</a></h3>
-<p>This needs to be done in the workflow, we need to set up that input in the workflow part.</p>
+<section id="creating-an-input-channel">
+<h3>3. Creating an input channel<a class="headerlink" href="#creating-an-input-channel" title="Link to this heading">#</a></h3>
+<p>This needs to be done in the workflow block.</p>
 <p>Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="c1">// create a channel for inputs</span>
+<span class="w">    </span><span class="c1">// creating a channel for inputs</span>
 <span class="w">    </span><span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello world!&#39;</span><span class="o">)</span>
 
-<span class="w">    </span><span class="c1">// emit a greeting</span>
+<span class="w">    </span><span class="c1">// emitting a greeting</span>
 <span class="w">    </span><span class="n">sayHello</span><span class="o">()</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 </section>
-<section id="add-the-channel-as-input-to-the-process-call">
-<h3>Add the channel as input to the process call<a class="headerlink" href="#add-the-channel-as-input-to-the-process-call" title="Link to this heading">#</a></h3>
+<section id="adding-the-channel-as-input-to-the-process-call">
+<h3>4. Adding the channel as input to the process call<a class="headerlink" href="#adding-the-channel-as-input-to-the-process-call" title="Link to this heading">#</a></h3>
 <p>Now we need to actually plug our newly created channel into the sayHello() process call.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// emit a greeting</span>
 <span class="n">sayHello</span><span class="o">(</span><span class="n">greeting_ch</span><span class="o">)</span>
@@ -514,15 +525,21 @@
 </section>
 <section id="relaunch-a-pipeline-without-repeating-steps">
 <h2>Relaunch a pipeline without repeating steps<a class="headerlink" href="#relaunch-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
-<p>A very useful option of nextflow is the -resume to launch a pipeline again without repeating identical steps. Very interesting if your pipeline had an error in one of the processes and you want to</p>
-<p>Run the workflow again with -resume</p>
+<blockquote>
+<div><p>One of the core features of Nextflow is the ability to cache task executions and re-use them in subsequent runs to minimize duplicate work. Reentrancy is useful both for recovering from errors and for iteratively when developing a pipeline.</p>
+</div></blockquote>
+<p>In other words use the <code class="docutils literal notranslate"><span class="pre">-resume</span></code> option to run a pipeline again without repeating the processes that have already been completed without errors.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">resume</span>
 </pre></div>
 </div>
+<p>What happened? Did your <code class="docutils literal notranslate"><span class="pre">sayHello()</span></code> process run again?</p>
 </section>
 <section id="use-command-line-interface-cli-parameters-for-inputs">
 <h2>Use command line interface (CLI) parameters for inputs<a class="headerlink" href="#use-command-line-interface-cli-parameters-for-inputs" title="Link to this heading">#</a></h2>
-<p>We want to be able to specify the input from the command line, Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.</p>
+<blockquote>
+<div><p>Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.</p>
+</div></blockquote>
+<p>So try to specify the input from the command line. For that you need to modify how the channel is created to get now the ingreeting value from the CLI in the workflow block.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
 <span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">greeting</span><span class="o">)</span>
 </pre></div>
@@ -533,32 +550,37 @@
 </div>
 <blockquote>
 <div><p>Notice one thing here, for parameters that apply to a pipeline, we use a double hyphen (–),
-whereas we use a single hyphen (-) &gt;for parameters that modify a specific Nextflow setting,
+whereas we use a single hyphen (-) for parameters that modify a specific Nextflow setting,
 e.g. the -resume feature we used earlier.</p>
 </div></blockquote>
 </section>
-<section id="add-a-second-process">
-<h2>Add a second process<a class="headerlink" href="#add-a-second-process" title="Link to this heading">#</a></h2>
-<p>Now we introduce a second process that converts the text to uppercase (all-caps).</p>
-<p>Here it is the code:</p>
+<section id="let-s-add-a-second-process-to-our-pipeline">
+<h2>Let’s add a second process to our pipeline<a class="headerlink" href="#let-s-add-a-second-process-to-our-pipeline" title="Link to this heading">#</a></h2>
+<p>Now we introduce a second process that converts the text to uppercase.</p>
+<p>Here it is just an scheme for the code:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Use a text replace utility as we will do it in bash to convert the greeting to uppercase</span>
 <span class="cm"> */</span>
 <span class="n">process</span><span class="w"> </span><span class="n">convertToUpper</span><span class="w"> </span><span class="o">{</span>
 
-<span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
+<span class="w">    </span><span class="c1">// directives</span>
+<span class="w">    </span><span class="c1">//publish a directory for results</span>
 
 <span class="w">    </span><span class="nl">input:</span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="n">input_file</span>
+<span class="w">        </span><span class="c1">//define an input file</span>
 
 <span class="w">    </span><span class="c1">// we modify the output file name</span>
+<span class="w">    </span><span class="c1">// the output file should contain an indication that these is an uppercase message and the input file name</span>
+<span class="w">    </span><span class="c1">// Avoid spaces in the file name</span>
 <span class="w">    </span><span class="nl">output:</span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;UPPER-${input_file}&quot;</span>
+<span class="w">        </span><span class="c1">//define an output file that contains</span>
 
 <span class="w">    </span><span class="c1">// now we add the bash code to convert the greeting to uppercase</span>
+<span class="w">    </span><span class="c1">// A way to do that in bash scripting is cat file | tr &#39;[a-z]&#39; &#39;[A-Z]&#39; &gt; output</span>
+<span class="w">    </span><span class="c1">// By the way do not add // (comments in your script block) they will be interpreted</span>
 <span class="w">    </span><span class="nl">script:</span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    cat &#39;$input_file&#39; | tr &#39;[a-z]&#39; &#39;[A-Z]&#39; &gt; UPPER-${input_file}</span>
+<span class="s2">    </span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 </pre></div>
@@ -578,20 +600,33 @@ e.g. the -resume feature we used earlier.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Let’s greet på Dansk igen!</p>
+<p>Now you are ready to greet på Dansk igen!</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
 </pre></div>
 </div>
+<p>What happened now? Did your code edits work? How are your output files named and where were they saved?</p>
 </section>
 <section id="let-s-run-the-script-on-a-batch-of-input-values">
 <h2>Let’s run the script on a batch of input values<a class="headerlink" href="#let-s-run-the-script-on-a-batch-of-input-values" title="Link to this heading">#</a></h2>
 <p>Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value. Inmagine taht these could be a list of genes, genomes or files …</p>
+<p>There are different factory channels to create the channels. Here you have an example where I used factory <code class="docutils literal notranslate"><span class="pre">Channel.fromFilePairs()</span></code> fastq read files.</p>
+<blockquote>
+<div><p>params.reads = “$projectDir/data/*_{1,2}.fq.gz”</p>
+<p>Channel
+.fromFilePairs(params.reads, checkIfExists: true)
+.toSortedList( { a, b -&gt; a[0] &lt;=&gt; b[0] } )
+.flatMap()
+.set { read_pairs_ch }
+read_pairs_ch.view()</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">.toSortedList</span></code>, <code class="docutils literal notranslate"><span class="pre">.flatMap</span></code>, <code class="docutils literal notranslate"><span class="pre">.set</span></code>, <code class="docutils literal notranslate"><span class="pre">.view</span></code> are operators to transform the channel and achieve the input files in the desired format.</p>
+<p>Back into our channel. Please modify the following, where do you need to add that?</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
 <span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s1">&#39;Hello&#39;</span><span class="o">,</span><span class="s1">&#39;Bonjour&#39;</span><span class="o">,</span><span class="s1">&#39;Hola&#39;</span><span class="o">,</span><span class="s1">&#39;Hej&#39;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>We want to ensure the output file names will be unique as they will be all written in the same folder. Let’s generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process:</p>
+<p>We want to ensure the output file names will be unique as they will be all written in the same folder <code class="docutils literal notranslate"><span class="pre">results</span></code>. Let’s generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process <code class="docutils literal notranslate"><span class="pre">sayHello</span></code>:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
@@ -613,28 +648,26 @@ e.g. the -resume feature we used earlier.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">ansi</span><span class="o">-</span><span class="n">log</span><span class="w"> </span><span class="kc">false</span>
 </pre></div>
 </div>
+<p>Did you see something different in the summary of the nextflow run?</p>
 <p>Check the results folder and the output files:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>results
 less<span class="w"> </span>results/Hello-output.txt
+less<span class="w"> </span>results/Hej-output.txt
+...
 </pre></div>
 </div>
 </section>
 <section id="take-a-file-source-of-input-values-a-sample-file">
 <h2>Take a file source of input values (a sample file)<a class="headerlink" href="#take-a-file-source-of-input-values-a-sample-file" title="Link to this heading">#</a></h2>
-<p>Finally last modification to our script. Usually workflows start from a sample file. In Nextflow this is usually called <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code>. We will create a file called <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> for our example pipeline and save it in a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<p>Finally last modification to our script. Usually workflows start from a sample file. In Nextflow and in nf-core standards this is usually called <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code>. We will create a file called <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> for our example pipeline and save it in a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>data
 <span class="nb">cd</span><span class="w"> </span>data
-vim<span class="w"> </span>greetings.csv
-<span class="c1"># Add the contents of the next code block (type a + add contents + ESC) and save (:wq!)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello,Bonjour,Hola,Hej,&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>greetings.csv
+less<span class="w"> </span>greetings.csv
 <span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
 </pre></div>
 </div>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">greetings.csv</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Hello,Bonjour,Hola,Hej
-</pre></div>
-</div>
-</div>
+<p>Does the file greetings.csv look as greetings separated per commas? :) Then you are good to go on…</p>
 <p>Now we need to set up a CLI parameter with a default value pointing to an input file. Let’s put that piece of code by the bginning of our script:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Pipeline parameters</span>
@@ -643,6 +676,7 @@ vim<span class="w"> </span>greetings.csv
 </pre></div>
 </div>
 <p>We need to construct the channel. We use channel factory, <code class="docutils literal notranslate"><span class="pre">Channel.fromPath()</span></code>, which has some built-in functionality for handling file paths. Furthermore, we’re going to add the <code class="docutils literal notranslate"><span class="pre">.splitCsv()</span></code> operator to make Nextflow parse the file contents accordingly, as well as the <code class="docutils literal notranslate"><span class="pre">.flatten()</span></code> operator to turn the array element produced by <code class="docutils literal notranslate"><span class="pre">.splitCsv()</span></code> into a channel of individual elements.</p>
+<p>By now you should know where to add this piece of code:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs from a CSV file</span>
 <span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">input_file</span><span class="o">)</span>
 <span class="w">                     </span><span class="o">.</span><span class="na">splitCsv</span><span class="o">()</span>
@@ -653,16 +687,25 @@ vim<span class="w"> </span>greetings.csv
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <blockquote>
-<div><p>You know how to provide the input values to the workflow via a file.
-More generally, you’ve learned how to use the essential components of Nextflow and you have a basic grasp of the logic of how to build a workflow and manage inputs and outputs.</p>
+<div><p>You should also have a basic idea of how to build a workflow and manage inputs and outputs. You know how to provide the input values to the workflow via the CLI or a file. You know how to define your output files and how to save the results in an specific folder.</p>
+<p>More generally, you’ve learned how to use the essential components of Nextflow:</p>
+<ul class="simple">
+<li><p><strong>Channels</strong>: contain the input of the workflows used by the processes. Channels connect processes with each other.</p></li>
+<li><p><strong>Operators</strong>: transform the content of channels by applying functions or transformations. Operators are usually applied on channels to get the input of a process in the desired format.</p></li>
+<li><p><strong>Processes</strong>: define the script or software that is run (e.g. a fastQC analysis on sequenced data).</p></li>
+<li><p><strong>Workflows</strong>: call the processes as functions with channels as input arguments, only processes defined in the workflow are run.</p></li>
+</ul>
 </div></blockquote>
 </section>
 <section id="full-script">
 <h2>Full script<a class="headerlink" href="#full-script" title="Link to this heading">#</a></h2>
 <p>Here you have you first nextflow script in full! Congratulations!</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -779,17 +822,18 @@ More generally, you’ve learned how to use the essential components of Nextflow
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">Input definition to the process block:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-the-process-command-to-use-the-input-variable">Edit the process command to use the input variable</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-input-channel">Create an input channel</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-channel-as-input-to-the-process-call">Add the channel as input to the process call</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">1. Input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-command-to-use-the-input-variable">2. Editing the process command to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel">3. Creating an input channel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call">4. Adding the channel as input to the process call</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-second-process">Add a second process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-add-a-second-process-to-our-pipeline">Let’s add a second process to our pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
 </ul>
   </nav></div>
