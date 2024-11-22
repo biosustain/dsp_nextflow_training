@@ -1,13 +1,18 @@
 # Instructions
 
 ## Opening the Nextflow environment
-Go to [course website](https://github.com/biosustain/dsp_nextflow_training)
 
-Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).
+To avoid installation and configuration issues we are going to deploy an environment for you containing Nextflow and its requirements.
 
 If you want to open directly a GitHub codespace for this specific repository click here: [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/biosustain/dsp_nextflow_training)
 
+If you want to do it manually go to [course website](https://github.com/biosustain/dsp_nextflow_training)
+
+Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).
+
 To learn more about Github codespaces go [here](https://github.com/features/codespaces)
+
+>Please remember to delete your Codespace by the end of the class so that you do not consume your free Github codespace credits! If you do not delete it it will be deleted automatically days after your created.
 
 ## Initial checks
 Now, Nextflow should be ready to run in your GitHub Codespace environment! Let's check that you have a fully functional environment with Nextflow, java and Docker properly installed
@@ -78,9 +83,9 @@ sudo mv nextflow /usr/local/bin/
 > Notice that these are the commands that we used in our devcontainer.json file to build our codespace.
 
 ### Docker
+
 Please to install Docker follow this [link](https://docs.docker.com/get-started/get-docker/) and download the version that matches you OS.
 
 ### Nextflow in Windows
 
-While Nextflow can run natively on Windows, its primary development and optimization are for Unix-based systems (Linux and macOS). Windows support is provided but may not be as smooth or feature-complete. We recommend to install Windows Subsystem for Linux (WSL). WSL allows you to run a Linux environment on Windows providing access to Unix-like tools and environments, 
-enabling compatibility with Docker for containerized workflows, and resolving many possible compatibility issues related to the file system and paths.
+While Nextflow can run natively on Windows, its primary development and optimization are for Unix-based systems (Linux and macOS). Windows support is provided but may not be as smooth or feature-complete. We recommend to install Windows Subsystem for Linux (WSL). WSL allows you to run a Linux environment on Windows providing access to Unix-like tools and environments, enabling compatibility with Docker for containerized workflows, and resolving many possible compatibility issues related to the file system and paths.
