@@ -378,7 +378,7 @@
 <span class="w">    </span><span class="c1">// code block (here using bash)</span>
 <span class="w">    </span><span class="nl">script:</span><span class="w"> </span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &quot;$USER says Hello World!&quot;</span>
+<span class="s2">    echo &quot;Your name says Hello World!&quot;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 
@@ -421,18 +421,21 @@
 <li><p>.exitcode: The exit code resulting from the command</p></li>
 </ul>
 </div></blockquote>
-<p>As you wrote your results in the standard output where do you think you will find your greeting message?</p>
-<p>You may have also noticed that you get some .nextflow.log files with all general log info compiled. These ones accumulate until 10 files. To see the one corresponding to the latest run do a <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">.nextflow.log</span></code>.</p>
+<p>As you wrote your results in the standard output, where do you think you will find your greeting message? Are there some files empty for this run? Why?</p>
+<p>You may have also noticed that you get some .nextflow.log files with all Nextflow activity since you run the script. These ones accumulate until 10 files. To see the one corresponding to the latest run do a <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">.nextflow.log</span></code>. Very useful for debugging as well!</p>
 </section>
 <section id="send-the-output-to-a-file-and-save-it-on-an-specific-folder">
 <h2>Send the output to a file and save it on an specific folder<a class="headerlink" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder" title="Link to this heading">#</a></h2>
 <p>Let’s write the output to a file, we need to define the output in a different way and change the bash code in the code block.</p>
 <p>Now in the output gets defined as a file instead of stdout.</p>
+<blockquote>
+<div><p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> qualifier allows you to provide input/output files to the process execution context.</p>
+</div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="nl">output:</span>
 <span class="w">    </span><span class="n">path</span><span class="w"> </span><span class="s1">&#39;output.txt&#39;</span>
 </pre></div>
 </div>
-<p>We adapt the code block:</p>
+<p>We adapt the code block. Now the greeting message is directed into the file called <code class="docutils literal notranslate"><span class="pre">output.txt</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Hello World!&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
@@ -443,8 +446,7 @@
 <p>Now go and find the output file in the <code class="docutils literal notranslate"><span class="pre">work</span></code> directory.</p>
 <p>Now let’s save the outputfile on an specific folder called <code class="docutils literal notranslate"><span class="pre">results</span></code>. We will do that by specifying in the directives the results folder using the directive <code class="docutils literal notranslate"><span class="pre">publishDir</span></code>.</p>
 <blockquote>
-<div><p>Directives are optional settings that affect the execution of the current process.
-The <code class="docutils literal notranslate"><span class="pre">path</span></code> qualifier allows you to provide input files to the process execution context.</p>
+<div><p>Directives are optional settings that affect the execution of the current process.</p>
 </div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
 
@@ -458,7 +460,10 @@ The <code class="docutils literal notranslate"><span class="pre">path</span></co
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
-<p>Were was the output file saved? Is it the same or different than the output file saved in the corresponding work directory? Notice the <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">'copy'</span></code>.</p>
+<p>Were was the output file saved now? Could you find it anywhere else? Notice the <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">'copy'</span></code>. Is your greeting message now in <code class="docutils literal notranslate"><span class="pre">.command.out</span></code>?</p>
+<blockquote>
+<div><p>With <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">'copy'</span></code> you are telling Nextflow that the reults need to be just a copy of the results saved in the work directory. There are other mode types to modify the publishDir behaviour.</p>
+</div></blockquote>
 </section>
 <section id="add-in-variable-inputs-using-a-channel">
 <h2>Add in variable inputs using a channel<a class="headerlink" href="#add-in-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
@@ -466,9 +471,9 @@ The <code class="docutils literal notranslate"><span class="pre">path</span></co
 <p>This requires us to make few changes:</p>
 <ol class="arabic simple">
 <li><p>Tell the process about expected variable inputs using the input block</p></li>
-<li><p>Edit the process to use the input</p></li>
+<li><p>Edit the process to use the input value (in the process block)</p></li>
 <li><p>Create a channel to pass input to the process (more on that in a minute)</p></li>
-<li><p>Add the channel as input to the process call</p></li>
+<li><p>Add the channel as input to the process call (in the workflow block)</p></li>
 </ol>
 <section id="input-definition-to-the-process-block">
 <h3>1. Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
@@ -532,14 +537,14 @@ The <code class="docutils literal notranslate"><span class="pre">path</span></co
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">resume</span>
 </pre></div>
 </div>
-<p>What happened? Did your <code class="docutils literal notranslate"><span class="pre">sayHello()</span></code> process run again?</p>
+<p>What happened? Did your <code class="docutils literal notranslate"><span class="pre">sayHello()</span></code> process run again? Notice that the work subdirectory referenced in the summary of the pipeline execution has not changed and contains all results files and logs from the previous run, this step has not run again.</p>
 </section>
 <section id="use-command-line-interface-cli-parameters-for-inputs">
 <h2>Use command line interface (CLI) parameters for inputs<a class="headerlink" href="#use-command-line-interface-cli-parameters-for-inputs" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.</p>
 </div></blockquote>
-<p>So try to specify the input from the command line. For that you need to modify how the channel is created to get now the ingreeting value from the CLI in the workflow block.</p>
+<p>So try to specify the input from the command line. For that you need to modify how the channel is created to get now the greeting value from the CLI in the workflow block.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
 <span class="n">greeting_ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Channel</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">greeting</span><span class="o">)</span>
 </pre></div>
@@ -553,13 +558,14 @@ The <code class="docutils literal notranslate"><span class="pre">path</span></co
 whereas we use a single hyphen (-) for parameters that modify a specific Nextflow setting,
 e.g. the -resume feature we used earlier.</p>
 </div></blockquote>
+<p>How the result looks now? Very Danish?</p>
 </section>
 <section id="let-s-add-a-second-process-to-our-pipeline">
 <h2>Let’s add a second process to our pipeline<a class="headerlink" href="#let-s-add-a-second-process-to-our-pipeline" title="Link to this heading">#</a></h2>
 <p>Now we introduce a second process that converts the text to uppercase.</p>
 <p>Here it is just an scheme for the code:</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
-<span class="cm"> * Use a text replace utility as we will do it in bash to convert the greeting to uppercase</span>
+<span class="cm"> * Let&#39;s convert the greeting to uppercase</span>
 <span class="cm"> */</span>
 <span class="n">process</span><span class="w"> </span><span class="n">convertToUpper</span><span class="w"> </span><span class="o">{</span>
 
@@ -604,21 +610,41 @@ e.g. the -resume feature we used earlier.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">--</span><span class="n">greeting</span><span class="w"> </span><span class="s1">&#39;Hej verden!&#39;</span>
 </pre></div>
 </div>
-<p>What happened now? Did your code edits work? How are your output files named and where were they saved?</p>
+<p>What happened now? How many processes have been run? Did your code edits work? How are your output files named and where were they saved?</p>
 </section>
 <section id="let-s-run-the-script-on-a-batch-of-input-values">
 <h2>Let’s run the script on a batch of input values<a class="headerlink" href="#let-s-run-the-script-on-a-batch-of-input-values" title="Link to this heading">#</a></h2>
 <p>Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value. Inmagine taht these could be a list of genes, genomes or files …</p>
+<p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or files …</p>
 <p>There are different factory channels to create the channels. Here you have an example where I used factory <code class="docutils literal notranslate"><span class="pre">Channel.fromFilePairs()</span></code> fastq read files.</p>
 <blockquote>
 <div><p>params.reads = “$projectDir/data/*_{1,2}.fq.gz”</p>
-<p>Channel
-.fromFilePairs(params.reads, checkIfExists: true)
-.toSortedList( { a, b -&gt; a[0] &lt;=&gt; b[0] } )
-.flatMap()
-.set { read_pairs_ch }
-read_pairs_ch.view()</p>
+<p>Channel</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .fromFilePairs(params.reads, checkIfExists: true)
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .toSortedList( { a, b -&gt; a[0] &lt;=&gt; b[0] } )
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .flatMap()
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .set { read_pairs_ch }
+</pre></div>
+</div>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   read_pairs_ch.view()
+</pre></div>
+</div>
 </div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">.toSortedList</span></code>, <code class="docutils literal notranslate"><span class="pre">.flatMap</span></code>, <code class="docutils literal notranslate"><span class="pre">.set</span></code>, <code class="docutils literal notranslate"><span class="pre">.view</span></code> are operators to transform the channel and achieve the input files in the desired format.</p>
 <p>Back into our channel. Please modify the following, where do you need to add that?</p>
@@ -639,7 +665,7 @@ read_pairs_ch.view()</p>
 
 <span class="w">    </span><span class="nl">script:</span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &#39;$greeting&#39; &gt; &#39;$greeting-output.txt&#39;</span>
+<span class="s2">    echo &#39;$greeting&#39; &gt; &#39;${greeting}-output.txt&#39;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 </pre></div>
@@ -687,6 +713,7 @@ less<span class="w"> </span>greetings.csv
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
 </div>
+<p>Did you get the same results? Hopefully yes but now you used a <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> that could be your <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code> file if you run a real biological pipeline.</p>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>

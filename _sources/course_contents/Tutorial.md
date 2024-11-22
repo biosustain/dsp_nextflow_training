@@ -23,7 +23,7 @@ process sayHello {
     // code block (here using bash)
     script: 
     """
-    echo "$USER says Hello World!"
+    echo "Your name says Hello World!"
     """
 }
 
@@ -67,21 +67,22 @@ If we look inside each subdirectory, we find the following log files:
 > - .command.sh: The command that was run by the process task call
 > - .exitcode: The exit code resulting from the command
 
-As you wrote your results in the standard output where do you think you will find your greeting message?
+As you wrote your results in the standard output, where do you think you will find your greeting message? Are there some files empty for this run? Why?
 
-You may have also noticed that you get some .nextflow.log files with all general log info compiled. These ones accumulate until 10 files. To see the one corresponding to the latest run do a `less .nextflow.log`.
+You may have also noticed that you get some .nextflow.log files with all Nextflow activity since you run the script. These ones accumulate until 10 files. To see the one corresponding to the latest run do a `less .nextflow.log`. Very useful for debugging as well!
 
 ## Send the output to a file and save it on an specific folder
 
 Let's write the output to a file, we need to define the output in a different way and change the bash code in the code block.
 
-Now in the output gets defined as a file instead of stdout.
+Now in the output gets defined as a file instead of stdout. 
+> The `path` qualifier allows you to provide input/output files to the process execution context.
 ```groovy
 output:
     path 'output.txt'
 ```
 
-We adapt the code block:
+We adapt the code block. Now the greeting message is directed into the file called `output.txt`.
 ```bash
 echo 'Hello World!' > output.txt
 ```
@@ -96,7 +97,6 @@ Now go and find the output file in the `work` directory.
 Now let's save the outputfile on an specific folder called `results`. We will do that by specifying in the directives the results folder using the directive `publishDir`.
 
 > Directives are optional settings that affect the execution of the current process.
-> The `path` qualifier allows you to provide input files to the process execution context.
 
 ```groovy
 process sayHello {
@@ -111,7 +111,9 @@ Run the pipeline again!
 ```groovy
 nextflow run hello.nf
 ```
-Were was the output file saved? Is it the same or different than the output file saved in the corresponding work directory? Notice the `mode: 'copy'`.
+
+Were was the output file saved now? Could you find it anywhere else? Notice the `mode: 'copy'`. Is your greeting message now in `.command.out`? 
+> With `mode: 'copy'` you are telling Nextflow that the reults need to be just a copy of the results saved in the work directory. There are other mode types to modify the publishDir behaviour. 
 
 ## Add in variable inputs using a channel
 
@@ -120,9 +122,9 @@ Let's add some more flexibility by using an input variable, so that we can easil
 This requires us to make few changes:
 
 1. Tell the process about expected variable inputs using the input block
-2. Edit the process to use the input
+2. Edit the process to use the input value (in the process block)
 3. Create a channel to pass input to the process (more on that in a minute)
-4. Add the channel as input to the process call
+4. Add the channel as input to the process call (in the workflow block)
 
 ### 1. Input definition to the process block:
 
@@ -189,13 +191,13 @@ In other words use the `-resume` option to run a pipeline again without repeatin
 ```groovy
 nextflow run hello.nf -resume
 ```
-What happened? Did your `sayHello()` process run again?
+What happened? Did your `sayHello()` process run again? Notice that the work subdirectory referenced in the summary of the pipeline execution has not changed and contains all results files and logs from the previous run, this step has not run again.
 
 ## Use command line interface (CLI) parameters for inputs
 
 > Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.
 
-So try to specify the input from the command line. For that you need to modify how the channel is created to get now the ingreeting value from the CLI in the workflow block.
+So try to specify the input from the command line. For that you need to modify how the channel is created to get now the greeting value from the CLI in the workflow block.
 ```groovy
 // create a channel for inputs
 greeting_ch = Channel.of(params.greeting)
@@ -210,6 +212,8 @@ nextflow run hello.nf --greeting 'Hej verden!'
 > whereas we use a single hyphen (-) for parameters that modify a specific Nextflow setting, 
 > e.g. the -resume feature we used earlier.
 
+How the result looks now? Very Danish?
+
 ## Let's add a second process to our pipeline
 
 Now we introduce a second process that converts the text to uppercase.
@@ -218,7 +222,7 @@ Here it is just an scheme for the code:
 
 ```groovy
 /*
- * Use a text replace utility as we will do it in bash to convert the greeting to uppercase
+ * Let's convert the greeting to uppercase
  */
 process convertToUpper {
 
@@ -267,23 +271,28 @@ Now you are ready to greet på Dansk igen!
 nextflow run hello.nf --greeting 'Hej verden!'
 ```
 
-What happened now? Did your code edits work? How are your output files named and where were they saved?
+What happened now? How many processes have been run? Did your code edits work? How are your output files named and where were they saved?
 
 ## Let's run the script on a batch of input values
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
 
-`Channel.of()` factory we've been using is quite happy to accept more than one value. Inmagine taht these could be a list of genes, genomes or files ...
+`Channel.of()` factory we've been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or files ...
 
 There are different factory channels to create the channels. Here you have an example where I used factory `Channel.fromFilePairs()` fastq read files.
 
 > params.reads = "$projectDir/data/*_{1,2}.fq.gz"
 >
 > Channel
+
 >        .fromFilePairs(params.reads, checkIfExists: true)
+
 >        .toSortedList( { a, b -> a[0] <=> b[0] } )
+
 >        .flatMap()
+
 >        .set { read_pairs_ch }
+
 >        read_pairs_ch.view()
 
 `.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and achieve the input files in the desired format.
@@ -309,7 +318,7 @@ process sayHello {
 
     script:
     """
-    echo '$greeting' > '$greeting-output.txt'
+    echo '$greeting' > '${greeting}-output.txt'
     """
 }
 ```
@@ -367,6 +376,7 @@ Ok, lets try this script one last time!
 ```groovy
 nextflow run hello.nf
 ```
+Did you get the same results? Hopefully yes but now you used a `greetings.csv` that could be your `samplesheet.csv` file if you run a real biological pipeline.
 
 ## Summary
 
