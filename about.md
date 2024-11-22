@@ -1,7 +1,9 @@
 # About
 
 ## The course 
-At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at DTU - Biosustain. To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop the workflows based on Groovy, allowing for easy integration with existing software and tools. Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. Nextflow has a strong community in the bioinformatics field and is supported by the nf-core project, which provides a large repository of pre-built, community-maintained bioinformatics pipelines that are optimized for Nextflow. For these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU-Biosustain.
+At the Data Science platform we are integrating with the research data management team and we are also building pipelines for our researchers at [DTU - Biosustain](https://www.biosustain.dtu.dk/). To that end we are building and deploying in Azure scalable, portable and reproducible bioinformatics workflows using Nextflow. Nextflow is a workflow orchestration tool designed for developing and executing reproducible and scalable data analysis pipelines. It is a scripting language to develop workflows based on Groovy, allowing for easy integration with existing software and tools. However you do not need to learn Groovy to get started with Nextflow. 
+
+Nextflow supports parallelization and can run on multiple computing environments, including local systems, high-performance clusters, and cloud platforms. Nextflow has a strong community behind in the bioinformatics field and is supported by the nf-core project, which provides a large repository of pre-built, community-maintained bioinformatics pipelines that are optimized for Nextflow. Mainly for these characteristics it has been our workflow building language of choice and would like to teach it to our fellows at DTU.
 
 ## Objectives
 
@@ -27,15 +29,15 @@ In this course you will learn:
 
 - Resources to keep training
 
-## [Data Science platform](https://www.biosustain.dtu.dk/technologies/informatics/data-science-platform)
+## Data Science platform
 
-Data Science has become an essential piece both in academia and industry to accelerate gaining insights into the generated data. As a strategy to integrate high-level analytics we created a centralized Data Science platform (DSP) that provides support to our researchers while promoting standardized data and data processes.
+Data Science has become an essential piece both in academia and industry to accelerate gaining insights into the generated datasets. As a strategy to integrate high-level analytics in [DTU - Biosustain](https://www.biosustain.dtu.dk/) we created a centralized [Data Science platform (DSP)](https://www.biosustain.dtu.dk/technologies/informatics/data-science-platform) that provides support to our researchers while promoting standardized data and data processes.
 
-The DSP team aims to make data science more accessible and inclusive at DTU Biosustain and across the DTU Community. The platform follows a data-centric approach that focuses on data infrastructure, processes, and outputs as ongoing, evolving products rather than one-time projects. Each data product is designed as a multidisciplinary collaboration involving the entire data lifecycle and pursuing standardization and automation, and with data usage in mind. 
+The DSP team aims to make data science more accessible and inclusive not only at DTU Biosustain but also across the DTU Community. The platform follows a data-centric approach that focuses on data infrastructure, processes, and outputs as ongoing, evolving products rather than one-time projects. Each data product is designed as a multidisciplinary collaboration involving the entire data lifecycle and pursuing standardization and automation, and with data usage and reusage in mind. 
 
 The DSP is based on four pillars: 
 
-– Support: our rsearch fellows on Statistics, Programming, Data analytics, and Machine learning
+– Support: our research fellows on Statistics, Programming, Data analytics, and Machine learning
 
 – Education: coorganizing Data club with DTU - Bioengineering and organizing Data Science workshops
 
