@@ -15,7 +15,7 @@ To be able to run this pipeline we will clone the training repository from Nextf
 
 First cloning with `git clone`:
 ```bash
-git clone https://github.com/nextflow-io/training.git
+git clone https://github.com/nextflow-io/training.git --depth 1
 ```
 And then move to `training/nf-training`:
 ```bash
