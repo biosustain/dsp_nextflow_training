@@ -496,7 +496,7 @@
 <section id="editing-the-process-command-to-use-the-input-variable">
 <h3>2. Editing the process command to use the input variable<a class="headerlink" href="#editing-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
 <p>Changing the code to write the variable (containing our grreting) in the output file:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;$greeting&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$greeting</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
 </section>
@@ -665,7 +665,7 @@ e.g. the -resume feature we used earlier.</p>
 
 <span class="w">    </span><span class="nl">script:</span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &#39;$greeting&#39; &gt; &#39;${greeting}-output.txt&#39;</span>
+<span class="s2">    echo &quot;$greeting&quot; &gt; &quot;${greeting}-output.txt&quot;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 </pre></div>
@@ -688,7 +688,7 @@ less<span class="w"> </span>results/Hej-output.txt
 <p>Finally last modification to our script. Usually workflows start from a sample file. In Nextflow and in nf-core standards this is usually called <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code>. We will create a file called <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> for our example pipeline and save it in a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>data
 <span class="nb">cd</span><span class="w"> </span>data
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello,Bonjour,Hola,Hej,&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>greetings.csv
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello,Bonjour,Hola,Hej&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>greetings.csv
 less<span class="w"> </span>greetings.csv
 <span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
 </pre></div>
@@ -755,7 +755,7 @@ less<span class="w"> </span>greetings.csv
 
 <span class="w">    </span><span class="nl">script:</span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &#39;$greeting&#39; &gt; &#39;$greeting-output.txt&#39;</span>
+<span class="s2">    echo &quot;$greeting&quot; &gt; &quot;$greeting-output.txt&quot;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 
@@ -776,7 +776,7 @@ less<span class="w"> </span>greetings.csv
 <span class="w">    </span><span class="c1">// now we add the bash code to convert the greeting to uppercase</span>
 <span class="w">    </span><span class="nl">script:</span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    cat &#39;$input_file&#39; | tr &#39;[a-z]&#39; &#39;[A-Z]&#39; &gt; UPPER-${input_file}</span>
+<span class="s2">    cat &quot;$input_file&quot; | tr &#39;[a-z]&#39; &#39;[A-Z]&#39; &gt; UPPER-${input_file}</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 
