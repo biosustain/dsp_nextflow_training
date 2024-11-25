@@ -23,9 +23,12 @@ cd training/nf-training
 ```
 Here there are a colloection of 7 scripts where the rnaseq pipeline (a small version of it) is broken into the different parts. It is great training material and I recommend you go through if you want to keep learning Nextflow. For today we will run the last script that contains all the parts we want to run (Indexing transcriptome file, fastQC, Salmon for quantification and MultiQC to see a final report of our run).
 
+> This pipeline requires Docker as every process is run inside a Docker container. On other words an environment where the required operation system and software is installed with all dependencies. Nextflow uses generally containerization tools like Docker, Singularity, or Conda to ensure reproducibility of the results.
+> To avoid permission issues with Docker we will run nextflow being super user (`sudo`)
+
 ```{code-block} groovy
 :caption: Running rnaseq pipeline (scrip7.nf)
-nextflow run script7.nf -with-docker
+sudo nextflow run script7.nf -with-docker
 ```
 
 After few minutes you should have run succesfully your first rnaseq pipeline! Time to check your results:
@@ -43,10 +46,16 @@ Then on the top right corner look for the icon `Show Preview`.
 
 MultiQC report aggregates results from the pipeline steps (from all the softwares that is compatible with -  quite many). In this case it shows some general statistics, fastQC results, and the Quantification information.
 
-In order to avoid to add the option `-with-docker` add the following line in the `nextflow.config` file: 
+In order to avoid to add the option `-with-docker`, you can customize your config file. Let's create a config file `course.config` and add the following:
 ```{code-block} groovy
 :caption: nextflow.config
 docker.enabled = true
 ```
 
->Remember that I mentioned in the theoretical part that usually nextflow script are run with the minimal environment settings specified in a config file (`nextflow.config`) placed in the same folder where you are running your main script (`main.nf`).
+Let's run again the workflow by calling our config file:
+```{code-block} groovy
+:caption: Running rnaseq pipeline (scrip7.nf) with course.config
+sudo nextflow run script7.nf -c course.config
+```
+
+ You are are welcome to have a look to the file that was downloaded `nextflow.config`, to see what usually these files contain and realise how important they are to setup the environment for the nextflow runs. The config file `nextflow.config` must be in the same folder where you are running your main script (`main.nf`) otherwise you need to specify the location with `-c`
