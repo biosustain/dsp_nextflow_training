@@ -58,4 +58,4 @@ Let's run again the workflow by calling our config file:
 sudo nextflow run script7.nf -c course.config
 ```
 
- You are are welcome to have a look to the file that was downloaded `nextflow.config`, to see what usually these files contain and realise how important they are to setup the environment for the nextflow runs. The config file `nextflow.config` must be in the same folder where you are running your main script (`main.nf`) otherwise you need to specify the location with `-c`
+You are are welcome to have a look to the file that was downloaded `nextflow.config`, to see what usually these files contain and realise how important they are to setup the environment for the nextflow runs. The config file `nextflow.config` must be in the same folder where you are running your main script (`main.nf`) otherwise you need to specify the location with `-c`
