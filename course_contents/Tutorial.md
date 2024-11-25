@@ -149,7 +149,7 @@ process sayHello {
 Changing the code to write the variable (containing our grreting) in the output file:
 
 ```bash
-echo '$greeting' > output.txt
+echo "$greeting" > output.txt
 ```
 ### 3. Creating an input channel
 
@@ -318,7 +318,7 @@ process sayHello {
 
     script:
     """
-    echo '$greeting' > '${greeting}-output.txt'
+    echo "$greeting" > "${greeting}-output.txt"
     """
 }
 ```
@@ -345,7 +345,7 @@ Finally last modification to our script. Usually workflows start from a sample f
 ```bash
 mkdir data
 cd data
-echo "Hello,Bonjour,Hola,Hej," > greetings.csv
+echo "Hello,Bonjour,Hola,Hej" > greetings.csv
 less greetings.csv
 cd .. 
 ```
@@ -416,7 +416,7 @@ process sayHello {
 
     script:
     """
-    echo '$greeting' > '$greeting-output.txt'
+    echo "$greeting" > "$greeting-output.txt"
     """
 }
 
@@ -437,7 +437,7 @@ process convertToUpper {
     // now we add the bash code to convert the greeting to uppercase
     script:
     """
-    cat '$input_file' | tr '[a-z]' '[A-Z]' > UPPER-${input_file}
+    cat "$input_file" | tr '[a-z]' '[A-Z]' > UPPER-${input_file}
     """
 }
 
