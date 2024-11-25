@@ -281,19 +281,16 @@ Workflows typically run on batches of inputs that are meant to be processed in b
 
 There are different factory channels to create the channels. Here you have an example where I used factory `Channel.fromFilePairs()` fastq read files.
 
-> params.reads = "$projectDir/data/*_{1,2}.fq.gz"
->
-> Channel
+```groovy
+params.reads = "$projectDir/data/*_{1,2}.fq.gz"
 
->        .fromFilePairs(params.reads, checkIfExists: true)
-
->        .toSortedList( { a, b -> a[0] <=> b[0] } )
-
->        .flatMap()
-
->        .set { read_pairs_ch }
-
->        read_pairs_ch.view()
+Channel
+    .fromFilePairs(params.reads, checkIfExists: true)
+    .toSortedList( { a, b -> a[0] <=> b[0] } )
+    .flatMap()
+    .set { read_pairs_ch }
+    read_pairs_ch.view()
+```
 
 `.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and achieve the input files in the desired format.
 
