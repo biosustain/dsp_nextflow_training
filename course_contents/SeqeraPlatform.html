@@ -361,6 +361,10 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">TOWER_ACCESS_TOKEN</span><span class="o">=</span>copyandpastetokenfromtheSqeraPlatformhere
 </pre></div>
 </div>
+<p>Now get back to the directory where the <code class="docutils literal notranslate"><span class="pre">hello.nf</span></code> script is.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>../..
+</pre></div>
+</div>
 <p>Lets’s run our first nextflow script in Seqera with the addition of the -with-tower command:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">hello.nf capturing logs in Seqera platform</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
@@ -368,6 +372,7 @@
 </pre></div>
 </div>
 </div>
+<p>If it run properly you should have got an URL like this one: <code class="docutils literal notranslate"><span class="pre">Monitor</span> <span class="pre">the</span> <span class="pre">execution</span> <span class="pre">with</span> <span class="pre">Seqera</span> <span class="pre">Platform</span> <span class="pre">using</span> <span class="pre">this</span> <span class="pre">URL:</span> <span class="pre">&lt;https://cloud.seqera.io/user/apca1/watch/1CexaaYrhJc2JE&gt;</span></code>. If you copy and paste that link in your browser you get a report of the workflow run with logs information (run information, cpus used, memory used, processes that succeded, processes that failed, etc…). This can be categorized as you desire and the runs can be shared among your collaborators. Pipelines can also be launched from the Platform.</p>
 </section>
 </section>
 
