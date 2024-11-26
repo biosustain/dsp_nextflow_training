@@ -617,35 +617,16 @@ e.g. the -resume feature we used earlier.</p>
 <p>Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Channel.of()</span></code> factory we’ve been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or files …</p>
 <p>There are different factory channels to create the channels. Here you have an example where I used factory <code class="docutils literal notranslate"><span class="pre">Channel.fromFilePairs()</span></code> fastq read files.</p>
-<blockquote>
-<div><p>params.reads = “$projectDir/data/*_{1,2}.fq.gz”</p>
-<p>Channel</p>
-</div></blockquote>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .fromFilePairs(params.reads, checkIfExists: true)
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="na">reads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;$projectDir/data/*_{1,2}.fq.gz&quot;</span>
+
+<span class="n">Channel</span>
+<span class="w">    </span><span class="o">.</span><span class="na">fromFilePairs</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">reads</span><span class="o">,</span><span class="w"> </span><span class="nl">checkIfExists:</span><span class="w"> </span><span class="kc">true</span><span class="o">)</span>
+<span class="w">    </span><span class="o">.</span><span class="na">toSortedList</span><span class="o">(</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;=&gt;</span><span class="w"> </span><span class="n">b</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="o">)</span>
+<span class="w">    </span><span class="o">.</span><span class="na">flatMap</span><span class="o">()</span>
+<span class="w">    </span><span class="o">.</span><span class="na">set</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">read_pairs_ch</span><span class="w"> </span><span class="o">}</span>
+<span class="w">    </span><span class="n">read_pairs_ch</span><span class="o">.</span><span class="na">view</span><span class="o">()</span>
 </pre></div>
 </div>
-</div></blockquote>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .toSortedList( { a, b -&gt; a[0] &lt;=&gt; b[0] } )
-</pre></div>
-</div>
-</div></blockquote>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .flatMap()
-</pre></div>
-</div>
-</div></blockquote>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   .set { read_pairs_ch }
-</pre></div>
-</div>
-</div></blockquote>
-<blockquote>
-<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   read_pairs_ch.view()
-</pre></div>
-</div>
-</div></blockquote>
 <p><code class="docutils literal notranslate"><span class="pre">.toSortedList</span></code>, <code class="docutils literal notranslate"><span class="pre">.flatMap</span></code>, <code class="docutils literal notranslate"><span class="pre">.set</span></code>, <code class="docutils literal notranslate"><span class="pre">.view</span></code> are operators to transform the channel and achieve the input files in the desired format.</p>
 <p>Back into our channel. Please modify the following, where do you need to add that?</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
