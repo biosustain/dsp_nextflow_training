@@ -2,3 +2,14 @@ _build
 *.docx
 .nextflow-console.log
 .nextflow.pid
+
+# ignore logs
+*.nextflow.log*
+ # Ignore the .nextflow directory created by Nextflow
+.nextflow
+work
+# Ignore the training directory cloned
+training
+# ignore results and data folder
+data
+results
