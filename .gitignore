@@ -3,6 +3,9 @@ _build
 .nextflow-console.log
 .nextflow.pid
 
+#ignore system file
+.DS_Store
+
 # ignore logs
 *.nextflow.log*
  # Ignore the .nextflow directory created by Nextflow
