@@ -16,29 +16,26 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -52,7 +49,6 @@
     <link rel="prev" title="Run Nextflow CLI with Seqera Platform visualizing and capturing logs" href="course_contents/SeqeraPlatform.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -68,8 +64,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -77,6 +84,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -84,8 +92,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -101,8 +109,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -141,17 +148,21 @@
           
           
           
-          <a href="https://github.com/enryh/" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+          <a href="https://github.com/biosustain/dsp_nextflow_training" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
             <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -215,7 +226,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/enryh/notes_template" target="_blank"
+<a href="https://github.com/biosustain/dsp_nextflow_training" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -294,16 +305,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -349,30 +368,30 @@
 <p>Here we are sharing some resources to keep learning Nextflow language or nf-core pipelines, and keep updated of Nextflow events. We have gone through some of these resources on our own to lean or get inspiration to prepare these course contents. They are also good to once in a while refresh some of the knowledge or learn something new.</p>
 <section id="local-installation">
 <h2>Local installation<a class="headerlink" href="#local-installation" title="Link to this heading">#</a></h2>
-<p>Please visit <a class="reference external" href="https://training.nextflow.io/envsetup/02_local/" rel="noopener noreferrer" target="_blank">https://training.nextflow.io/envsetup/02_local/</a></p>
+<p>Please visit <a class="reference external" href="https://training.nextflow.io/envsetup/02_local/" rel="noreferrer" target="_blank">https://training.nextflow.io/envsetup/02_local/</a></p>
 </section>
 <section id="training-material">
 <h2>Training material<a class="headerlink" href="#training-material" title="Link to this heading">#</a></h2>
-<p>Nextflow training portal (different levels): <a class="reference external" href="https://training.nextflow.io/" rel="noopener noreferrer" target="_blank">https://training.nextflow.io/</a></p>
-<p>Nextflow documentation: <a class="reference external" href="https://www.nextflow.io/docs/latest/index.html" rel="noopener noreferrer" target="_blank">https://www.nextflow.io/docs/latest/index.html</a></p>
-<p>Nf-core pipelines: <a class="reference external" href="https://nf-co.re/" rel="noopener noreferrer" target="_blank">https://nf-co.re/</a></p>
+<p>Nextflow training portal (different levels): <a class="reference external" href="https://training.nextflow.io/" rel="noreferrer" target="_blank">https://training.nextflow.io/</a></p>
+<p>Nextflow documentation: <a class="reference external" href="https://www.nextflow.io/docs/latest/index.html" rel="noreferrer" target="_blank">https://www.nextflow.io/docs/latest/index.html</a></p>
+<p>Nf-core pipelines: <a class="reference external" href="https://nf-co.re/" rel="noreferrer" target="_blank">https://nf-co.re/</a></p>
 </section>
 <section id="asking-for-help-following-specific-developements">
 <h2>Asking for help, following specific developements<a class="headerlink" href="#asking-for-help-following-specific-developements" title="Link to this heading">#</a></h2>
-<p>Nextflow community forum: <a class="reference external" href="https://community.seqera.io/" rel="noopener noreferrer" target="_blank">https://community.seqera.io/</a>
-Nextflow slack channel: <a class="reference external" href="https://nextflow.slack.com/join/shared_invite/" rel="noopener noreferrer" target="_blank">https://nextflow.slack.com/join/shared_invite/</a></p>
+<p>Nextflow community forum: <a class="reference external" href="https://community.seqera.io/" rel="noreferrer" target="_blank">https://community.seqera.io/</a>
+Nextflow slack channel: <a class="reference external" href="https://nextflow.slack.com/join/shared_invite/" rel="noreferrer" target="_blank">https://nextflow.slack.com/join/shared_invite/</a></p>
 </section>
 <section id="nextflow-events">
 <h2>Nextflow events<a class="headerlink" href="#nextflow-events" title="Link to this heading">#</a></h2>
-<p>Upcoming events: <a class="reference external" href="https://summit.nextflow.io/" rel="noopener noreferrer" target="_blank">https://summit.nextflow.io/</a></p>
+<p>Upcoming events: <a class="reference external" href="https://summit.nextflow.io/" rel="noreferrer" target="_blank">https://summit.nextflow.io/</a></p>
 </section>
 <section id="seqera-platform">
 <h2>Seqera platform<a class="headerlink" href="#seqera-platform" title="Link to this heading">#</a></h2>
-<p>Seqera platform: <a class="reference external" href="https://seqera.io/platform/" rel="noopener noreferrer" target="_blank">https://seqera.io/platform/</a></p>
+<p>Seqera platform: <a class="reference external" href="https://seqera.io/platform/" rel="noreferrer" target="_blank">https://seqera.io/platform/</a></p>
 </section>
 <section id="citations">
 <h2>Citations<a class="headerlink" href="#citations" title="Link to this heading">#</a></h2>
-<p>P. Di Tommaso, et al. Nextflow enables reproducible computational workflows. Nature Biotechnology 35, 316–319 (2017) doi:<a class="reference external" href="https://www.nature.com/articles/nbt.3820" rel="noopener noreferrer" target="_blank">10.1038/nbt.3820</a></p>
+<p>P. Di Tommaso, et al. Nextflow enables reproducible computational workflows. Nature Biotechnology 35, 316–319 (2017) doi:<a class="reference external" href="https://www.nature.com/articles/nbt.3820" rel="noreferrer" target="_blank">10.1038/nbt.3820</a></p>
 </section>
 </section>
 
@@ -403,8 +422,7 @@ Nextflow slack channel: <a class="reference external" href="https://nextflow.sla
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -443,7 +461,7 @@ By Albert Palleja from DSP
 
   <p class="copyright">
     
-      © Copyright 2024, DTU Biosustain, Informatics Platform, Data Science Platform (DSP).
+      © Copyright 2024-25, DTU Biosustain, Informatics Platform, Data Science Platform (DSP).
       <br/>
     
   </p>
@@ -467,8 +485,8 @@ By Albert Palleja from DSP
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
