@@ -2,11 +2,15 @@
 
 Our first script is going to be the typical `"Hello World!"` script to start learning any programming language. Let's get hands on the code!
 
+First create a pipeline script file with extension `.nf` (e.g `main.nf`)
+
+And a nextflow config file that needs to be in the same folder that you created the pipeline script (e.g `nextflow.config`)
+
 ## Running our first script
 
 Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal `code hello.nf` (nf is the extension for Nextflow scripts). Then copy / paste the following code. Save the file as hello.nf.
 
-```{code-block} groovy
+```{groovy, eval=FALSE}
 :caption: hello.nf
 
 #!/usr/bin/env nextflow
