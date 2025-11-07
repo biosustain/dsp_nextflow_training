@@ -7,7 +7,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "Nextflow training notes"
-copyright = "2024, DTU Biosustain, Informatics Platform, Data Science Platform (DSP)"
+copyright = "2024-25, DTU Biosustain, Informatics Platform, Data Science Platform (DSP)"
 author = "Albert Palleja from DSP"
 
 
