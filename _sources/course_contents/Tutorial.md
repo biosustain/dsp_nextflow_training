@@ -4,7 +4,9 @@ Our first script is going to be the typical `"Hello World!"` script to start lea
 
 ## Running our first script
 
-Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal `code hello.nf` (nf is the extension for Nextflow scripts). Then copy / paste the following code. Save the file as hello.nf.
+Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal `code hello.nf` (nf is the extension for Nextflow pipeline scripts).
+
+Then copy / paste the following code. Save the file as hello.nf.
 
 ```{code-block} groovy
 :caption: hello.nf
@@ -35,7 +37,11 @@ workflow {
 }
 ```
 
-Now let's have a look to the code. A Nextflow script involves two main types of core components: process/es and the workflow. Each process describes what operation(s) should be performed (in our case printing 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps. For now we only have `output` and `code block` in the process and only one process is called in the workflow block (`sayHello()`).
+Now let's have a look to the code. A Nextflow script involves two main types of core components: process/es and the workflow. 
+
+Each process describes what operation(s) should be performed (in our case printing 'Hello World!'), while the workflow describes the dataflow logic that connects the various steps. 
+
+For now we only have `output` and `code block` in the process and only one process is called in the workflow block (`sayHello()`).
 
 Let's try to run your first Nextflow script in your codespace:
 
@@ -46,14 +52,20 @@ nextflow run hello.nf
 
 How do you feel? Success? :)
 
+Notice that while running it you got some info:
+
+1. Nextflow version
+2. Run tag assigned and DSL2 code version (Nextflow is based on DSL language which is based on Groovy)
+3. Executor (local machine)
+4. Details about the run (e.g. completion, processes run, where to find the logs)
+
 ## Find the output and logs in the work directory
 
 The first time you run a pipeline it will create a new directory called `work`. In this directory all the logs and results of each process will be stored in a folder named with a random hexadecimal code.
 
-To find which is the folder that you have to look for check at the run summary of your pipeline, then do an `ls work/<hexadecimal code here>`.
-
-To see the entire work folder structure use `tree`:
+Let's do an `ls -a` to list the contents of `work`. Or to see the entire work folder structure try `tree -a`:
 ```bash
+ls -a work/<hexadecimal code here>
 tree -a work
 ```
 Spend some time identifying all the files produced in your first script.
@@ -113,6 +125,7 @@ nextflow run hello.nf
 ```
 
 Were was the output file saved now? Could you find it anywhere else? Notice the `mode: 'copy'`. Is your greeting message now in `.command.out`? 
+
 > With `mode: 'copy'` you are telling Nextflow that the reults need to be just a copy of the results saved in the work directory. There are other mode types to modify the publishDir behaviour. 
 
 ## Add in variable inputs using a channel
@@ -146,7 +159,7 @@ process sayHello {
 
 ### 2. Editing the process command to use the input variable
 
-Changing the code to write the variable (containing our grreting) in the output file:
+Changing the code to write the variable (containing our greeting) in the output file:
 
 ```bash
 echo "$greeting" > output.txt
@@ -184,7 +197,7 @@ nextflow run hello.nf
 
 ## Relaunch a pipeline without repeating steps
 
-> One of the core features of Nextflow is the ability to cache task executions and re-use them in subsequent runs to minimize duplicate work. Reentrancy is useful both for recovering from errors and for iteratively when developing a pipeline.
+> One of the core features of Nextflow is the ability to cache task executions and re-use them in subsequent runs to minimize duplicate work. Reentrancy as it is called in computation, is useful both for recovering from errors and when developing a pipeline.
 
 In other words use the `-resume` option to run a pipeline again without repeating the processes that have already been completed without errors. 
 
@@ -218,7 +231,7 @@ How the result looks now? Very Danish?
 
 Now we introduce a second process that converts the text to uppercase.
 
-Here it is just an scheme for the code:
+Here it is just an scheme for the code, please complete it yourself:
 
 ```groovy
 /*
@@ -229,14 +242,12 @@ process convertToUpper {
     // directives
     //publish a directory for results
 
+    //define an input file
     input:
-        //define an input file
-
-    // we modify the output file name
-    // the output file should contain an indication that these is an uppercase message and the input file name
-    // Avoid spaces in the file name
+        
+    // the output file should contain an indication that these is an uppercase message + "_" + input file name
+    // Avoid spaces in the file name!
     output:
-        //define an output file that contains
 
     // now we add the bash code to convert the greeting to uppercase
     // A way to do that in bash scripting is cat file | tr '[a-z]' '[A-Z]' > output
@@ -277,10 +288,11 @@ What happened now? How many processes have been run? Did your code edits work? H
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
 
-`Channel.of()` factory we've been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or files ...
+`Channel.of()` factory we've been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files ... to the next process.
 
-There are different factory channels to create the channels. Here you have an example where I used factory `Channel.fromFilePairs()` fastq read files.
+There are different factory channels to create these channels. 
 
+Here you have an example where I used factory `Channel.fromFilePairs()` to package as a channel fastq files.
 ```groovy
 params.reads = "$projectDir/data/*_{1,2}.fq.gz"
 
@@ -292,7 +304,7 @@ Channel
     read_pairs_ch.view()
 ```
 
-`.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and achieve the input files in the desired format.
+`.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and obtain the input files on your desired format.
 
 Back into our channel. Please modify the following, where do you need to add that?
 ```groovy
@@ -358,7 +370,11 @@ Now we need to set up a CLI parameter with a default value pointing to an input 
 params.input_file = "data/greetings.csv"
 ```
 
-We need to construct the channel. We use channel factory, `Channel.fromPath()`, which has some built-in functionality for handling file paths. Furthermore, we're going to add the `.splitCsv()` operator to make Nextflow parse the file contents accordingly, as well as the `.flatten()` operator to turn the array element produced by `.splitCsv()` into a channel of individual elements.
+Then we need to build the channel. 
+
+We use channel factory, `Channel.fromPath()`, which has some built-in functionality for handling file paths. 
+
+Furthermore, we're going to add the `.splitCsv()` operator to make Nextflow parse the file contents accordingly, as well as the `.flatten()` operator to turn the array element produced by `.splitCsv()` into a channel of individual elements.
 
 By now you should know where to add this piece of code:
 ```groovy
@@ -377,7 +393,7 @@ Did you get the same results? Hopefully yes but now you used a `greetings.csv` t
 
 ## Summary
 
-> You should also have a basic idea of how to build a workflow and manage inputs and outputs. You know how to provide the input values to the workflow via the CLI or a file. You know how to define your output files and how to save the results in an specific folder.
+> Basic idea of how to build a workflow and manage inputs and outputs. You know how to provide the input values to the workflow via the CLI or a file. You know how to define your output files and how to save the results in an specific folder.
 >
 > More generally, you've learned how to use the essential components of Nextflow: 
 > - **Channels**: contain the input of the workflows used by the processes. Channels connect processes with each other.
