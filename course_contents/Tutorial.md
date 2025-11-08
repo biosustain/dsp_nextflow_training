@@ -205,7 +205,7 @@ What happened? Did your `sayHello()` process run again? Notice that the work sub
 
 > Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.
 
-So try to specify the input from the command line. For that you need to modify how the channel is created to get now the greeting value from the CLI in the workflow block.
+Now we are going to modify how the channel is created to get the greeting value from the CLI in the workflow block.
 ```groovy
 // create a channel for inputs
 greeting_ch = Channel.of(params.greeting)
@@ -218,7 +218,7 @@ nextflow run hello.nf --greeting 'Hej verden!'
 
 > Notice one thing here, for parameters that apply to a pipeline, we use a double hyphen (--), 
 > whereas we use a single hyphen (-) for parameters that modify a specific Nextflow setting, 
-> e.g. the -resume feature we used earlier.
+> e.g. the -resume feature.
 
 How the result looks now? Very Danish?
 
@@ -240,7 +240,7 @@ process convertToUpper {
     //define an input file
     input:
         
-    // the output file should contain an indication that these is an uppercase message + "_" + input file name
+    // the output file should contain an indication that these is an uppercase file + "_" + input file name
     // Avoid spaces in the file name!
     output:
 
@@ -271,10 +271,10 @@ workflow {
 }
 ```
 
-Now you are ready to greet på Dansk igen!
+Now let's say Good morning in portuguese!
 
 ```groovy
-nextflow run hello.nf --greeting 'Hej verden!'
+nextflow run hello.nf --greeting 'Bom dia!'
 ```
 
 What happened now? How many processes have been run? Did your code edits work? How are your output files named and where were they saved?
@@ -283,7 +283,7 @@ What happened now? How many processes have been run? Did your code edits work? H
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
 
-`Channel.of()` factory we've been using is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files ... to the next process.
+`Channel.of()` factory method is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files, etc ... to the next process.
 
 There are different factory channels to create these channels. 
 
@@ -356,7 +356,7 @@ cd ..
 
 Does the file greetings.csv look as greetings separated per commas? :) Then you are good to go on...
 
-Now we need to set up a CLI parameter with a default value pointing to an input file. Let's put that piece of code by the bginning of our script:
+Now we need to set up a CLI parameter with a default value pointing to an input file. Let's put that piece of code by the beginning of our script:
 
 ```groovy
 /*
@@ -369,7 +369,7 @@ Then we need to build the channel.
 
 We use channel factory, `Channel.fromPath()`, which has some built-in functionality for handling file paths. 
 
-Furthermore, we're going to add the `.splitCsv()` operator to make Nextflow parse the file contents accordingly, as well as the `.flatten()` operator to turn the array element produced by `.splitCsv()` into a channel of individual elements.
+Furthermore, we're going to add the `.splitCsv()` operator to split the line by comma, as well as the `.flatten()` operator to turn the array of elements produced into a channel of individual elements.
 
 By now you should know where to add this piece of code:
 ```groovy
@@ -382,13 +382,14 @@ greeting_ch = Channel.fromPath(params.input_file)
 Ok, lets try this script one last time!
 
 ```groovy
-nextflow run hello.nf
+nextflow run hello.nf -ansi-log false
 ```
 Did you get the same results? Hopefully yes but now you used a `greetings.csv` that could be your `samplesheet.csv` file if you run a real biological pipeline.
 
 ## Summary
 
-> Basic idea of how to build a workflow and manage inputs and outputs. You know how to provide the input values to the workflow via the CLI or a file. You know how to define your output files and how to save the results in an specific folder.
+By now you should have:
+> Basic idea of how to build a simple workflow and manage inputs and outputs. You know how to provide the input values to the workflow via the CLI or a file. You know how to define your output files and how to save the results in an specific folder.
 >
 > More generally, you've learned how to use the essential components of Nextflow: 
 > - **Channels**: contain the input of the workflows used by the processes. Channels connect processes with each other.
