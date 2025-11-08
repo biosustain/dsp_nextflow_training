@@ -354,13 +354,13 @@ document.write(`
 <p>Let’s run a commonly used Nextflow pipeline to analise RNA-seq data (<a class="reference external" href="https://nf-co.re/rnaseq/3.17.0" rel="noreferrer" target="_blank">nf-core/rnaseq</a>).</p>
 <p>This pipeline will cover the following 4 steps using commonly used bioinformatics tools:</p>
 <ol class="arabic simple">
-<li><p>Indexes a transcriptome file</p></li>
+<li><p>Indexing a transcriptome file</p></li>
 <li><p>Quality control of the high throughput sequence data with <strong>FastQC</strong></p></li>
 <li><p>Quantification  of transcripts using <strong>Salmon</strong></p></li>
 <li><p>Creates a <strong>MultiQC</strong> report. MultiQC searches a given directory for analysis logs and compiles an easy-viewing HTML report.</p></li>
 </ol>
-<p>This is based on this part of <a class="reference external" href="https://training.nextflow.io/basic_training/rnaseq_pipeline/" rel="noreferrer" target="_blank">Nextflow tutorial</a>. There you can find the pipeline broken into different part as a collection of 7 scripts if you want to get into deeper on the code.</p>
-<p>To be able to run this pipeline we will clone the training repository from Nextflow official training materials from Github. Here you can enjoy the hello training, their fundamentals training based on the rnaseq pipeline and the advanced training with all data, files and scripts needed.</p>
+<p>This is based on this part of <a class="reference external" href="https://training.nextflow.io/basic_training/rnaseq_pipeline/" rel="noreferrer" target="_blank">Nextflow tutorial</a>. There you can find the pipeline broken into 7 scripts if you want to get deeper on the Nextflow code.</p>
+<p>To be able to run this pipeline we will clone the Nextflow training repository. If you do so you can practice with hello training, their fundamentals training based on the rnaseq pipeline and the advanced training with all data, files and scripts needed.</p>
 <p>First cloning with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nextflow-io/training.git<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span>
 </pre></div>
@@ -369,18 +369,18 @@ document.write(`
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>training/nf-training
 </pre></div>
 </div>
-<p>Here you find a collection of 7 scripts where the rnaseq pipeline (a small version of it) is broken into the different parts. It is great training material and I recommend you go through if you want to keep learning Nextflow. For today we will run the last script that contains all the parts we want to run (Indexing transcriptome file, fastQC of the files, Salmon for transcript quantification and MultiQC to see a final report of our run).</p>
+<p>For today we will run the last script that contains all the parts we want to run (Indexing transcriptome file, fastQC of the files, Salmon for transcript quantification and MultiQC to see a final report of our run).</p>
 <blockquote>
-<div><p>This pipeline requires Docker as every process is run inside a Docker container. On other words an environment where the required operation system and software is installed with all dependencies. Nextflow uses generally containerization tools like Docker, Singularity, or Conda to ensure reproducibility of the results.</p>
+<div><p>This pipeline requires Docker as every process is run inside a Docker container. On other words an environment where the required operation system and software is installed with all dependencies. Nextflow uses generally containerization tools like Docker, Apptainer (formerly Singularity), or Conda environments to ensure reproducibility of the results.</p>
 </div></blockquote>
-<p>We run script7.nf that contain all the parts we want to run. ANd we tell Nextflow to use Docker:</p>
+<p>We run script7.nf that contain all the parts we want to run in today’s exercise. And we tell Nextflow to use Docker:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">Running rnaseq pipeline (scrip7.nf)</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">script7</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">docker</span>
 </pre></div>
 </div>
 </div>
-<p>After few minutes you should have run succesfully your first rnaseq pipeline! Time to check your results and logs:</p>
+<p>After few minutes you should have run succesfully your first rnaseq pipeline on gut samples! Time to check your results and logs:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-a<span class="w"> </span>results
 tree<span class="w"> </span>-a<span class="w"> </span>work
 ls<span class="w"> </span>results
@@ -391,7 +391,7 @@ ls<span class="w"> </span>results
 </pre></div>
 </div>
 <p>Then on the top right corner look for the icon <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">Preview</span></code>.</p>
-<p>MultiQC report aggregates results from the pipeline steps (from all the softwares that is compatible with -  quite many). In this case it shows some general statistics, fastQC results, and the Quantification information.</p>
+<p>MultiQC report aggregates results from the pipeline steps (from all the softwares that is compatible with -  quite many!). In this case it shows some general statistics, fastQC results, and the Quantification information.</p>
 <p>We could also specify to Nextflow that it needs to run with Docker adding this information in a config file. Let’s create a config file named <code class="docutils literal notranslate"><span class="pre">course.config</span></code> and add the following:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
@@ -402,7 +402,7 @@ ls<span class="w"> </span>results
 <p>Let’s run again the workflow by calling our config file with Nextflow option <code class="docutils literal notranslate"><span class="pre">-c</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Running rnaseq pipeline (scrip7.nf) with course.config</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span><span class="w"> </span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">script7</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">course</span><span class="o">.</span><span class="na">config</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">script7</span><span class="o">.</span><span class="na">nf</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">course</span><span class="o">.</span><span class="na">config</span>
 </pre></div>
 </div>
 </div>
