@@ -351,10 +351,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">1. Input definition to the process block:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-command-to-use-the-input-variable">2. Editing the process command to use the input variable</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel">3. Creating an input channel</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call">4. Adding the channel as input to the process call</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-input-definition-to-the-process-block">1. Adding input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-code-to-use-the-input-variable">2. Editing the process code to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel-in-the-workflow-block">3. Creating an input channel in the workflow block</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call-in-the-workflow-block">4. Adding the channel as input to the process call in the workflow block</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
@@ -498,16 +498,10 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 <section id="add-in-variable-inputs-using-a-channel">
 <h2>Add in variable inputs using a channel<a class="headerlink" href="#add-in-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
 <p>Let’s add some more flexibility by using an input variable, so that we can easily change the greeting message.</p>
-<p>This requires us to make few changes:</p>
-<ol class="arabic simple">
-<li><p>Tell the process about expected variable inputs using the input block</p></li>
-<li><p>Edit the process to use the input value (in the process block)</p></li>
-<li><p>Create a channel to pass input to the process (more on that in a minute)</p></li>
-<li><p>Add the channel as input to the process call (in the workflow block)</p></li>
-</ol>
-<section id="input-definition-to-the-process-block">
-<h3>1. Input definition to the process block:<a class="headerlink" href="#input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
-<p>Adding an input definition.</p>
+<p>This requires us to make four changes:</p>
+<section id="adding-input-definition-to-the-process-block">
+<h3>1. Adding input definition to the process block:<a class="headerlink" href="#adding-input-definition-to-the-process-block" title="Link to this heading">#</a></h3>
+<p>Tell the process about expected variable inputs using the input block</p>
 <blockquote>
 <div><p>The <code class="docutils literal notranslate"><span class="pre">val</span></code> qualifier accepts any data type. It can be accessed in the process script by using the specified input name.</p>
 </div></blockquote>
@@ -523,17 +517,19 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 </pre></div>
 </div>
 </section>
-<section id="editing-the-process-command-to-use-the-input-variable">
-<h3>2. Editing the process command to use the input variable<a class="headerlink" href="#editing-the-process-command-to-use-the-input-variable" title="Link to this heading">#</a></h3>
+<section id="editing-the-process-code-to-use-the-input-variable">
+<h3>2. Editing the process code to use the input variable<a class="headerlink" href="#editing-the-process-code-to-use-the-input-variable" title="Link to this heading">#</a></h3>
 <p>Changing the code to write the variable (containing our greeting) in the output file:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$greeting</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>output.txt
 </pre></div>
 </div>
 </section>
-<section id="creating-an-input-channel">
-<h3>3. Creating an input channel<a class="headerlink" href="#creating-an-input-channel" title="Link to this heading">#</a></h3>
-<p>This needs to be done in the workflow block.</p>
-<p>Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together</p>
+<section id="creating-an-input-channel-in-the-workflow-block">
+<h3>3. Creating an input channel in the workflow block<a class="headerlink" href="#creating-an-input-channel-in-the-workflow-block" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>Nextflow uses <strong>channels</strong> to feed inputs to processes and ferry data between processes that are connected together
+Channel.of is a factory method to create Channels</p>
+</div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="c1">// creating a channel for inputs</span>
@@ -545,8 +541,8 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 </pre></div>
 </div>
 </section>
-<section id="adding-the-channel-as-input-to-the-process-call">
-<h3>4. Adding the channel as input to the process call<a class="headerlink" href="#adding-the-channel-as-input-to-the-process-call" title="Link to this heading">#</a></h3>
+<section id="adding-the-channel-as-input-to-the-process-call-in-the-workflow-block">
+<h3>4. Adding the channel as input to the process call in the workflow block<a class="headerlink" href="#adding-the-channel-as-input-to-the-process-call-in-the-workflow-block" title="Link to this heading">#</a></h3>
 <p>Now we need to actually plug our newly created channel into the sayHello() process call.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// emit a greeting</span>
 <span class="n">sayHello</span><span class="o">(</span><span class="n">greeting_ch</span><span class="o">)</span>
@@ -860,10 +856,10 @@ less<span class="w"> </span>greetings.csv
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-definition-to-the-process-block">1. Input definition to the process block:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-command-to-use-the-input-variable">2. Editing the process command to use the input variable</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel">3. Creating an input channel</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call">4. Adding the channel as input to the process call</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-input-definition-to-the-process-block">1. Adding input definition to the process block:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-code-to-use-the-input-variable">2. Editing the process code to use the input variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel-in-the-workflow-block">3. Creating an input channel in the workflow block</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call-in-the-workflow-block">4. Adding the channel as input to the process call in the workflow block</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
