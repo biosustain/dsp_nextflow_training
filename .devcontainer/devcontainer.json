@@ -1,22 +1,34 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-  "name": "Nextflow Development Environment",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",  // Added Base Ubuntu container image as OS
-  "runArgs": [
-    "--volume=/var/run/docker.sock:/var/run/docker.sock"  // Mounted the Docker socket from host machine
-  ],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y openjdk-11-jdk curl && curl -s https://get.nextflow.io | bash && chmod +x nextflow && sudo mv nextflow /usr/local/bin/ && sudo apt-get install -y docker.io && sudo groupadd docker || true && sudo usermod -aG docker $USER && sudo chown $USER:docker /var/run/docker.sock", 
-  // Updated packages, 
-  // installed java 11, 
-  // installed nextflow, 
-  // changed permissions for nextflow to make it executable 
-  // and moved Nextflow to /usr/local/bin
-  // Also installed Docker and added the Codespace user to the Docker group, enabling the user to run Docker commands
-  "customizations": {
-    "vscode": { // Added VSCode as my Editor
-      "extensions": [
-        "ms-azuretools.vscode-docker" // Docker extension for VS Code
-      ]
-    }
-  }
-}
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
 
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.live-server",
+				"nextflow.nextflow"
+			]
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
