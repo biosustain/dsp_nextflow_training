@@ -10,11 +10,11 @@ Don't change the configuration and accept the default option. It says pay but yo
 
 If you want to do it manually go to [course website](https://github.com/biosustain/dsp_nextflow_training)
 
-Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, VSCode with Docker extension) with additional customization added in the Dockerfile (i.e, installing java and Docker dependencies).
+Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, and VSCode with needed extensions) with additional customization added in the Dockerfile (i.e, installing java and Nextflow).
 
 To learn more about Github codespaces go [here](https://github.com/features/codespaces)
 
->Please remember to delete your Codespace by the end of the class so that you do not consume your free Github codespace credits! If you do not delete it it will be deleted automatically days after your created.
+>Please remember to delete your Codespace by the end of the class so that you do not consume your free Github codespace credits! If you do not delete your codespaces they will be deleted automatically days after your created.
 
 ## Initial checks
 Now, Nextflow should be ready to run in your GitHub Codespace environment! Let's check that you have a fully functional environment with Nextflow, java and Docker properly installed
@@ -43,7 +43,7 @@ nextflow info
 docker --version
 ```
 
-If everything went well you have a fully functional Nextflow environment for today. Rememeber that we are going to use VS code as our editor to write code and handle our files.
+If everything went well you have a fully functional Nextflow environment for today! Rememeber that we are going to use VS code as our editor to write code and handle our files.
 
 ## Local installation
 
