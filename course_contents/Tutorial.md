@@ -133,16 +133,11 @@ Were was the output file saved now? Could you find it anywhere else? Notice the 
 
 Let's add some more flexibility by using an input variable, so that we can easily change the greeting message.
 
-This requires us to make few changes:
+This requires us to make four changes:
 
-1. Tell the process about expected variable inputs using the input block
-2. Edit the process to use the input value (in the process block)
-3. Create a channel to pass input to the process (more on that in a minute)
-4. Add the channel as input to the process call (in the workflow block)
+### 1. Adding input definition to the process block:
 
-### 1. Input definition to the process block:
-
-Adding an input definition. 
+Tell the process about expected variable inputs using the input block 
 
 > The `val` qualifier accepts any data type. It can be accessed in the process script by using the specified input name.
 
@@ -158,18 +153,17 @@ process sayHello {
         path "output.txt"
 ```
 
-### 2. Editing the process command to use the input variable
+### 2. Editing the process code to use the input variable
 
 Changing the code to write the variable (containing our greeting) in the output file:
 
 ```bash
 echo "$greeting" > output.txt
 ```
-### 3. Creating an input channel
+### 3. Creating an input channel in the workflow block
 
-This needs to be done in the workflow block.
-
-Nextflow uses channels to feed inputs to processes and ferry data between processes that are connected together
+> Nextflow uses **channels** to feed inputs to processes and ferry data between processes that are connected together
+> Channel.of is a factory method to create Channels
 
 ```groovy
 workflow {
@@ -182,7 +176,7 @@ workflow {
 }
 ```
 
-### 4. Adding the channel as input to the process call
+### 4. Adding the channel as input to the process call in the workflow block
 
 Now we need to actually plug our newly created channel into the sayHello() process call.
 

@@ -13,6 +13,7 @@ _build
 work
 # Ignore the training directory cloned
 training
-# ignore results and data folder
+# ignore hello.nf, results and data folder
+hello.nf
 data
 results
