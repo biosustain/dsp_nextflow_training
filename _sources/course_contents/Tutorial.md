@@ -77,6 +77,7 @@ If we look inside each subdirectory, we find the following log files:
 > - .command.log: Complete log output emitted by the process task
 > - .command.out: Regular output (stdout) by the process task
 > - .command.sh: The command that was run by the process task call
+> - .command.run: Full script run by Nextflow to execute the process call
 > - .exitcode: The exit code resulting from the command
 
 As you wrote your results in the standard output, where do you think you will find your greeting message? Are there some files empty for this run? Why?
