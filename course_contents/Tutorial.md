@@ -84,7 +84,7 @@ As you wrote your results in the standard output, where do you think you will fi
 
 You may have also noticed that you get some .nextflow.log files with all Nextflow activity since you run the script. These ones accumulate until 10 files. To see the one corresponding to the latest run do a `less .nextflow.log`. Very useful for debugging as well!
 
-## Send the output to a file and save it on an specific folder
+## Sending the output to a file and saving it on a folder
 
 Let's write the output to a file, we need to define the output in a different way and change the bash code in the code block.
 
@@ -129,7 +129,7 @@ Were was the output file saved now? Could you find it anywhere else? Notice the 
 
 > With `mode: 'copy'` you are telling Nextflow that the reults need to be just a copy of the results saved in the work directory. There are other mode types to modify the publishDir behaviour. 
 
-## Add in variable inputs using a channel
+## Adding variable inputs using a channel
 
 Let's add some more flexibility by using an input variable, so that we can easily change the greeting message.
 
@@ -162,8 +162,7 @@ echo "$greeting" > output.txt
 ```
 ### 3. Creating an input channel in the workflow block
 
-> Nextflow uses **channels** to feed inputs to processes and ferry data between processes that are connected together
-> Channel.of is a factory method to create Channels
+> Nextflow uses **channels** to feed inputs to processes and ferry data between processes that are connected together. `Channel.of` is a factory method to create Channels
 
 ```groovy
 workflow {
@@ -190,7 +189,7 @@ And run the pipeline again!
 nextflow run hello.nf
 ```
 
-## Relaunch a pipeline without repeating steps
+## Relaunching a pipeline without repeating steps
 
 > One of the core features of Nextflow is the ability to cache task executions and re-use them in subsequent runs to minimize duplicate work. Reentrancy as it is called in computation, is useful both for recovering from errors and when developing a pipeline.
 
@@ -201,9 +200,9 @@ nextflow run hello.nf -resume
 ```
 What happened? Did your `sayHello()` process run again? Notice that the work subdirectory referenced in the summary of the pipeline execution has not changed and contains all results files and logs from the previous run, this step has not run again.
 
-## Use command line interface (CLI) parameters for inputs
+## Command line interface (CLI) parameters for inputs
 
-> Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.
+> Nextflow has a built-in workflow parameter system called **params**, which makes it easy to declare and use CLI parameters.
 
 Now we are going to modify how the channel is created to get the greeting value from the CLI in the workflow block.
 ```groovy
@@ -342,7 +341,7 @@ less results/Hello-output.txt
 less results/Hej-output.txt
 ...
 ```
-## Take a file source of input values (a sample file)
+## Taking a sample file with different inputs
 
 Finally last modification to our script. Usually workflows start from a sample file. In Nextflow and in nf-core standards this is usually called `samplesheet.csv`. We will create a file called `greetings.csv` for our example pipeline and save it in a folder called `data`.
 
