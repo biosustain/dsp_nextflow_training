@@ -349,19 +349,19 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sending-the-output-to-a-file-and-saving-it-on-a-folder">Sending the output to a file and saving it on a folder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-variable-inputs-using-a-channel">Adding variable inputs using a channel</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-input-definition-to-the-process-block">1. Adding input definition to the process block:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-code-to-use-the-input-variable">2. Editing the process code to use the input variable</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel-in-the-workflow-block">3. Creating an input channel in the workflow block</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call-in-the-workflow-block">4. Adding the channel as input to the process call in the workflow block</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunching-a-pipeline-without-repeating-steps">Relaunching a pipeline without repeating steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-line-interface-cli-parameters-for-inputs">Command line interface (CLI) parameters for inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-add-a-second-process-to-our-pipeline">Let’s add a second process to our pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-a-sample-file-with-different-inputs">Taking a sample file with different inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
 </ul>
@@ -454,8 +454,8 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 <p>As you wrote your results in the standard output, where do you think you will find your greeting message? Are there some files empty for this run? Why?</p>
 <p>You may have also noticed that you get some .nextflow.log files with all Nextflow activity since you run the script. These ones accumulate until 10 files. To see the one corresponding to the latest run do a <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">.nextflow.log</span></code>. Very useful for debugging as well!</p>
 </section>
-<section id="send-the-output-to-a-file-and-save-it-on-an-specific-folder">
-<h2>Send the output to a file and save it on an specific folder<a class="headerlink" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder" title="Link to this heading">#</a></h2>
+<section id="sending-the-output-to-a-file-and-saving-it-on-a-folder">
+<h2>Sending the output to a file and saving it on a folder<a class="headerlink" href="#sending-the-output-to-a-file-and-saving-it-on-a-folder" title="Link to this heading">#</a></h2>
 <p>Let’s write the output to a file, we need to define the output in a different way and change the bash code in the code block.</p>
 <p>Now in the output gets defined as a file instead of stdout.</p>
 <blockquote>
@@ -495,8 +495,8 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 <div><p>With <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">'copy'</span></code> you are telling Nextflow that the reults need to be just a copy of the results saved in the work directory. There are other mode types to modify the publishDir behaviour.</p>
 </div></blockquote>
 </section>
-<section id="add-in-variable-inputs-using-a-channel">
-<h2>Add in variable inputs using a channel<a class="headerlink" href="#add-in-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
+<section id="adding-variable-inputs-using-a-channel">
+<h2>Adding variable inputs using a channel<a class="headerlink" href="#adding-variable-inputs-using-a-channel" title="Link to this heading">#</a></h2>
 <p>Let’s add some more flexibility by using an input variable, so that we can easily change the greeting message.</p>
 <p>This requires us to make four changes:</p>
 <section id="adding-input-definition-to-the-process-block">
@@ -527,8 +527,7 @@ tree<span class="w"> </span>-a<span class="w"> </span>work
 <section id="creating-an-input-channel-in-the-workflow-block">
 <h3>3. Creating an input channel in the workflow block<a class="headerlink" href="#creating-an-input-channel-in-the-workflow-block" title="Link to this heading">#</a></h3>
 <blockquote>
-<div><p>Nextflow uses <strong>channels</strong> to feed inputs to processes and ferry data between processes that are connected together
-Channel.of is a factory method to create Channels</p>
+<div><p>Nextflow uses <strong>channels</strong> to feed inputs to processes and ferry data between processes that are connected together. <code class="docutils literal notranslate"><span class="pre">Channel.of</span></code> is a factory method to create Channels</p>
 </div></blockquote>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="o">{</span>
 
@@ -554,8 +553,8 @@ Channel.of is a factory method to create Channels</p>
 </div>
 </section>
 </section>
-<section id="relaunch-a-pipeline-without-repeating-steps">
-<h2>Relaunch a pipeline without repeating steps<a class="headerlink" href="#relaunch-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
+<section id="relaunching-a-pipeline-without-repeating-steps">
+<h2>Relaunching a pipeline without repeating steps<a class="headerlink" href="#relaunching-a-pipeline-without-repeating-steps" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p>One of the core features of Nextflow is the ability to cache task executions and re-use them in subsequent runs to minimize duplicate work. Reentrancy as it is called in computation, is useful both for recovering from errors and when developing a pipeline.</p>
 </div></blockquote>
@@ -565,10 +564,10 @@ Channel.of is a factory method to create Channels</p>
 </div>
 <p>What happened? Did your <code class="docutils literal notranslate"><span class="pre">sayHello()</span></code> process run again? Notice that the work subdirectory referenced in the summary of the pipeline execution has not changed and contains all results files and logs from the previous run, this step has not run again.</p>
 </section>
-<section id="use-command-line-interface-cli-parameters-for-inputs">
-<h2>Use command line interface (CLI) parameters for inputs<a class="headerlink" href="#use-command-line-interface-cli-parameters-for-inputs" title="Link to this heading">#</a></h2>
+<section id="command-line-interface-cli-parameters-for-inputs">
+<h2>Command line interface (CLI) parameters for inputs<a class="headerlink" href="#command-line-interface-cli-parameters-for-inputs" title="Link to this heading">#</a></h2>
 <blockquote>
-<div><p>Nextflow has a built-in workflow parameter system called params, which makes it easy to declare and use CLI parameters.</p>
+<div><p>Nextflow has a built-in workflow parameter system called <strong>params</strong>, which makes it easy to declare and use CLI parameters.</p>
 </div></blockquote>
 <p>Now we are going to modify how the channel is created to get the greeting value from the CLI in the workflow block.</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// create a channel for inputs</span>
@@ -689,8 +688,8 @@ less<span class="w"> </span>results/Hej-output.txt
 </pre></div>
 </div>
 </section>
-<section id="take-a-file-source-of-input-values-a-sample-file">
-<h2>Take a file source of input values (a sample file)<a class="headerlink" href="#take-a-file-source-of-input-values-a-sample-file" title="Link to this heading">#</a></h2>
+<section id="taking-a-sample-file-with-different-inputs">
+<h2>Taking a sample file with different inputs<a class="headerlink" href="#taking-a-sample-file-with-different-inputs" title="Link to this heading">#</a></h2>
 <p>Finally last modification to our script. Usually workflows start from a sample file. In Nextflow and in nf-core standards this is usually called <code class="docutils literal notranslate"><span class="pre">samplesheet.csv</span></code>. We will create a file called <code class="docutils literal notranslate"><span class="pre">greetings.csv</span></code> for our example pipeline and save it in a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>data
 <span class="nb">cd</span><span class="w"> </span>data
@@ -855,19 +854,19 @@ less<span class="w"> </span>greetings.csv
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-our-first-script">Running our first script</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find-the-output-and-logs-in-the-work-directory">Find the output and logs in the work directory</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#send-the-output-to-a-file-and-save-it-on-an-specific-folder">Send the output to a file and save it on an specific folder</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-in-variable-inputs-using-a-channel">Add in variable inputs using a channel</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sending-the-output-to-a-file-and-saving-it-on-a-folder">Sending the output to a file and saving it on a folder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-variable-inputs-using-a-channel">Adding variable inputs using a channel</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-input-definition-to-the-process-block">1. Adding input definition to the process block:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#editing-the-process-code-to-use-the-input-variable">2. Editing the process code to use the input variable</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-input-channel-in-the-workflow-block">3. Creating an input channel in the workflow block</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-channel-as-input-to-the-process-call-in-the-workflow-block">4. Adding the channel as input to the process call in the workflow block</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunch-a-pipeline-without-repeating-steps">Relaunch a pipeline without repeating steps</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-command-line-interface-cli-parameters-for-inputs">Use command line interface (CLI) parameters for inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaunching-a-pipeline-without-repeating-steps">Relaunching a pipeline without repeating steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#command-line-interface-cli-parameters-for-inputs">Command line interface (CLI) parameters for inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-add-a-second-process-to-our-pipeline">Let’s add a second process to our pipeline</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-run-the-script-on-a-batch-of-input-values">Let’s run the script on a batch of input values</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-a-file-source-of-input-values-a-sample-file">Take a file source of input values (a sample file)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taking-a-sample-file-with-different-inputs">Taking a sample file with different inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#full-script">Full script</a></li>
 </ul>
