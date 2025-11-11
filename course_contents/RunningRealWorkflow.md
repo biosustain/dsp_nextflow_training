@@ -24,6 +24,8 @@ cd training/nf-training
 ```
 For today we will run the last script (script7.nf) that contains all the parts we want to run (Indexing transcriptome file, fastQC of the files, Salmon for transcript quantification and MultiQC to see a final report).
 
+Please open the script7 and let's have a look together.
+
 > This pipeline requires **Docker** as every process is run inside a Docker container. In other words, we need an environment where the required operation system and software is installed with all dependencies. Nextflow uses generally containerization tools like Docker, Apptainer (formerly Singularity), or Conda environments to ensure reproducibility of the results.
 
 We run script7.nf and we tell Nextflow to use Docker:
