@@ -413,18 +413,19 @@ params.input_file = "data/greetings.csv"
  * Process 1: Use echo to print 'Hello World!' to an output file
  */
 process sayHello {
-    //directives
+
     publishDir 'results', mode: 'copy'
 
     input:
-        path input_file
+        val greeting
 
     output:
         path "${greeting}-output.txt"
-
-    script:
+    
+    // code block (here using bash)
+    script: 
     """
-    echo "$greeting" > "$greeting-output.txt"
+    echo "$greeting" > "${greeting}-output.txt"
     """
 }
 
