@@ -752,18 +752,19 @@ less<span class="w"> </span>greetings.csv
 <span class="cm"> * Process 1: Use echo to print &#39;Hello World!&#39; to an output file</span>
 <span class="cm"> */</span>
 <span class="n">process</span><span class="w"> </span><span class="n">sayHello</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="c1">//directives</span>
+
 <span class="w">    </span><span class="n">publishDir</span><span class="w"> </span><span class="s1">&#39;results&#39;</span><span class="o">,</span><span class="w"> </span><span class="nl">mode:</span><span class="w"> </span><span class="s1">&#39;copy&#39;</span>
 
 <span class="w">    </span><span class="nl">input:</span>
-<span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="n">input_file</span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">greeting</span>
 
 <span class="w">    </span><span class="nl">output:</span>
 <span class="w">        </span><span class="n">path</span><span class="w"> </span><span class="s2">&quot;${greeting}-output.txt&quot;</span>
-
-<span class="w">    </span><span class="nl">script:</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// code block (here using bash)</span>
+<span class="w">    </span><span class="nl">script:</span><span class="w"> </span>
 <span class="w">    </span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    echo &quot;$greeting&quot; &gt; &quot;$greeting-output.txt&quot;</span>
+<span class="s2">    echo &quot;$greeting&quot; &gt; &quot;${greeting}-output.txt&quot;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">}</span>
 
