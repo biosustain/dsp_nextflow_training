@@ -162,13 +162,13 @@ echo "$greeting" > output.txt
 ```
 ### 3. Creating an input channel in the workflow block
 
-> Nextflow uses **channels** to feed inputs to processes and ferry data between processes that are connected together. `Channel.of` is a factory method to create Channels
+> Nextflow uses **channels** to feed inputs to processes and ferry data between processes that are connected together. `channel.of` is a factory method to create channels
 
 ```groovy
 workflow {
 
     // creating a channel for inputs
-    greeting_ch = Channel.of('Hello world!')
+    greeting_ch = channel.of('Hello world!')
 
     // emitting a greeting
     sayHello()
@@ -207,7 +207,7 @@ What happened? Did your `sayHello()` process run again? Notice that the work sub
 Now we are going to modify how the channel is created to get the greeting value from the CLI in the workflow block.
 ```groovy
 // create a channel for inputs
-greeting_ch = Channel.of(params.greeting)
+greeting_ch = channel.of(params.greeting)
 ```
 
 Run the pipeline! Let's greet på Dansk!
@@ -260,7 +260,7 @@ The output of the sayHello process is automatically packaged as a channel called
 workflow {
 
     // create a channel for inputs
-    greeting_ch = Channel.of(params.greeting)
+    greeting_ch = channel.of(params.greeting)
 
     // emit a greeting
     sayHello(greeting_ch)
@@ -282,20 +282,20 @@ What happened now? How many processes have been run? Did your code edits work? H
 
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so we want to upgrade the workflow to accept multiple input values.
 
-`Channel.of()` factory method is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files, etc ... to the next process.
+`channel.of()` factory method is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files, etc ... to the next process.
 
 There are different factory channels to create these channels. 
 
-Here you have an example where I used factory `Channel.fromFilePairs()` to package as a channel fastq files.
+Here you have an example where I used factory `channel.fromFilePairs()` to package as a channel fastq files.
 ```groovy
 params.reads = "$projectDir/data/*_{1,2}.fq.gz"
 
-Channel
+channel
     .fromFilePairs(params.reads, checkIfExists: true)
     .toSortedList( { a, b -> a[0] <=> b[0] } )
     .flatMap()
     .set { read_pairs_ch }
-    read_pairs_ch.view()
+read_pairs_ch.view()
 ```
 
 `.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and obtain the input files on your desired format.
@@ -303,7 +303,7 @@ Channel
 Back into our channel. Please modify the following, where do you need to add that?
 ```groovy
 // create a channel for inputs
-greeting_ch = Channel.of('Hello','Bonjour','Hola','Hej')
+greeting_ch = channel.of('Hello','Bonjour','Hola','Hej')
 ```
 
 We want to ensure the output file names will be unique as they will be all written in the same folder `results`. Let's generate a file name dynamically so that the final file names will be unique. We need then to modify the code in the process `sayHello`:
@@ -366,14 +366,14 @@ params.input_file = "data/greetings.csv"
 
 Then we need to build the channel. 
 
-We use channel factory, `Channel.fromPath()`, which has some built-in functionality for handling file paths. 
+We use channel factory, `channel.fromPath()`, which has some built-in functionality for handling file paths. 
 
 Furthermore, we're going to add the `.splitCsv()` operator to split the line by comma, as well as the `.flatten()` operator to turn the array of elements produced into a channel of individual elements.
 
 By now you should know where to add this piece of code:
 ```groovy
 // create a channel for inputs from a CSV file
-greeting_ch = Channel.fromPath(params.input_file)
+greeting_ch = channel.fromPath(params.input_file)
                      .splitCsv()
                      .flatten()
 ```
@@ -453,7 +453,7 @@ process convertToUpper {
 workflow {
 
     // create a channel for inputs from a CSV file
-    greeting_ch = Channel.fromPath(params.input_file)
+    greeting_ch = channel.fromPath(params.input_file)
                      .splitCsv()
                      .flatten()
 
