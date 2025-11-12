@@ -17,3 +17,6 @@ training
 hello.nf
 data
 results
+
+# ignore .env environment file
+.env
