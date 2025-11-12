@@ -295,7 +295,7 @@ channel
     .toSortedList( { a, b -> a[0] <=> b[0] } )
     .flatMap()
     .set { read_pairs_ch }
-    read_pairs_ch.view()
+read_pairs_ch.view()
 ```
 
 `.toSortedList`, `.flatMap`, `.set`, `.view` are operators to transform the channel and obtain the input files on your desired format.
