@@ -53,7 +53,7 @@ Some requirements will be different depending on your local machine operation sy
 
 Requirements are:
 - Bash (with wget or curl installed)
-- Java (up to 21 seems to be tested)
+- Java 17 or later (up to 26). The codespace uses Java 21
 - Git
 - Docker (not needed for the first script that you will write but needed in general for Nextflow)
 
@@ -82,7 +82,7 @@ Finally, ensure the nextflow executable is in your $PATH. The executable could b
 sudo mv nextflow /usr/local/bin/
 ```
 
-> Notice that these are the commands that we used in our devcontainer.json file to build our codespace.
+> Notice that in our codespace the Dockerfile in `.devcontainer` does the same, but downloads a fixed Nextflow version (26.10.4) so that everybody runs the tutorial with the same version.
 
 ### Docker
 

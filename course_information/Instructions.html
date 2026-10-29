@@ -465,7 +465,7 @@
 <p>Requirements are:</p>
 <ul class="simple">
 <li><p>Bash (with wget or curl installed)</p></li>
-<li><p>Java (up to 21 seems to be tested)</p></li>
+<li><p>Java 17 or later (up to 26). The codespace uses Java 21</p></li>
 <li><p>Git</p></li>
 <li><p>Docker (not needed for the first script that you will write but needed in general for Nextflow)</p></li>
 </ul>
@@ -491,7 +491,7 @@ If you are using it in Azure it is good to have you Azure Batch, Azure Storage, 
 </pre></div>
 </div>
 <blockquote>
-<div><p>Notice that these are the commands that we used in our devcontainer.json file to build our codespace.</p>
+<div><p>Notice that in our codespace the Dockerfile in <code class="docutils literal notranslate"><span class="pre">.devcontainer</span></code> does the same, but downloads a fixed Nextflow version (26.10.4) so that everybody runs the tutorial with the same version.</p>
 </div></blockquote>
 </section>
 <section id="docker">
