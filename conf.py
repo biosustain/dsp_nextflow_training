@@ -17,7 +17,7 @@ author = "Albert Palleja from DSP"
 extensions = [
     "myst_nb",
     # "sphinx_design", # https://sphinx-design.readthedocs.io/en/sbt-theme/
-    # "sphinx_copybutton", # https://sphinx-copybutton.readthedocs.io/
+    "sphinx_copybutton", # https://sphinx-copybutton.readthedocs.io/
     "sphinx_new_tab_link",
 ]
 
@@ -34,6 +34,7 @@ exclude_patterns = [
     "**/.ipynb_checkpoints/*",
     "jupyter_execute",
     "conf.py",
+    ".env",
 ]
 
 
