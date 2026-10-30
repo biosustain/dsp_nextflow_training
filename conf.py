@@ -39,6 +39,8 @@ exclude_patterns = [
     "training",
     "dsp-minirnaseq",
     "rnaseq_results",
+    # finished pipelines, not pages of the website
+    "solutions",
 ]
 
 

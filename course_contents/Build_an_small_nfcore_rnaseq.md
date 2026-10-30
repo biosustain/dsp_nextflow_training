@@ -29,6 +29,8 @@ reads (FASTQ) ──────────────────────
                                           transcript abundances
 ```
 
+> Stuck or short of time? The finished pipeline is in the [`solutions/dsp-minirnaseq`](https://github.com/biosustain/dsp_nextflow_training/tree/main/solutions/dsp-minirnaseq) folder of the course repository. Compare your files with it, or run it directly (see step 5).
+
 ## 0. Before you start (2 min)
 
 Open your codespace and check that you have the tools we need. If you created your codespace before this course, create a new one so that you get the updated environment.
@@ -332,6 +334,12 @@ nextflow run . -profile test,docker --outdir results -resume
 Thanks to `-resume`, FastQC is not run again. How many processes were run now? How many times was `SALMON_QUANT` run, and why?
 
 > If something fails, read the error message: Nextflow tells you which process failed, the command that was run and its work directory. Fix the code and run the same command again with `-resume`.
+
+If you could not finish the code, run the solution instead, so that you also get results to explore in the next step:
+
+```bash
+nextflow run ../solutions/dsp-minirnaseq -profile test,docker --outdir results
+```
 
 ## 6. Explore the results (13 min)
 
