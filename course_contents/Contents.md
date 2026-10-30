@@ -4,6 +4,6 @@ To follow the introduction to Nextflow you can download this [powerpoint](https:
 
 To follow the hands-on tutorial click [here](https://biosustain.github.io/dsp_nextflow_training/course_contents/Tutorial.html).
 
-To try to run an RNA-Seq data processing pipeline follow instructions [here](https://biosustain.github.io/dsp_nextflow_training/course_contents/RunningRealWorkflow.html).
+To build a small nf-core RNA-seq pipeline (FastQC, Bowtie2, Salmon and MultiQC) follow instructions [here](https://biosustain.github.io/dsp_nextflow_training/course_contents/Build_an_small_nfcore_rnaseq.html).
 
 To run your first Nextflow script and follow the results and logs through Seqera platform go [here](https://biosustain.github.io/dsp_nextflow_training/course_contents/SeqeraPlatform.html).
