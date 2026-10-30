@@ -35,6 +35,12 @@ exclude_patterns = [
     "jupyter_execute",
     "conf.py",
     ".env",
+    # folders created while following the course
+    "training",
+    "dsp-minirnaseq",
+    "rnaseq_results",
+    # finished pipelines, not pages of the website
+    "solutions",
 ]
 
 

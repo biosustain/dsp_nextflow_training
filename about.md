@@ -21,7 +21,7 @@ In this course you will learn:
 
 - Write and run your first Nextflow script (nextflow script, config file, results, working directory)
 
-- Run a nextflow pipeline in a Docker image (run for example a short version of an rnaseq pipeline)
+- Build a small RNA-seq pipeline from the nf-core template and nf-core modules, and run it in Docker containers
 
 - Seqera platform (monitoring your pipeline execution)
 
