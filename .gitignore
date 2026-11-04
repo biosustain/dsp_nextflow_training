@@ -13,6 +13,9 @@ _build
 work
 # Ignore the training directory cloned
 training
+# ignore the pipelines built and run during the course (the solution is in solutions/)
+/dsp-minirnaseq
+/rnaseq_results
 # ignore hello.nf, results and data folder
 hello.nf
 data

@@ -10,7 +10,7 @@ Don't change the configuration and accept the default option. It says pay but yo
 
 If you want to do it manually go to [course website](https://github.com/biosustain/dsp_nextflow_training)
 
-Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, and VSCode with needed extensions) with additional customization added in the Dockerfile (i.e, installing java and Nextflow).
+Click on button **Code** and click on the Codespaces tab. There click on **Create codespace**. Now your Nextflow environment will be built following the instructions in devcontainer.json file (i.e. installing Ubuntu, Docker, and VSCode with needed extensions) with additional customization added in the Dockerfile (i.e, installing java, Nextflow and nf-core tools).
 
 To learn more about Github codespaces go [here](https://github.com/features/codespaces)
 
@@ -35,6 +35,12 @@ nextflow -v
 :caption: Nextflow current version, system and runtime:
 
 nextflow info
+```
+
+```{code-block} bash
+:caption: Verify nf-core tools installation:
+
+nf-core --version
 ```
 
 ```{code-block} bash
