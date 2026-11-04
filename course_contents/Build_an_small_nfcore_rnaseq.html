@@ -1,0 +1,985 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Build a small nf-core RNA-seq pipeline &#8212; Nextflow training notes  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'course_contents/Build_an_small_nfcore_rnaseq';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run Nextflow CLI with Seqera Platform visualizing and capturing logs" href="SeqeraPlatform.html" />
+    <link rel="prev" title="Nextflow fundamentals tutorial" href="Tutorial.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Nextflow training notes  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/biosustain/dsp_nextflow_training" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Location.html">Location</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course_information/Timing.html">Timing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course contents</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Contents.html">Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Nextflow fundamentals tutorial</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Build a small nf-core RNA-seq pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SeqeraPlatform.html">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/biosustain/dsp_nextflow_training" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/course_contents/Build_an_small_nfcore_rnaseq.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Build a small nf-core RNA-seq pipeline</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-start-2-min">0. Before you start (2 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-pipeline-from-the-nf-core-template-5-min">1. Create the pipeline from the nf-core template (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-test-data-and-run-the-template-10-min">2. Add the test data and run the template (10 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-reference-parameters">Add the reference parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile">Use the nf-core/rnaseq prokaryotic test data in the test profile</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-template">Run the template</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-nf-core-modules-5-min">3. Install the nf-core modules (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-the-modules-in-the-workflow-20-min">4. Connect the modules in the workflow (20 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-the-references-to-the-workflow">Pass the references to the workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-new-steps-to-the-workflow">Add the new steps to the workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-options-of-the-tools">Set the options of the tools</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-your-pipeline-5-min">5. Run your pipeline (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-the-results-13-min">6. Explore the results (13 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transcript-abundances">Transcript abundances</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiqc-report">MultiQC report</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#going-further">Going further</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="build-a-small-nf-core-rna-seq-pipeline">
+<h1>Build a small nf-core RNA-seq pipeline<a class="headerlink" href="#build-a-small-nf-core-rna-seq-pipeline" title="Link to this heading">#</a></h1>
+<p>In the tutorial you wrote a Nextflow pipeline from scratch. Real pipelines are rarely written like that: most bioinformatics pipelines are built from the <a class="reference external" href="https://nf-co.re/" rel="noreferrer" target="_blank">nf-core</a> <strong>template</strong> and from ready-made, tested nf-core <strong>modules</strong> (one module = one tool wrapped in a Nextflow process).</p>
+<p>In this activity (about one hour) you will build <code class="docutils literal notranslate"><span class="pre">minirnaseq</span></code>, a small RNA-seq pipeline that:</p>
+<ol class="arabic simple">
+<li><p>checks the quality of the sequencing reads with <strong>FastQC</strong></p></li>
+<li><p>aligns the reads to the transcripts of a reference genome with <strong>Bowtie2</strong></p></li>
+<li><p>quantifies the transcripts with <strong>Salmon</strong></p></li>
+<li><p>summarises everything in a <strong>MultiQC</strong> report</p></li>
+</ol>
+<p>At the end you will have a table of <strong>transcript abundances</strong> for each sample and a <strong>MultiQC report</strong> to revise.</p>
+<blockquote>
+<div><p>The design follows the prokaryotic mode of <a class="reference external" href="https://nf-co.re/rnaseq" rel="noreferrer" target="_blank">nf-core/rnaseq</a> (<code class="docutils literal notranslate"><span class="pre">--aligner</span> <span class="pre">bowtie2_salmon</span></code>), and we use the same test dataset: two paired-end RNA-seq samples of <em>Salmonella</em> Typhimurium SL1344 and a small subset of its genome.</p>
+</div></blockquote>
+<p>Bacterial genes have no introns, so the reads can be aligned directly to the transcript sequences, and Salmon can count the reads aligned to each transcript. Salmon needs two reference files that we do not have yet: the transcript sequences and an annotation in GTF format. We get both from the genome (FASTA) and its annotation (GFF) with a small tool called <strong>gffread</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>reads (FASTQ) ───────&gt; FastQC ─────────────────────────────────────────┐
+                                                                       │
+genome (FASTA) + annotation (GFF) ──gffread──&gt; GTF + transcripts       │
+                                                    │                  │
+                                              Bowtie2 index            │
+                                                    │                  │
+reads (FASTQ) ─────────────────────────────&gt; Bowtie2 alignment ────────┤
+                                                    │                  │
+                                                 Salmon ───────────────┴──&gt; MultiQC report
+                                                    │
+                                          transcript abundances
+</pre></div>
+</div>
+<blockquote>
+<div><p>Stuck or short of time? The finished pipeline is in the <a class="reference external" href="https://github.com/biosustain/dsp_nextflow_training/tree/main/solutions/dsp-minirnaseq" rel="noreferrer" target="_blank"><code class="docutils literal notranslate"><span class="pre">solutions/dsp-minirnaseq</span></code></a> folder of the course repository. Compare your files with it, or run it directly (see step 5).</p>
+</div></blockquote>
+<section id="before-you-start-2-min">
+<h2>0. Before you start (2 min)<a class="headerlink" href="#before-you-start-2-min" title="Link to this heading">#</a></h2>
+<p>Open your codespace and check that you have the tools we need. If you created your codespace before this course, create a new one so that you get the updated environment.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>-v
+nf-core<span class="w"> </span>--version
+docker<span class="w"> </span>--version
+</pre></div>
+</div>
+<p>Then go to the folder of the course repository, where we will create the pipeline:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/workspaces/dsp_nextflow_training
+</pre></div>
+</div>
+</section>
+<section id="create-the-pipeline-from-the-nf-core-template-5-min">
+<h2>1. Create the pipeline from the nf-core template (5 min)<a class="headerlink" href="#create-the-pipeline-from-the-nf-core-template-5-min" title="Link to this heading">#</a></h2>
+<p>nf-core tools creates a new pipeline with all the nf-core structure (configuration, parameter validation, MultiQC, CI tests, documentation…) already in place:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nf-core<span class="w"> </span>pipelines<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--name<span class="w"> </span>minirnaseq<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--description<span class="w"> </span><span class="s2">&quot;A mini RNA-seq pipeline built in the DSP Nextflow course&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--author<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--organisation<span class="w"> </span>dsp
+</pre></div>
+</div>
+<blockquote>
+<div><p>Without options, <code class="docutils literal notranslate"><span class="pre">nf-core</span> <span class="pre">pipelines</span> <span class="pre">create</span></code> opens an interactive app where you can also choose which parts of the template to include.</p>
+</div></blockquote>
+<p>A new folder <code class="docutils literal notranslate"><span class="pre">dsp-minirnaseq</span></code> was created. It is already a git repository. Go inside and have a look:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dsp-minirnaseq
+tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span>
+</pre></div>
+</div>
+<p>The most important files for today are:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>What it contains</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">main.nf</span></code></p></td>
+<td><p>The entry point: reads the parameters, validates the inputs and calls the main workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflows/minirnaseq.nf</span></code></p></td>
+<td><p>The main workflow, where we connect the processes. It already runs FastQC and MultiQC!</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">modules/nf-core/</span></code></p></td>
+<td><p>The nf-core modules installed in the pipeline (now <code class="docutils literal notranslate"><span class="pre">fastqc</span></code> and <code class="docutils literal notranslate"><span class="pre">multiqc</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code></p></td>
+<td><p>The parameters with their default values, and the profiles (e.g. <code class="docutils literal notranslate"><span class="pre">docker</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nextflow_schema.json</span></code></p></td>
+<td><p>The description of every parameter, used to validate them and to build the <code class="docutils literal notranslate"><span class="pre">--help</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">assets/schema_input.json</span></code></p></td>
+<td><p>The description of the columns of the samplesheet given with <code class="docutils literal notranslate"><span class="pre">--input</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">conf/test.config</span></code></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">test</span></code> profile: small test data to check that the pipeline works</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">conf/modules.config</span></code></p></td>
+<td><p>The options of each module (extra arguments, where to save the results)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>In the tutorial we saved the results with workflow outputs (<code class="docutils literal notranslate"><span class="pre">publish:</span></code> and the <code class="docutils literal notranslate"><span class="pre">output</span></code> block). The nf-core template still saves the results of each process with the <code class="docutils literal notranslate"><span class="pre">publishDir</span></code> directive, which is set for all processes in <code class="docutils literal notranslate"><span class="pre">conf/modules.config</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="add-the-test-data-and-run-the-template-10-min">
+<h2>2. Add the test data and run the template (10 min)<a class="headerlink" href="#add-the-test-data-and-run-the-template-10-min" title="Link to this heading">#</a></h2>
+<section id="add-the-reference-parameters">
+<h3>Add the reference parameters<a class="headerlink" href="#add-the-reference-parameters" title="Link to this heading">#</a></h3>
+<p>Our pipeline needs two new parameters: the genome sequence (<code class="docutils literal notranslate"><span class="pre">--fasta</span></code>) and its annotation (<code class="docutils literal notranslate"><span class="pre">--gff</span></code>). Open <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> and add them in the <code class="docutils literal notranslate"><span class="pre">params</span></code> block, under <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">References</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">// References</span>
+<span class="w">    </span><span class="n">genome</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="n">fasta</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="n">gff</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+</pre></div>
+</div>
+</div>
+<p>Every parameter of an nf-core pipeline must also be described in <code class="docutils literal notranslate"><span class="pre">nextflow_schema.json</span></code>, otherwise the pipeline warns about it. nf-core tools adds the new parameters for us:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nf-core<span class="w"> </span>pipelines<span class="w"> </span>schema<span class="w"> </span>build<span class="w"> </span>--no-prompts
+</pre></div>
+</div>
+<blockquote>
+<div><p>Without <code class="docutils literal notranslate"><span class="pre">--no-prompts</span></code>, this command asks you about every change and offers to open a web editor where you can write the description and help text of each parameter.</p>
+</div></blockquote>
+</section>
+<section id="use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile">
+<h3>Use the nf-core/rnaseq prokaryotic test data in the test profile<a class="headerlink" href="#use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile" title="Link to this heading">#</a></h3>
+<p>Open <code class="docutils literal notranslate"><span class="pre">conf/test.config</span></code> and replace the <code class="docutils literal notranslate"><span class="pre">TODO</span></code> lines and the example input in the <code class="docutils literal notranslate"><span class="pre">params</span></code> block with the <em>Salmonella</em> test data:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">conf/test.config</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">config_profile_name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Test profile&#39;</span>
+<span class="w">    </span><span class="n">config_profile_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Minimal test dataset to check pipeline function&#39;</span>
+
+<span class="w">    </span><span class="c1">// Input data: Salmonella Typhimurium SL1344, as in the nf-core/rnaseq test_prokaryotic profile</span>
+<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">pipelines_testdata_base_path</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;rnaseq/samplesheet/prokaryotic/samplesheet_test.csv&#39;</span>
+
+<span class="w">    </span><span class="c1">// Genome references: Salmonella Typhimurium SL1344 (subset)</span>
+<span class="w">    </span><span class="n">fasta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">pipelines_testdata_base_path</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;rnaseq/reference/prokaryotic/SL1344_sub.fasta&#39;</span>
+<span class="w">    </span><span class="n">gff</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">pipelines_testdata_base_path</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;rnaseq/reference/prokaryotic/SL1344_sub.gff3&#39;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<p>The codespace has 2 CPUs and 8 GB of memory, so lower the maximum resources that a process can use in the same file:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">conf/test.config</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">resourceLimits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="nl">cpus:</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span>
+<span class="w">        </span><span class="nl">memory:</span><span class="w"> </span><span class="s1">&#39;6.GB&#39;</span><span class="o">,</span>
+<span class="w">        </span><span class="nl">time:</span><span class="w"> </span><span class="s1">&#39;1.h&#39;</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<p>Have a look at the <a class="reference external" href="https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/samplesheet/prokaryotic/samplesheet_test.csv" rel="noreferrer" target="_blank">samplesheet</a>. It has one row per sample with the sample name and the two FASTQ files (forward and reverse reads), as in most nf-core pipelines.</p>
+</section>
+<section id="run-the-template">
+<h3>Run the template<a class="headerlink" href="#run-the-template" title="Link to this heading">#</a></h3>
+<p>Our pipeline already works! Let’s run it with the <code class="docutils literal notranslate"><span class="pre">test</span></code> profile (the test data) and the <code class="docutils literal notranslate"><span class="pre">docker</span></code> profile (every process runs in its own container):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>run<span class="w"> </span>.<span class="w"> </span>-profile<span class="w"> </span>test,docker<span class="w"> </span>--outdir<span class="w"> </span>results
+</pre></div>
+</div>
+<p>Which processes were run? Have a look at <code class="docutils literal notranslate"><span class="pre">results/fastqc</span></code> and <code class="docutils literal notranslate"><span class="pre">results/multiqc</span></code>.</p>
+<p>You also got a warning about the <code class="docutils literal notranslate"><span class="pre">strandedness</span></code> column of the samplesheet. The samplesheet was made for nf-core/rnaseq, and our <code class="docutils literal notranslate"><span class="pre">assets/schema_input.json</span></code> only knows the <code class="docutils literal notranslate"><span class="pre">sample</span></code>, <code class="docutils literal notranslate"><span class="pre">fastq_1</span></code> and <code class="docutils literal notranslate"><span class="pre">fastq_2</span></code> columns, so the extra column is ignored.</p>
+</section>
+</section>
+<section id="install-the-nf-core-modules-5-min">
+<h2>3. Install the nf-core modules (5 min)<a class="headerlink" href="#install-the-nf-core-modules-5-min" title="Link to this heading">#</a></h2>
+<p>We do not need to write the processes for gffread, Bowtie2 and Salmon: there are nf-core modules for them. You can search the modules on the <a class="reference external" href="https://nf-co.re/modules" rel="noreferrer" target="_blank">nf-core website</a> or with <code class="docutils literal notranslate"><span class="pre">nf-core</span> <span class="pre">modules</span> <span class="pre">list</span> <span class="pre">remote</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class="w"> </span>gffread
+nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class="w"> </span>bowtie2/build
+nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class="w"> </span>bowtie2/align
+nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class="w"> </span>salmon/quant
+</pre></div>
+</div>
+<p>Each module was downloaded to <code class="docutils literal notranslate"><span class="pre">modules/nf-core/</span></code> and recorded in <code class="docutils literal notranslate"><span class="pre">modules.json</span></code>. Before using a module, check its inputs and outputs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nf-core<span class="w"> </span>modules<span class="w"> </span>info<span class="w"> </span>salmon/quant
+</pre></div>
+</div>
+<p>Open also <code class="docutils literal notranslate"><span class="pre">modules/nf-core/salmon/quant/main.nf</span></code>. Can you find the <code class="docutils literal notranslate"><span class="pre">input:</span></code> and <code class="docutils literal notranslate"><span class="pre">output:</span></code> blocks? Notice that most inputs are tuples like <code class="docutils literal notranslate"><span class="pre">tuple</span> <span class="pre">val(meta),</span> <span class="pre">path(reads)</span></code>: in nf-core, every file travels together with a <code class="docutils literal notranslate"><span class="pre">meta</span></code> map with information about the sample, e.g. <code class="docutils literal notranslate"><span class="pre">[id:</span> <span class="pre">'SALM_REP1',</span> <span class="pre">single_end:</span> <span class="pre">false]</span></code>.</p>
+</section>
+<section id="connect-the-modules-in-the-workflow-20-min">
+<h2>4. Connect the modules in the workflow (20 min)<a class="headerlink" href="#connect-the-modules-in-the-workflow-20-min" title="Link to this heading">#</a></h2>
+<section id="pass-the-references-to-the-workflow">
+<h3>Pass the references to the workflow<a class="headerlink" href="#pass-the-references-to-the-workflow" title="Link to this heading">#</a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>, the entry workflow (<code class="docutils literal notranslate"><span class="pre">workflow</span> <span class="pre">{</span></code>, at the end of the file) calls the <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code> workflow, which calls our <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code> workflow. We pass the two new parameters through both.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>, add <code class="docutils literal notranslate"><span class="pre">fasta</span></code> and <code class="docutils literal notranslate"><span class="pre">gff</span></code> to the inputs (<code class="docutils literal notranslate"><span class="pre">take:</span></code>) of <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code> and to its call of <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">main.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="n">DSP_MINIRNASEQ</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">    </span><span class="nl">take:</span>
+<span class="w">    </span><span class="n">samplesheet</span><span class="w"> </span><span class="c1">// channel: samplesheet read in from --input</span>
+<span class="w">    </span><span class="n">fasta</span><span class="w">       </span><span class="c1">// path: genome FASTA file</span>
+<span class="w">    </span><span class="n">gff</span><span class="w">         </span><span class="c1">// path: genome annotation GFF file</span>
+
+<span class="w">    </span><span class="nl">main:</span>
+
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// WORKFLOW: Run pipeline</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="n">MINIRNASEQ</span><span class="w"> </span><span class="o">(</span>
+<span class="w">        </span><span class="n">samplesheet</span><span class="o">,</span>
+<span class="w">        </span><span class="n">fasta</span><span class="o">,</span>
+<span class="w">        </span><span class="n">gff</span><span class="o">,</span>
+<span class="w">        </span><span class="n">params</span><span class="o">.</span><span class="na">multiqc_config</span><span class="o">,</span>
+<span class="w">        </span><span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<p>and, further down in the entry workflow, give the parameters to <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">main.nf</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="n">DSP_MINIRNASEQ</span><span class="w"> </span><span class="o">(</span>
+<span class="w">        </span><span class="n">PIPELINE_INITIALISATION</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">samplesheet</span><span class="o">,</span>
+<span class="w">        </span><span class="n">params</span><span class="o">.</span><span class="na">fasta</span><span class="o">,</span>
+<span class="w">        </span><span class="n">params</span><span class="o">.</span><span class="na">gff</span>
+<span class="w">    </span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="add-the-new-steps-to-the-workflow">
+<h3>Add the new steps to the workflow<a class="headerlink" href="#add-the-new-steps-to-the-workflow" title="Link to this heading">#</a></h3>
+<p>Open <code class="docutils literal notranslate"><span class="pre">workflows/minirnaseq.nf</span></code>. First include the new modules next to the <code class="docutils literal notranslate"><span class="pre">FASTQC</span></code> and <code class="docutils literal notranslate"><span class="pre">MULTIQC</span></code> ones. We use gffread twice for two different jobs, so we include it twice with two different names (aliases):</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">GFFREAD</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">GFF_TO_GTF</span><span class="w">          </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/gffread/main&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">GFFREAD</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">GFFREAD_TRANSCRIPTS</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/gffread/main&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">BOWTIE2_BUILD</span><span class="w">                  </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/bowtie2/build/main&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">BOWTIE2_ALIGN</span><span class="w">                  </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/bowtie2/align/main&#39;</span>
+<span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">SALMON_QUANT</span><span class="w">                   </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/salmon/quant/main&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Then add <code class="docutils literal notranslate"><span class="pre">fasta</span></code> and <code class="docutils literal notranslate"><span class="pre">gff</span></code> to the inputs of <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code>, in the same order as in the call in <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nl">take:</span>
+<span class="w">    </span><span class="n">ch_samplesheet</span><span class="w"> </span><span class="c1">// channel: samplesheet read in from --input</span>
+<span class="w">    </span><span class="n">fasta</span><span class="w">          </span><span class="c1">// path: genome FASTA file</span>
+<span class="w">    </span><span class="n">gff</span><span class="w">            </span><span class="c1">// path: genome annotation GFF file</span>
+<span class="w">    </span><span class="n">multiqc_config</span>
+</pre></div>
+</div>
+</div>
+<p>Now the main part. Add the following code right after the FastQC step (after the <code class="docutils literal notranslate"><span class="pre">ch_multiqc_files</span> <span class="pre">=</span> <span class="pre">ch_multiqc_files.mix(FASTQC.out.zip...)</span></code> line). Read the comments: what goes in and out of each step?</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id8" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// MODULE: Convert the genome annotation from GFF to GTF with gffread</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="n">GFF_TO_GTF</span><span class="o">(</span>
+<span class="w">        </span><span class="n">channel</span><span class="o">.</span><span class="na">value</span><span class="o">([</span><span class="w"> </span><span class="o">[</span><span class="nl">id:</span><span class="w"> </span><span class="s1">&#39;genome&#39;</span><span class="o">],</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="n">gff</span><span class="o">,</span><span class="w"> </span><span class="nl">checkIfExists:</span><span class="w"> </span><span class="kc">true</span><span class="o">)</span><span class="w"> </span><span class="o">]),</span>
+<span class="w">        </span><span class="o">[]</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="n">ch_gtf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFF_TO_GTF</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gtf</span>
+
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// MODULE: Extract the transcript sequences from the genome with gffread</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="n">GFFREAD_TRANSCRIPTS</span><span class="o">(</span><span class="n">ch_gtf</span><span class="o">,</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="n">fasta</span><span class="o">,</span><span class="w"> </span><span class="nl">checkIfExists:</span><span class="w"> </span><span class="kc">true</span><span class="o">))</span>
+<span class="w">    </span><span class="n">ch_transcripts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GFFREAD_TRANSCRIPTS</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">gffread_fasta</span>
+
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// MODULE: Build the Bowtie2 index of the transcripts</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="n">BOWTIE2_BUILD</span><span class="o">(</span><span class="n">ch_transcripts</span><span class="o">)</span>
+
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// MODULE: Align the reads to the transcripts with Bowtie2</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="n">BOWTIE2_ALIGN</span><span class="o">(</span>
+<span class="w">        </span><span class="n">ch_samplesheet</span><span class="o">,</span>
+<span class="w">        </span><span class="n">BOWTIE2_BUILD</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">index</span><span class="o">,</span>
+<span class="w">        </span><span class="n">ch_transcripts</span><span class="o">,</span>
+<span class="w">        </span><span class="kc">false</span><span class="o">,</span><span class="w"> </span><span class="c1">// save_unaligned</span>
+<span class="w">        </span><span class="kc">false</span><span class="w">  </span><span class="c1">// sort_bam: Salmon needs the alignments of each read together</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="n">ch_multiqc_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch_multiqc_files</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">BOWTIE2_ALIGN</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">log</span><span class="o">.</span><span class="na">map</span><span class="o">{</span><span class="w"> </span><span class="n">_meta</span><span class="o">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">})</span>
+
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// MODULE: Quantify the transcripts from the alignments with Salmon</span>
+<span class="w">    </span><span class="c1">//</span>
+<span class="w">    </span><span class="c1">// Salmon reference: [ meta, index (not needed in alignment mode), GTF, transcripts ]</span>
+<span class="w">    </span><span class="n">ch_salmon_reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch_gtf</span>
+<span class="w">        </span><span class="o">.</span><span class="na">combine</span><span class="o">(</span><span class="n">ch_transcripts</span><span class="o">)</span>
+<span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">_meta</span><span class="o">,</span><span class="w"> </span><span class="n">gtf</span><span class="o">,</span><span class="w"> </span><span class="n">_meta2</span><span class="o">,</span><span class="w"> </span><span class="n">transcripts</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="o">[</span><span class="nl">id:</span><span class="w"> </span><span class="s1">&#39;transcripts&#39;</span><span class="o">],</span><span class="w"> </span><span class="o">[],</span><span class="w"> </span><span class="n">gtf</span><span class="o">,</span><span class="w"> </span><span class="n">transcripts</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">}</span>
+<span class="w">        </span><span class="o">.</span><span class="na">first</span><span class="o">()</span><span class="w"> </span><span class="c1">// a value channel, so it is reused for every sample</span>
+<span class="w">    </span><span class="n">SALMON_QUANT</span><span class="o">(</span><span class="n">BOWTIE2_ALIGN</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">bam</span><span class="o">,</span><span class="w"> </span><span class="n">ch_salmon_reference</span><span class="o">)</span>
+<span class="w">    </span><span class="n">ch_multiqc_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch_multiqc_files</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">SALMON_QUANT</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">results</span><span class="o">.</span><span class="na">map</span><span class="o">{</span><span class="w"> </span><span class="n">_meta</span><span class="o">,</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">})</span>
+</pre></div>
+</div>
+</div>
+<p>A few things to notice:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The reference files are wrapped in <strong>value channels</strong> (<code class="docutils literal notranslate"><span class="pre">channel.value(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">.first()</span></code>). A value channel can be read again and again, so the same index and transcripts are used for every sample. A normal channel is consumed: with it, only the first sample would be quantified!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[]</span></code> is used for an optional input that we do not need, e.g. Salmon does not need its own index because it reads the Bowtie2 alignments.</p></li>
+<li><p>Every tool that MultiQC understands adds its log or result files to <code class="docutils literal notranslate"><span class="pre">ch_multiqc_files</span></code>, the channel that MultiQC reads.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="set-the-options-of-the-tools">
+<h3>Set the options of the tools<a class="headerlink" href="#set-the-options-of-the-tools" title="Link to this heading">#</a></h3>
+<p>The command line options of each tool are not written in the modules but in <code class="docutils literal notranslate"><span class="pre">conf/modules.config</span></code> (<code class="docutils literal notranslate"><span class="pre">ext.args</span></code>), so the same module can be reused in different pipelines. Add these settings inside the <code class="docutils literal notranslate"><span class="pre">process</span> <span class="pre">{</span> <span class="pre">}</span></code> block, before the <code class="docutils literal notranslate"><span class="pre">MULTIQC</span></code> settings:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">conf/modules.config</span><a class="headerlink" href="#id9" title="Link to this code">#</a></div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="n">GFF_TO_GTF</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;--keep-exon-attrs -F -T&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="n">GFFREAD_TRANSCRIPTS</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;-w&#39;</span>
+<span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;transcripts&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="s1">&#39;GFF_TO_GTF|GFFREAD_TRANSCRIPTS|BOWTIE2_BUILD&#39;</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">publishDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">            </span><span class="nl">path:</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s2">&quot;${params.outdir}/reference&quot;</span><span class="w"> </span><span class="o">},</span>
+<span class="w">            </span><span class="nl">mode:</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="na">publish_dir_mode</span>
+<span class="w">        </span><span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="n">BOWTIE2_ALIGN</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;--very-sensitive --no-discordant -k 200&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+
+<span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="n">SALMON_QUANT</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;--libType A&#39;</span>
+<span class="w">    </span><span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>gffread converts the GFF to GTF (<code class="docutils literal notranslate"><span class="pre">-T</span></code>) and writes the transcript sequences (<code class="docutils literal notranslate"><span class="pre">-w</span></code>).</p></li>
+<li><p>Bowtie2 reports up to 200 alignments per read (<code class="docutils literal notranslate"><span class="pre">-k</span> <span class="pre">200</span></code>), so that Salmon can share the reads that map to several transcripts. These are the settings used by nf-core/rnaseq.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--libType</span> <span class="pre">A</span></code> lets Salmon detect automatically if the library is stranded.</p></li>
+<li><p>The reference files are saved in <code class="docutils literal notranslate"><span class="pre">results/reference</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="run-your-pipeline-5-min">
+<h2>5. Run your pipeline (5 min)<a class="headerlink" href="#run-your-pipeline-5-min" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>run<span class="w"> </span>.<span class="w"> </span>-profile<span class="w"> </span>test,docker<span class="w"> </span>--outdir<span class="w"> </span>results<span class="w"> </span>-resume
+</pre></div>
+</div>
+<p>Thanks to <code class="docutils literal notranslate"><span class="pre">-resume</span></code>, FastQC is not run again. How many processes were run now? How many times was <code class="docutils literal notranslate"><span class="pre">SALMON_QUANT</span></code> run, and why?</p>
+<blockquote>
+<div><p>If something fails, read the error message: Nextflow tells you which process failed, the command that was run and its work directory. Fix the code and run the same command again with <code class="docutils literal notranslate"><span class="pre">-resume</span></code>.</p>
+</div></blockquote>
+<p>If you could not finish the code, run the solution instead, so that you also get results to explore in the next step:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>run<span class="w"> </span>../solutions/dsp-minirnaseq<span class="w"> </span>-profile<span class="w"> </span>test,docker<span class="w"> </span>--outdir<span class="w"> </span>results
+</pre></div>
+</div>
+</section>
+<section id="explore-the-results-13-min">
+<h2>6. Explore the results (13 min)<a class="headerlink" href="#explore-the-results-13-min" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span><span class="w"> </span>results
+</pre></div>
+</div>
+<section id="transcript-abundances">
+<h3>Transcript abundances<a class="headerlink" href="#transcript-abundances" title="Link to this heading">#</a></h3>
+<p>Salmon writes one folder per sample. Have a look at the abundances of the first sample:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>column<span class="w"> </span>-t<span class="w"> </span>results/salmon/SALM_REP1/quant.sf
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Name</span></code></p></td>
+<td><p>Transcript name</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Length</span></code></p></td>
+<td><p>Length of the transcript</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">EffectiveLength</span></code></p></td>
+<td><p>Length corrected for the fragment length (the positions where a fragment can start)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TPM</span></code></p></td>
+<td><p>Transcripts Per Million: abundance normalised by transcript length and sequencing depth, comparable between transcripts</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NumReads</span></code></p></td>
+<td><p>Estimated number of reads coming from the transcript</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Which transcript is the most abundant in each sample? Are the two replicates similar? Salmon also wrote <code class="docutils literal notranslate"><span class="pre">quant.genes.sf</span></code>, with the abundances per gene.</p>
+<blockquote>
+<div><p>These tables are the starting point of a differential expression analysis, e.g. with DESeq2 in R.</p>
+</div></blockquote>
+</section>
+<section id="multiqc-report">
+<h3>MultiQC report<a class="headerlink" href="#multiqc-report" title="Link to this heading">#</a></h3>
+<p>Open <code class="docutils literal notranslate"><span class="pre">results/multiqc/multiqc_report.html</span></code>: right click on it in the VSCode explorer and select <strong>Show Preview</strong> (or <strong>Open with Live Server</strong>).</p>
+<ul class="simple">
+<li><p><strong>General Statistics</strong>: one line per sample with the main numbers of every tool</p></li>
+<li><p><strong>FastQC</strong>: are the reads of good quality? Is there adapter content?</p></li>
+<li><p><strong>Bowtie2</strong>: which percentage of the read pairs aligned to the transcripts?</p></li>
+<li><p><strong>Salmon</strong>: which fragment length distribution did Salmon estimate?</p></li>
+<li><p><strong>Software versions</strong> and <strong>Workflow summary</strong>: everything you need to report your analysis</p></li>
+</ul>
+<p>Have a look also at <code class="docutils literal notranslate"><span class="pre">results/pipeline_info</span></code>: the execution report and timeline tell you how long each process took and how much CPU and memory it used.</p>
+</section>
+</section>
+<section id="going-further">
+<h2>Going further<a class="headerlink" href="#going-further" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Check your code with the Nextflow linter: <code class="docutils literal notranslate"><span class="pre">nextflow</span> <span class="pre">lint</span> <span class="pre">.</span></code>. The warnings about the <code class="docutils literal notranslate"><span class="pre">when</span></code> section come from the nf-core modules, not from your code.</p></li>
+<li><p>Check that your pipeline follows the nf-core guidelines: <code class="docutils literal notranslate"><span class="pre">nf-core</span> <span class="pre">pipelines</span> <span class="pre">lint</span></code>.</p></li>
+<li><p>Run the real nf-core/rnaseq pipeline on the same data and compare the results with yours (this one takes longer!). Its test profile asks for 4 CPUs, so first write a small config file that limits the resources to the codespace size, and give it to Nextflow with <code class="docutils literal notranslate"><span class="pre">-c</span></code>:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;process.resourceLimits = [cpus: 2, memory: &#39;6.GB&#39;, time: &#39;1.h&#39;]&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>codespace.config
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow<span class="w"> </span>run<span class="w"> </span>nf-core/rnaseq<span class="w"> </span>-r<span class="w"> </span><span class="m">3</span>.27.0<span class="w"> </span>-profile<span class="w"> </span>test_prokaryotic,docker<span class="w"> </span>--outdir<span class="w"> </span>rnaseq_results<span class="w"> </span>-c<span class="w"> </span>codespace.config
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Learn more in the <a class="reference external" href="https://nf-co.re/docs" rel="noreferrer" target="_blank">nf-core documentation</a> and in the <a class="reference external" href="https://training.nextflow.io/" rel="noreferrer" target="_blank">Nextflow training</a>.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Nextflow fundamentals tutorial</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="SeqeraPlatform.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Run Nextflow CLI with Seqera Platform visualizing and capturing logs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-start-2-min">0. Before you start (2 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-pipeline-from-the-nf-core-template-5-min">1. Create the pipeline from the nf-core template (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-test-data-and-run-the-template-10-min">2. Add the test data and run the template (10 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-reference-parameters">Add the reference parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile">Use the nf-core/rnaseq prokaryotic test data in the test profile</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-template">Run the template</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-the-nf-core-modules-5-min">3. Install the nf-core modules (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-the-modules-in-the-workflow-20-min">4. Connect the modules in the workflow (20 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-the-references-to-the-workflow">Pass the references to the workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-new-steps-to-the-workflow">Add the new steps to the workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-options-of-the-tools">Set the options of the tools</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-your-pipeline-5-min">5. Run your pipeline (5 min)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explore-the-results-13-min">6. Explore the results (13 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transcript-abundances">Transcript abundances</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiqc-report">MultiQC report</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#going-further">Going further</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Albert Palleja from DSP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024-25, DTU Biosustain, Informatics Platform, Data Science Platform (DSP).
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
