@@ -90,7 +90,6 @@ The most important files for today are:
 Our pipeline needs two new parameters: the genome sequence (`--fasta`) and its annotation (`--gff`). Open `nextflow.config` and add them in the `params` block, under `// References`:
 
 ```{code-block} groovy
-:caption: nextflow.config
     // References
     genome                     = null
     fasta                      = null
@@ -110,7 +109,6 @@ nf-core pipelines schema build --no-prompts
 Open `conf/test.config` and replace the `TODO` lines and the example input in the `params` block with the *Salmonella* test data:
 
 ```{code-block} groovy
-:caption: conf/test.config
 params {
     config_profile_name        = 'Test profile'
     config_profile_description = 'Minimal test dataset to check pipeline function'
@@ -127,7 +125,6 @@ params {
 The codespace has 2 CPUs and 8 GB of memory, so lower the maximum resources that a process can use in the same file:
 
 ```{code-block} groovy
-:caption: conf/test.config
 process {
     resourceLimits = [
         cpus: 2,
@@ -179,7 +176,6 @@ In `main.nf`, the entry workflow (`workflow {`, at the end of the file) calls th
 In `main.nf`, add `fasta` and `gff` to the inputs (`take:`) of `DSP_MINIRNASEQ` and to its call of `MINIRNASEQ`:
 
 ```{code-block} groovy
-:caption: main.nf
 workflow DSP_MINIRNASEQ {
 
     take:
@@ -203,7 +199,6 @@ workflow DSP_MINIRNASEQ {
 and, further down in the entry workflow, give the parameters to `DSP_MINIRNASEQ`:
 
 ```{code-block} groovy
-:caption: main.nf
     DSP_MINIRNASEQ (
         PIPELINE_INITIALISATION.out.samplesheet,
         params.fasta,
@@ -216,7 +211,6 @@ and, further down in the entry workflow, give the parameters to `DSP_MINIRNASEQ`
 Open `workflows/minirnaseq.nf`. First include the new modules next to the `FASTQC` and `MULTIQC` ones. We use gffread twice for two different jobs, so we include it twice with two different names (aliases):
 
 ```{code-block} groovy
-:caption: workflows/minirnaseq.nf
 include { GFFREAD as GFF_TO_GTF          } from '../modules/nf-core/gffread/main'
 include { GFFREAD as GFFREAD_TRANSCRIPTS } from '../modules/nf-core/gffread/main'
 include { BOWTIE2_BUILD                  } from '../modules/nf-core/bowtie2/build/main'
@@ -227,7 +221,6 @@ include { SALMON_QUANT                   } from '../modules/nf-core/salmon/quant
 Then add `fasta` and `gff` to the inputs of `MINIRNASEQ`, in the same order as in the call in `main.nf`:
 
 ```{code-block} groovy
-:caption: workflows/minirnaseq.nf
     take:
     ch_samplesheet // channel: samplesheet read in from --input
     fasta          // path: genome FASTA file
@@ -238,7 +231,6 @@ Then add `fasta` and `gff` to the inputs of `MINIRNASEQ`, in the same order as i
 Now the main part. Add the following code right after the FastQC step (after the `ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip...)` line). Read the comments: what goes in and out of each step?
 
 ```{code-block} groovy
-:caption: workflows/minirnaseq.nf
     //
     // MODULE: Convert the genome annotation from GFF to GTF with gffread
     //
@@ -294,7 +286,6 @@ A few things to notice:
 The command line options of each tool are not written in the modules but in `conf/modules.config` (`ext.args`), so the same module can be reused in different pipelines. Add these settings inside the `process { }` block, before the `MULTIQC` settings:
 
 ```{code-block} groovy
-:caption: conf/modules.config
     withName: GFF_TO_GTF {
         ext.args = '--keep-exon-attrs -F -T'
     }
