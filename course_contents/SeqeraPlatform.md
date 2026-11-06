@@ -25,7 +25,6 @@ cd ../..
 ``` 
 Lets's run our first nextflow script in Seqera with the addition of the -with-tower command:
 ```{code-block} groovy
-:caption: hello.nf capturing logs in Seqera platform
 nextflow run hello.nf -with-tower
 ```
 
