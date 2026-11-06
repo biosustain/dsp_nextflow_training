@@ -335,24 +335,9 @@ Workflows typically run on batches of inputs that are meant to be processed in b
 
 `channel.of()` factory method is quite happy to accept more than one value. Imagine that these could be used to pass a list of genes, genomes or fasta files, etc ... to the next process.
 
-There are different factory channels to create these channels. 
+There are different factory channels to create these channels. We will use `channel.of()` to create a channel for ou greetings.
 
-Here you have an example where I used factory `channel.fromFilePairs()` to package as a channel fastq files.
-```groovy
-params {
-    reads: String = "${projectDir}/data/*_{1,2}.fq.gz"
-}
-
-workflow {
-    main:
-    read_pairs_ch = channel.fromFilePairs(params.reads, checkIfExists: true)
-    read_pairs_ch.view()
-}
-```
-
-`.view` is an operator. Operators transform the channels or, as here, just print their contents, so that you obtain the input files on your desired format. Other commonly used operators are `.map`, `.filter`, `.flatMap` or `.collect`.
-
-Back into our channel. Please modify the following, where do you need to add that?
+Where do you need to add the following?
 ```groovy
 // create a channel for inputs
 greeting_ch = channel.of('Hello','Bonjour','Hola','Hej')
@@ -418,8 +403,6 @@ less greetings.csv
 cd .. 
 ```
 
-Does the file greetings.csv look as one header and one greeting per line? :) Then you are good to go on...
-
 Now we need to set up a CLI parameter with a default value pointing to an input file. Let's replace the `greeting` parameter in the `params` block. The type is now `Path`, because the parameter is a file:
 
 ```groovy
@@ -452,8 +435,6 @@ Ok, lets try this script one last time!
 nextflow run hello.nf -ansi-log false
 ```
 Did you get the same results? Hopefully yes but now you used a `greetings.csv` that could be your `samplesheet.csv` file if you run a real biological pipeline.
-
-Want to greet in other languages? Point the pipeline to another file with `--input path/to/another.csv`.
 
 ## Checking and formatting your code
 
@@ -567,8 +548,3 @@ output {
 }
 ```
 
-## Going further
-
-The language keeps evolving. When you feel comfortable with the basics, have a look at:
-- [Static typing](https://www.nextflow.io/docs/latest/static-typing.html): typed processes and workflows, and records instead of tuples (enabled with `nextflow.enable.types = true`).
-- [Modules](https://www.nextflow.io/docs/latest/modules.html): install and reuse nf-core modules with `nextflow module install`.
