@@ -435,8 +435,6 @@
 <h2>Running our first script<a class="headerlink" href="#running-our-first-script" title="Link to this heading">#</a></h2>
 <p>Open a new file in VSCode in the codespace by clicking the New file icon or by typing in the terminal <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">hello.nf</span></code> (nf is the extension for Nextflow pipeline scripts).</p>
 <p>Then copy / paste the following code. Save the file as hello.nf.</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -461,16 +459,12 @@
 <span class="o">}</span>
 </pre></div>
 </div>
-</div>
 <p>Now let’s have a look to the code. A Nextflow script involves two main types of core components: process/es and the workflow.</p>
 <p>Each process describes what operation(s) should be performed (in our case printing ‘Hello World!’), while the workflow describes the dataflow logic that connects the various steps.</p>
 <p>For now we only have <code class="docutils literal notranslate"><span class="pre">output</span></code> and <code class="docutils literal notranslate"><span class="pre">script</span></code> (the code block) in the process and only one process is called in the workflow block (<code class="docutils literal notranslate"><span class="pre">sayHello()</span></code>).</p>
 <p>Let’s try to run your first Nextflow script in your codespace:</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Running hello.nf</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">nextflow</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">hello</span><span class="o">.</span><span class="na">nf</span>
 </pre></div>
-</div>
 </div>
 <p>How do you feel? Success? :)</p>
 <p>Notice that while running it you got some info:</p>
@@ -869,8 +863,6 @@ less<span class="w"> </span>greetings.csv
 <section id="full-script">
 <h2>Full script<a class="headerlink" href="#full-script" title="Link to this heading">#</a></h2>
 <p>Here you have you first nextflow script in full! Congratulations!</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">hello.nf</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="cp">#!/usr/bin/env nextflow</span>
 
 <span class="cm">/*</span>
@@ -948,7 +940,6 @@ less<span class="w"> </span>greetings.csv
 <span class="w">    </span><span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
-</div>
 </div>
 </section>
 <section id="going-further">

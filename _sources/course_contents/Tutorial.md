@@ -11,7 +11,6 @@ Open a new file in VSCode in the codespace by clicking the New file icon or by t
 Then copy / paste the following code. Save the file as hello.nf.
 
 ```{code-block} groovy
-:caption: hello.nf
 
 #!/usr/bin/env nextflow
 
@@ -46,7 +45,6 @@ For now we only have `output` and `script` (the code block) in the process and o
 Let's try to run your first Nextflow script in your codespace:
 
 ```{code-block} groovy
-:caption: Running hello.nf
 nextflow run hello.nf
 ```
 
@@ -491,7 +489,6 @@ By now you should have:
 Here you have you first nextflow script in full! Congratulations!
 
 ```{code-block} groovy
-:caption: hello.nf
 #!/usr/bin/env nextflow
 
 /*

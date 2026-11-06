@@ -533,14 +533,11 @@ tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span>
 <section id="add-the-reference-parameters">
 <h3>Add the reference parameters<a class="headerlink" href="#add-the-reference-parameters" title="Link to this heading">#</a></h3>
 <p>Our pipeline needs two new parameters: the genome sequence (<code class="docutils literal notranslate"><span class="pre">--fasta</span></code>) and its annotation (<code class="docutils literal notranslate"><span class="pre">--gff</span></code>). Open <code class="docutils literal notranslate"><span class="pre">nextflow.config</span></code> and add them in the <code class="docutils literal notranslate"><span class="pre">params</span></code> block, under <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">References</span></code>:</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">nextflow.config</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">// References</span>
 <span class="w">    </span><span class="n">genome</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">    </span><span class="n">fasta</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 <span class="w">    </span><span class="n">gff</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
 </pre></div>
-</div>
 </div>
 <p>Every parameter of an nf-core pipeline must also be described in <code class="docutils literal notranslate"><span class="pre">nextflow_schema.json</span></code>, otherwise the pipeline warns about it. nf-core tools adds the new parameters for us:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nf-core<span class="w"> </span>pipelines<span class="w"> </span>schema<span class="w"> </span>build<span class="w"> </span>--no-prompts
@@ -553,8 +550,6 @@ tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span>
 <section id="use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile">
 <h3>Use the nf-core/rnaseq prokaryotic test data in the test profile<a class="headerlink" href="#use-the-nf-core-rnaseq-prokaryotic-test-data-in-the-test-profile" title="Link to this heading">#</a></h3>
 <p>Open <code class="docutils literal notranslate"><span class="pre">conf/test.config</span></code> and replace the <code class="docutils literal notranslate"><span class="pre">TODO</span></code> lines and the example input in the <code class="docutils literal notranslate"><span class="pre">params</span></code> block with the <em>Salmonella</em> test data:</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">conf/test.config</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">config_profile_name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Test profile&#39;</span>
 <span class="w">    </span><span class="n">config_profile_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Minimal test dataset to check pipeline function&#39;</span>
@@ -568,10 +563,7 @@ tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-</div>
 <p>The codespace has 2 CPUs and 8 GB of memory, so lower the maximum resources that a process can use in the same file:</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">conf/test.config</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">process</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="n">resourceLimits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
 <span class="w">        </span><span class="nl">cpus:</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span>
@@ -580,7 +572,6 @@ tree<span class="w"> </span>-L<span class="w"> </span><span class="m">2</span>
 <span class="w">    </span><span class="o">]</span>
 <span class="o">}</span>
 </pre></div>
-</div>
 </div>
 <p>Have a look at the <a class="reference external" href="https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/samplesheet/prokaryotic/samplesheet_test.csv" rel="noreferrer" target="_blank">samplesheet</a>. It has one row per sample with the sample name and the two FASTQ files (forward and reverse reads), as in most nf-core pipelines.</p>
 </section>
@@ -615,8 +606,6 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <h3>Pass the references to the workflow<a class="headerlink" href="#pass-the-references-to-the-workflow" title="Link to this heading">#</a></h3>
 <p>In <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>, the entry workflow (<code class="docutils literal notranslate"><span class="pre">workflow</span> <span class="pre">{</span></code>, at the end of the file) calls the <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code> workflow, which calls our <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code> workflow. We pass the two new parameters through both.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>, add <code class="docutils literal notranslate"><span class="pre">fasta</span></code> and <code class="docutils literal notranslate"><span class="pre">gff</span></code> to the inputs (<code class="docutils literal notranslate"><span class="pre">take:</span></code>) of <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code> and to its call of <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code>:</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">main.nf</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">workflow</span><span class="w"> </span><span class="n">DSP_MINIRNASEQ</span><span class="w"> </span><span class="o">{</span>
 
 <span class="w">    </span><span class="nl">take:</span>
@@ -637,10 +626,7 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="w">        </span><span class="o">...</span>
 </pre></div>
 </div>
-</div>
 <p>and, further down in the entry workflow, give the parameters to <code class="docutils literal notranslate"><span class="pre">DSP_MINIRNASEQ</span></code>:</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">main.nf</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="n">DSP_MINIRNASEQ</span><span class="w"> </span><span class="o">(</span>
 <span class="w">        </span><span class="n">PIPELINE_INITIALISATION</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">samplesheet</span><span class="o">,</span>
 <span class="w">        </span><span class="n">params</span><span class="o">.</span><span class="na">fasta</span><span class="o">,</span>
@@ -648,13 +634,10 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="w">    </span><span class="o">)</span>
 </pre></div>
 </div>
-</div>
 </section>
 <section id="add-the-new-steps-to-the-workflow">
 <h3>Add the new steps to the workflow<a class="headerlink" href="#add-the-new-steps-to-the-workflow" title="Link to this heading">#</a></h3>
 <p>Open <code class="docutils literal notranslate"><span class="pre">workflows/minirnaseq.nf</span></code>. First include the new modules next to the <code class="docutils literal notranslate"><span class="pre">FASTQC</span></code> and <code class="docutils literal notranslate"><span class="pre">MULTIQC</span></code> ones. We use gffread twice for two different jobs, so we include it twice with two different names (aliases):</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">GFFREAD</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">GFF_TO_GTF</span><span class="w">          </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/gffread/main&#39;</span>
 <span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">GFFREAD</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">GFFREAD_TRANSCRIPTS</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/gffread/main&#39;</span>
 <span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">BOWTIE2_BUILD</span><span class="w">                  </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/bowtie2/build/main&#39;</span>
@@ -662,10 +645,7 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="n">include</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">SALMON_QUANT</span><span class="w">                   </span><span class="o">}</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s1">&#39;../modules/nf-core/salmon/quant/main&#39;</span>
 </pre></div>
 </div>
-</div>
 <p>Then add <code class="docutils literal notranslate"><span class="pre">fasta</span></code> and <code class="docutils literal notranslate"><span class="pre">gff</span></code> to the inputs of <code class="docutils literal notranslate"><span class="pre">MINIRNASEQ</span></code>, in the same order as in the call in <code class="docutils literal notranslate"><span class="pre">main.nf</span></code>:</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nl">take:</span>
 <span class="w">    </span><span class="n">ch_samplesheet</span><span class="w"> </span><span class="c1">// channel: samplesheet read in from --input</span>
 <span class="w">    </span><span class="n">fasta</span><span class="w">          </span><span class="c1">// path: genome FASTA file</span>
@@ -673,10 +653,7 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="w">    </span><span class="n">multiqc_config</span>
 </pre></div>
 </div>
-</div>
 <p>Now the main part. Add the following code right after the FastQC step (after the <code class="docutils literal notranslate"><span class="pre">ch_multiqc_files</span> <span class="pre">=</span> <span class="pre">ch_multiqc_files.mix(FASTQC.out.zip...)</span></code> line). Read the comments: what goes in and out of each step?</p>
-<div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">workflows/minirnaseq.nf</span><a class="headerlink" href="#id8" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">//</span>
 <span class="w">    </span><span class="c1">// MODULE: Convert the genome annotation from GFF to GTF with gffread</span>
 <span class="w">    </span><span class="c1">//</span>
@@ -721,7 +698,6 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="w">    </span><span class="n">ch_multiqc_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch_multiqc_files</span><span class="o">.</span><span class="na">mix</span><span class="o">(</span><span class="n">SALMON_QUANT</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">results</span><span class="o">.</span><span class="na">map</span><span class="o">{</span><span class="w"> </span><span class="n">_meta</span><span class="o">,</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">dir</span><span class="w"> </span><span class="o">})</span>
 </pre></div>
 </div>
-</div>
 <p>A few things to notice:</p>
 <blockquote>
 <div><ul class="simple">
@@ -734,8 +710,6 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <section id="set-the-options-of-the-tools">
 <h3>Set the options of the tools<a class="headerlink" href="#set-the-options-of-the-tools" title="Link to this heading">#</a></h3>
 <p>The command line options of each tool are not written in the modules but in <code class="docutils literal notranslate"><span class="pre">conf/modules.config</span></code> (<code class="docutils literal notranslate"><span class="pre">ext.args</span></code>), so the same module can be reused in different pipelines. Add these settings inside the <code class="docutils literal notranslate"><span class="pre">process</span> <span class="pre">{</span> <span class="pre">}</span></code> block, before the <code class="docutils literal notranslate"><span class="pre">MULTIQC</span></code> settings:</p>
-<div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-text">conf/modules.config</span><a class="headerlink" href="#id9" title="Link to this code">#</a></div>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nl">withName:</span><span class="w"> </span><span class="n">GFF_TO_GTF</span><span class="w"> </span><span class="o">{</span>
 <span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;--keep-exon-attrs -F -T&#39;</span>
 <span class="w">    </span><span class="o">}</span>
@@ -760,7 +734,6 @@ nf-core<span class="w"> </span>modules<span class="w"> </span>install<span class
 <span class="w">        </span><span class="n">ext</span><span class="o">.</span><span class="na">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;--libType A&#39;</span>
 <span class="w">    </span><span class="o">}</span>
 </pre></div>
-</div>
 </div>
 <blockquote>
 <div><ul class="simple">
