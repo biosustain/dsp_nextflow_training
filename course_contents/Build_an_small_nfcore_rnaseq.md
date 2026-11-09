@@ -1,19 +1,30 @@
 # Build a small nf-core RNA-seq pipeline
 
-In the tutorial you wrote a Nextflow pipeline from scratch. Real pipelines are rarely written like that: most bioinformatics pipelines are built from the [nf-core](https://nf-co.re/) **template** and from ready-made, tested nf-core **modules** (one module = one tool wrapped in a Nextflow process).
+In the tutorial you wrote a Nextflow pipeline from scratch. Real pipelines are rarely
+written like that: most bioinformatics pipelines are built from the
+[nf-core](https://nf-co.re/) **template** and from ready-made, tested nf-core **modules**
+(one module = one tool wrapped in a Nextflow process).
 
-In this activity (about one hour) you will build `minirnaseq`, a small RNA-seq pipeline that:
+In this activity (about one hour) you will build `minirnaseq`, a small RNA-seq pipeline
+that:
 
 1. checks the quality of the sequencing reads with **FastQC**
 2. aligns the reads to the transcripts of a reference genome with **Bowtie2**
 3. quantifies the transcripts with **Salmon**
 4. summarises everything in a **MultiQC** report
 
-At the end you will have a table of **transcript abundances** for each sample and a **MultiQC report** to revise.
+At the end you will have a table of **transcript abundances** for each sample and a
+**MultiQC report** to revise.
 
-> The design follows the prokaryotic mode of [nf-core/rnaseq](https://nf-co.re/rnaseq) (`--aligner bowtie2_salmon`), and we use the same test dataset: two paired-end RNA-seq samples of *Salmonella* Typhimurium SL1344 and a small subset of its genome.
+> The design follows the prokaryotic mode of [nf-core/rnaseq](https://nf-co.re/rnaseq)
+> (`--aligner bowtie2_salmon`), and we use the same test dataset: two paired-end RNA-seq
+> samples of *Salmonella* Typhimurium SL1344 and a small subset of its genome.
 
-Bacterial genes have no introns, so the reads can be aligned directly to the transcript sequences, and Salmon can count the reads aligned to each transcript. Salmon needs two reference files that we do not have yet: the transcript sequences and an annotation in GTF format. We get both from the genome (FASTA) and its annotation (GFF) with a small tool called **gffread**:
+Bacterial genes have no introns, so the reads can be aligned directly to the transcript
+sequences, and Salmon can count the reads aligned to each transcript. Salmon needs two
+reference files that we do not have yet: the transcript sequences and an annotation in
+GTF format. We get both from the genome (FASTA) and its annotation (GFF) with a small
+tool called **gffread**:
 
 ```text
 reads (FASTQ) ───────> FastQC ─────────────────────────────────────────┐
@@ -29,11 +40,15 @@ reads (FASTQ) ──────────────────────
                                           transcript abundances
 ```
 
-> Stuck or short of time? The finished pipeline is in the [`solutions/dsp-minirnaseq`](https://github.com/biosustain/dsp_nextflow_training/tree/main/solutions/dsp-minirnaseq) folder of the course repository. Compare your files with it, or run it directly (see step 5).
+> Stuck or short of time? The finished pipeline is in the
+> [`solutions/dsp-minirnaseq`](https://github.com/biosustain/dsp_nextflow_training/tree/main/solutions/dsp-minirnaseq)
+> folder of the course repository. Compare your files with it, or run it directly (see
+> step 5).
 
 ## 0. Before you start (2 min)
 
-Open your codespace and check that you have the tools we need. If you created your codespace before this course, create a new one so that you get the updated environment.
+Open your codespace and check that you have the tools we need. If you created your
+codespace before this course, create a new one so that you get the updated environment.
 
 ```bash
 nextflow -v
@@ -49,7 +64,8 @@ cd /workspaces/dsp_nextflow_training
 
 ## 1. Create the pipeline from the nf-core template (5 min)
 
-nf-core tools creates a new pipeline with all the nf-core structure (configuration, parameter validation, MultiQC, CI tests, documentation...) already in place:
+nf-core tools creates a new pipeline with all the nf-core structure (configuration,
+parameter validation, MultiQC, CI tests, documentation...) already in place:
 
 ```bash
 nf-core pipelines create \
@@ -59,9 +75,11 @@ nf-core pipelines create \
     --organisation dsp
 ```
 
-> Without options, `nf-core pipelines create` opens an interactive app where you can also choose which parts of the template to include.
+> Without options, `nf-core pipelines create` opens an interactive app where you can also
+> choose which parts of the template to include.
 
-A new folder `dsp-minirnaseq` was created. It is already a git repository. Go inside and have a look:
+A new folder `dsp-minirnaseq` was created. It is already a git repository. Go inside and
+have a look:
 
 ```bash
 cd dsp-minirnaseq
@@ -81,13 +99,17 @@ The most important files for today are:
 | `conf/test.config` | The `test` profile: small test data to check that the pipeline works
 | `conf/modules.config` | The options of each module (extra arguments, where to save the results)
 
-> In the tutorial we saved the results with workflow outputs (`publish:` and the `output` block). The nf-core template still saves the results of each process with the `publishDir` directive, which is set for all processes in `conf/modules.config`.
+> In the tutorial we saved the results with workflow outputs (`publish:` and the `output`
+> block). The nf-core template still saves the results of each process with the
+> `publishDir` directive, which is set for all processes in `conf/modules.config`.
 
 ## 2. Add the test data and run the template (10 min)
 
 ### Add the reference parameters
 
-Our pipeline needs two new parameters: the genome sequence (`--fasta`) and its annotation (`--gff`). Open `nextflow.config` and add them in the `params` block, under `// References`:
+Our pipeline needs two new parameters: the genome sequence (`--fasta`) and its annotation
+(`--gff`). Open `nextflow.config` and add them in the `params` block, under `//
+References`:
 
 ```{code-block} groovy
     // References
@@ -96,17 +118,20 @@ Our pipeline needs two new parameters: the genome sequence (`--fasta`) and its a
     gff                        = null
 ```
 
-Every parameter of an nf-core pipeline must also be described in `nextflow_schema.json`, otherwise the pipeline warns about it. nf-core tools adds the new parameters for us:
+Every parameter of an nf-core pipeline must also be described in `nextflow_schema.json`,
+otherwise the pipeline warns about it. nf-core tools adds the new parameters for us:
 
 ```bash
 nf-core pipelines schema build --no-prompts
 ```
 
-> Without `--no-prompts`, this command asks you about every change and offers to open a web editor where you can write the description and help text of each parameter.
+> Without `--no-prompts`, this command asks you about every change and offers to open a
+> web editor where you can write the description and help text of each parameter.
 
 ### Use the nf-core/rnaseq prokaryotic test data in the test profile
 
-Open `conf/test.config` and replace the `TODO` lines and the example input in the `params` block with the *Salmonella* test data:
+Open `conf/test.config` and replace the `TODO` lines and the example input in the
+`params` block with the *Salmonella* test data:
 
 ```{code-block} groovy
 params {
@@ -122,7 +147,8 @@ params {
 }
 ```
 
-The codespace has 2 CPUs and 8 GB of memory, so lower the maximum resources that a process can use in the same file:
+The codespace has 2 CPUs and 8 GB of memory, so lower the maximum resources that a
+process can use in the same file:
 
 ```{code-block} groovy
 process {
@@ -134,11 +160,15 @@ process {
 }
 ```
 
-Have a look at the [samplesheet](https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/samplesheet/prokaryotic/samplesheet_test.csv). It has one row per sample with the sample name and the two FASTQ files (forward and reverse reads), as in most nf-core pipelines.
+Have a look at the
+[samplesheet](https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/samplesheet/prokaryotic/samplesheet_test.csv).
+It has one row per sample with the sample name and the two FASTQ files (forward and
+reverse reads), as in most nf-core pipelines.
 
 ### Run the template
 
-Our pipeline already works! Let's run it with the `test` profile (the test data) and the `docker` profile (every process runs in its own container):
+Our pipeline already works! Let's run it with the `test` profile (the test data) and the
+`docker` profile (every process runs in its own container):
 
 ```bash
 nextflow run . -profile test,docker --outdir results
@@ -146,11 +176,15 @@ nextflow run . -profile test,docker --outdir results
 
 Which processes were run? Have a look at `results/fastqc` and `results/multiqc`.
 
-You also got a warning about the `strandedness` column of the samplesheet. The samplesheet was made for nf-core/rnaseq, and our `assets/schema_input.json` only knows the `sample`, `fastq_1` and `fastq_2` columns, so the extra column is ignored.
+You also got a warning about the `strandedness` column of the samplesheet. The
+samplesheet was made for nf-core/rnaseq, and our `assets/schema_input.json` only knows
+the `sample`, `fastq_1` and `fastq_2` columns, so the extra column is ignored.
 
 ## 3. Install the nf-core modules (5 min)
 
-We do not need to write the processes for gffread, Bowtie2 and Salmon: there are nf-core modules for them. You can search the modules on the [nf-core website](https://nf-co.re/modules) or with `nf-core modules list remote`.
+We do not need to write the processes for gffread, Bowtie2 and Salmon from scratch: there
+are nf-core modules for them. You can search the modules on the [nf-core
+website](https://nf-co.re/modules) or with `nf-core modules list remote`.
 
 ```bash
 nf-core modules install gffread
@@ -159,21 +193,28 @@ nf-core modules install bowtie2/align
 nf-core modules install salmon/quant
 ```
 
-Each module was downloaded to `modules/nf-core/` and recorded in `modules.json`. Before using a module, check its inputs and outputs:
+Each module was downloaded to `modules/nf-core/` and recorded in `modules.json`. Before
+using a module, check its inputs and outputs:
 
 ```bash
 nf-core modules info salmon/quant
 ```
 
-Open also `modules/nf-core/salmon/quant/main.nf`. Can you find the `input:` and `output:` blocks? Notice that most inputs are tuples like `tuple val(meta), path(reads)`: in nf-core, every file travels together with a `meta` map with information about the sample, e.g. `[id: 'SALM_REP1', single_end: false]`.
+Open also `modules/nf-core/salmon/quant/main.nf`. Can you find the `input:` and `output:`
+blocks? Notice that most inputs are tuples like `tuple val(meta), path(reads)`: in
+nf-core, every file travels together with a `meta` map with information about the sample,
+e.g. `[id: 'SALM_REP1', single_end: false]`.
 
 ## 4. Connect the modules in the workflow (20 min)
 
 ### Pass the references to the workflow
 
-In `main.nf`, the entry workflow (`workflow {`, at the end of the file) calls the `DSP_MINIRNASEQ` workflow, which calls our `MINIRNASEQ` workflow. We pass the two new parameters through both.
+In `main.nf`, the entry workflow (`workflow {`, at the end of the file) calls the
+`DSP_MINIRNASEQ` workflow, which calls our `MINIRNASEQ` workflow. We pass the two new
+parameters through both.
 
-In `main.nf`, add `fasta` and `gff` to the inputs (`take:`) of `DSP_MINIRNASEQ` and to its call of `MINIRNASEQ`:
+In `main.nf`, add `fasta` and `gff` to the inputs (`take:`) of `DSP_MINIRNASEQ` and to
+its call of `MINIRNASEQ`:
 
 ```{code-block} groovy
 workflow DSP_MINIRNASEQ {
@@ -208,7 +249,9 @@ and, further down in the entry workflow, give the parameters to `DSP_MINIRNASEQ`
 
 ### Add the new steps to the workflow
 
-Open `workflows/minirnaseq.nf`. First include the new modules next to the `FASTQC` and `MULTIQC` ones. We use gffread twice for two different jobs, so we include it twice with two different names (aliases):
+Open `workflows/minirnaseq.nf`. First include the new modules next to the `FASTQC` and
+`MULTIQC` ones. We use gffread twice for two different jobs, so we include it twice with
+two different names (aliases):
 
 ```{code-block} groovy
 include { GFFREAD as GFF_TO_GTF          } from '../modules/nf-core/gffread/main'
@@ -218,7 +261,8 @@ include { BOWTIE2_ALIGN                  } from '../modules/nf-core/bowtie2/alig
 include { SALMON_QUANT                   } from '../modules/nf-core/salmon/quant/main'
 ```
 
-Then add `fasta` and `gff` to the inputs of `MINIRNASEQ`, in the same order as in the call in `main.nf`:
+Then add `fasta` and `gff` to the inputs of `MINIRNASEQ`, in the same order as in the
+call in `main.nf`:
 
 ```{code-block} groovy
     take:
@@ -228,7 +272,9 @@ Then add `fasta` and `gff` to the inputs of `MINIRNASEQ`, in the same order as i
     multiqc_config
 ```
 
-Now the main part. Add the following code right after the FastQC step (after the `ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip...)` line). Read the comments: what goes in and out of each step?
+Now the main part. Add the following code right after the FastQC step (after the
+`ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip...)` line). Read the comments:
+what goes in and out of each step?
 
 ```{code-block} groovy
     //
@@ -280,10 +326,17 @@ A few things to notice:
 > - The reference files are wrapped in **value channels** (`channel.value(...)`, `.first()`). A value channel can be read again and again, so the same index and transcripts are used for every sample. A normal channel is consumed: with it, only the first sample would be quantified!
 > - `[]` is used for an optional input that we do not need, e.g. Salmon does not need its own index because it reads the Bowtie2 alignments.
 > - Every tool that MultiQC understands adds its log or result files to `ch_multiqc_files`, the channel that MultiQC reads.
+> - `[]` is used for an optional input that we do not need, e.g. Salmon does not need its
+>   own index because it reads the Bowtie2 alignments.
+> - Every tool that MultiQC understands adds its log or result files to
+>   `ch_multiqc_files`, the channel that MultiQC reads.
 
 ### Set the options of the tools
 
-The command line options of each tool are not written in the modules but in `conf/modules.config` (`ext.args`), so the same module can be reused in different pipelines. Add these settings inside the `process { }` block, before the `MULTIQC` settings:
+The command line options of each tool are not written in the modules but in
+`conf/modules.config` (`ext.args`), so the same module can be reused in different
+pipelines. Add these settings inside the `process { }` block, before the `MULTIQC`
+settings:
 
 ```{code-block} groovy
     withName: GFF_TO_GTF {
@@ -312,7 +365,9 @@ The command line options of each tool are not written in the modules but in `con
 ```
 
 > - gffread converts the GFF to GTF (`-T`) and writes the transcript sequences (`-w`).
-> - Bowtie2 reports up to 200 alignments per read (`-k 200`), so that Salmon can share the reads that map to several transcripts. These are the settings used by nf-core/rnaseq.
+> - Bowtie2 reports up to 200 alignments per read (`-k 200`), so that Salmon can share
+>   the reads that map to several transcripts. These are the settings used by
+>   nf-core/rnaseq.
 > - `--libType A` lets Salmon detect automatically if the library is stranded.
 > - The reference files are saved in `results/reference`.
 
@@ -322,11 +377,15 @@ The command line options of each tool are not written in the modules but in `con
 nextflow run . -profile test,docker --outdir results -resume
 ```
 
-Thanks to `-resume`, FastQC is not run again. How many processes were run now? How many times was `SALMON_QUANT` run, and why?
+Thanks to `-resume`, FastQC is not run again. How many processes were run now? How many
+times was `SALMON_QUANT` run, and why?
 
-> If something fails, read the error message: Nextflow tells you which process failed, the command that was run and its work directory. Fix the code and run the same command again with `-resume`.
+> If something fails, read the error message: Nextflow tells you which process failed,
+> the command that was run and its work directory. Fix the code and run the same command
+> again with `-resume`.
 
-If you could not finish the code, run the solution instead, so that you also get results to explore in the next step:
+If you could not finish the code, run the solution instead, so that you also get results
+to explore in the next step:
 
 ```bash
 nextflow run ../solutions/dsp-minirnaseq -profile test,docker --outdir results
@@ -354,27 +413,36 @@ column -t results/salmon/SALM_REP1/quant.sf
 | `TPM` | Transcripts Per Million: abundance normalised by transcript length and sequencing depth, comparable between transcripts
 | `NumReads` | Estimated number of reads coming from the transcript
 
-Which transcript is the most abundant in each sample? Are the two replicates similar? Salmon also wrote `quant.genes.sf`, with the abundances per gene.
+Which transcript is the most abundant in each sample? Are the two replicates similar?
+Salmon also wrote `quant.genes.sf`, with the abundances per gene.
 
-> These tables are the starting point of a differential expression analysis, e.g. with DESeq2 in R.
+> These tables are the starting point of a differential expression analysis, e.g. with
+> DESeq2 in R.
 
 ### MultiQC report
 
-Open `results/multiqc/multiqc_report.html`: right click on it in the VSCode explorer and select **Show Preview** (or **Open with Live Server**).
+Open `results/multiqc/multiqc_report.html`: right click on it in the VSCode explorer and
+select **Show Preview** (or **Open with Live Server**).
 
 - **General Statistics**: one line per sample with the main numbers of every tool
 - **FastQC**: are the reads of good quality? Is there adapter content?
 - **Bowtie2**: which percentage of the read pairs aligned to the transcripts?
 - **Salmon**: which fragment length distribution did Salmon estimate?
-- **Software versions** and **Workflow summary**: everything you need to report your analysis
+- **Software versions** and **Workflow summary**: everything you need to report your
+  analysis
 
-Have a look also at `results/pipeline_info`: the execution report and timeline tell you how long each process took and how much CPU and memory it used.
+Have a look also at `results/pipeline_info`: the execution report and timeline tell you
+how long each process took and how much CPU and memory it used.
 
 ## Going further
 
-- Check your code with the Nextflow linter: `nextflow lint .`. The warnings about the `when` section come from the nf-core modules, not from your code.
+- Check your code with the Nextflow linter: `nextflow lint .`. The warnings about the
+  `when` section come from the nf-core modules, not from your code.
 - Check that your pipeline follows the nf-core guidelines: `nf-core pipelines lint`.
-- Run the real nf-core/rnaseq pipeline on the same data and compare the results with yours (this one takes longer!). Its test profile asks for 4 CPUs, so first write a small config file that limits the resources to the codespace size, and give it to Nextflow with `-c`:
+- Run the real nf-core/rnaseq pipeline on the same data and compare the results with
+  yours (this one takes longer!). Its test profile asks for 4 CPUs, so first write a
+  small config file that limits the resources to the codespace size, and give it to
+  Nextflow with `-c`:
 
 ```bash
 echo "process.resourceLimits = [cpus: 2, memory: '6.GB', time: '1.h']" > codespace.config
@@ -384,4 +452,5 @@ echo "process.resourceLimits = [cpus: 2, memory: '6.GB', time: '1.h']" > codespa
 nextflow run nf-core/rnaseq -r 3.27.0 -profile test_prokaryotic,docker --outdir rnaseq_results -c codespace.config
 ```
 
-- Learn more in the [nf-core documentation](https://nf-co.re/docs) and in the [Nextflow training](https://training.nextflow.io/).
+- Learn more in the [nf-core documentation](https://nf-co.re/docs) and in the [Nextflow
+  training](https://training.nextflow.io/).
