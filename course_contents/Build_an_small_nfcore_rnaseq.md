@@ -323,9 +323,11 @@ what goes in and out of each step?
 
 A few things to notice:
 
-> - The reference files are wrapped in **value channels** (`channel.value(...)`, `.first()`). A value channel can be read again and again, so the same index and transcripts are used for every sample. A normal channel is consumed: with it, only the first sample would be quantified!
-> - `[]` is used for an optional input that we do not need, e.g. Salmon does not need its own index because it reads the Bowtie2 alignments.
-> - Every tool that MultiQC understands adds its log or result files to `ch_multiqc_files`, the channel that MultiQC reads.
+> - The reference files are wrapped in **value channels** (`channel.value(...)`,
+>   `.first()`). A value channel can be read again and again, so the same index and
+>   transcripts are used for every sample. A normal channel is consumed: Once used, it is
+>   exausted - this means empty. Using a normal channel, only the first sample would be
+>   quantified!
 > - `[]` is used for an optional input that we do not need, e.g. Salmon does not need its
 >   own index because it reads the Bowtie2 alignments.
 > - Every tool that MultiQC understands adds its log or result files to
