@@ -184,9 +184,10 @@ the greeting message.
 
 This requires us to make four changes:
 
-### 1. Adding input definition to the process block:
+### 1. Adding an input definition to the process block:
 
-Tell the process about expected variable inputs using the input block 
+Tell the process about expected inputs (an input variable or parameter) using the input
+block 
 
 > The `val` qualifier accepts any data type. It can be accessed in the process script by
 > using the specified input name.
@@ -209,7 +210,7 @@ echo "${greeting}" > output.txt
 ```
 ### 3. Creating an input channel in the workflow block
 
-> Nextflow uses **channels** to feed inputs to processes and ferry data between processes
+> Nextflow uses **channels** to feed inputs to processes and move data between processes
 > that are connected together. `channel.of` is a factory method to create channels
 
 ```groovy
@@ -387,12 +388,12 @@ your output files named and where were they saved?
 Workflows typically run on batches of inputs that are meant to be processed in bulk, so
 we want to upgrade the workflow to accept multiple input values.
 
-`channel.of()` factory method is quite happy to accept more than one value. Imagine that
-these could be used to pass a list of genes, genomes or fasta files, etc ... to the next
-process.
+The `channel.of()` factory method is quite happy to accept more than one value. Imagine
+that these could be used to pass a list of genes, genomes or fasta files, etc ... to the
+next process.
 
 There are different factory channels to create these channels. We will use `channel.of()`
-to create a channel for ou greetings.
+to create a channel for our greetings.
 
 Where do you need to add the following?
 ```groovy
@@ -401,7 +402,7 @@ greeting_ch = channel.of('Hello','Bonjour','Hola','Hej')
 ```
 
 We want to ensure the output file names will be unique as they will be all written in the
-same folder `results`. Let's generate a file name dynamically so that the final file
+same `results` folder. Let's generate a file name dynamically so that the final file
 names will be unique. We need then to modify the code in the process `sayHello`:
 
 ```groovy
@@ -485,13 +486,14 @@ params {
 
 Then we need to build the channel. 
 
-We use channel factory, `channel.fromPath()`, which has some built-in functionality for
-handling file paths. 
+We use the channel factory, `channel.fromPath()`, which has some built-in functionality
+for handling file paths. 
 
 Furthermore, we're going to add the `.flatMap` operator to read each CSV file into its
-rows using `splitCsv(header: true)`: each row becomes a map from the header to the value,
-e.g. `[greeting: 'Hello']`. Finally, the `.map` operator picks the `greeting` value of
-each row, so we get a channel of individual greetings.
+rows using `splitCsv(header: true)`: each row becomes a map (a dictionary of the
+column-name to it's values in that row) from the header to the value, e.g. `[greeting:
+'Hello']`. Finally, the `.map` operator picks the `greeting` value of each row, so we get
+a channel of individual greetings.
 
 By now you should know where to add this piece of code:
 ```groovy
