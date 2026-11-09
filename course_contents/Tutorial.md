@@ -13,7 +13,7 @@ the terminal `code hello.nf` (nf is the extension for Nextflow pipeline scripts)
 
 Then copy / paste the following code. Save the file as hello.nf.
 
-```{code-block} groovy
+```groovy
 
 #!/usr/bin/env nextflow
 
@@ -51,7 +51,7 @@ process is called in the workflow block (`sayHello()`).
 
 Let's try to run your first Nextflow script in your codespace:
 
-```{code-block} groovy
+```bash
 nextflow run hello.nf
 ```
 
@@ -116,7 +116,7 @@ echo 'Hello World!' > output.txt
 ```
 
 Run the pipeline again!
-```groovy
+```bash
 nextflow run hello.nf
 ```
 
@@ -159,7 +159,7 @@ output {
 ```
 
 Run the pipeline again!
-```groovy
+```bash
 nextflow run hello.nf
 ```
 
@@ -237,7 +237,7 @@ sayHello(greeting_ch)
 ```
 
 And run the pipeline again!
-```groovy
+```bash
 nextflow run hello.nf
 ```
 
@@ -250,7 +250,7 @@ nextflow run hello.nf
 In other words use the `-resume` option to run a pipeline again without repeating the
 processes that have already been completed without errors. 
 
-```groovy
+```bash
 nextflow run hello.nf -resume
 ```
 What happened? Did your `sayHello()` process run again? Notice that the work subdirectory
@@ -283,12 +283,12 @@ greeting_ch = channel.of(params.greeting)
 ```
 
 Run the pipeline without giving any greeting. What does Nextflow tell you?
-```groovy
+```bash
 nextflow run hello.nf
 ```
 
 Now let's greet på Dansk!
-```groovy
+```bash
 nextflow run hello.nf --greeting 'Hej verden!'
 ```
 
@@ -314,7 +314,7 @@ params {
 
 Now we introduce a second process that converts the text to uppercase.
 
-Here it is just an scheme for the code, please complete it yourself:
+Here is just a scheme for the process code, please complete it yourself:
 
 ```groovy
 /*
@@ -376,7 +376,7 @@ output {
 
 Now let's say Good morning in portuguese!
 
-```groovy
+```bash
 nextflow run hello.nf --greeting 'Bom dia!'
 ```
 
@@ -424,7 +424,7 @@ Let's run the script again. But hang on, to expand the logging to display one li
 process call to have a closer look to what is going on, just add `-ansi-log false` to the
 command.
 
-```groovy
+```bash
 nextflow run hello.nf -ansi-log false
 ```
 
@@ -505,7 +505,7 @@ greeting_ch = channel.fromPath(params.input)
 
 Ok, lets try this script one last time!
 
-```groovy
+```bash
 nextflow run hello.nf -ansi-log false
 ```
 Did you get the same results? Hopefully yes but now you used a `greetings.csv` that could
@@ -527,7 +527,7 @@ nextflow lint -format hello.nf
 ```
 
 > The Nextflow extension for VSCode (already installed in the codespace) runs the same
-> checks while you write: look for the underlined code and the Problems tab.
+> checks while you write: look for the underlined code and the 'Problems' tab.
 
 ## Summary
 
@@ -555,7 +555,7 @@ By now you should have:
 
 Here you have you first nextflow script in full! Congratulations!
 
-```{code-block} groovy
+```groovy
 #!/usr/bin/env nextflow
 
 /*
